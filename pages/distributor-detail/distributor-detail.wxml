@@ -1,0 +1,82 @@
+<view class='nav'>
+  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="content">
+  <view class="new_moreny">当前总金额：1000</view>
+  <view class="hint">补贴</view>
+  <view class="subsidy_list">
+    <view class="item flex_sb">
+      <view class="flex_y">
+        <view class="position">指挥</view>
+        <view>2%</view>
+      </view>
+      <view bindtap="show_madel">选择成员</view>
+    </view>
+    <view class="item flex_sb">
+      <view class="flex_y">
+        <view class="position">MT</view>
+        <view>2%</view>
+      </view>
+      <view>选择成员</view>
+    </view>
+    <view class="item flex_sb">
+      <view class="flex_y">
+        <view class="position">FT</view>
+        <view>2%</view>
+      </view>
+      <view>选择成员</view>
+    </view>
+    <view class="item flex_sb">
+      <view class="flex_y">
+        <view class="position">DPS1st</view>
+        <view>2%</view>
+      </view>
+      <view>选择成员</view>
+    </view>
+    <view class="item flex_sb">
+      <view class="flex_y">
+        <view class="position">HPS1st</view>
+        <view>2%</view>
+      </view>
+      <view>选择成员</view>
+    </view>
+  </view>
+  <view class="punishment">
+    <view class="item flex_sb">
+      <view>扣罚</view>
+      <view>选择成员</view>
+    </view>
+    <view class="item flex_sb">
+      <view>不分钱</view>
+      <view>选择成员</view>
+    </view>
+  </view>
+  <view class="amend" bindtap="skip" data-url="/pages/distributor-sure/distributor-sure">修正</view>
+</view>
+<view class="popup" wx:if="{{show_member}}">
+  <view class="popup_bj" bindtap="show_madel"></view>
+  <view class="popup_box">
+    <view class="popup_content flex_sb flex_y">
+      <view class="btn_box">取消</view>
+      <view>成员列表</view>
+      <view class="btn_box">确定</view>
+    </view>
+    <!-- <view class="sel_btn flex_sb">
+      <view class="btn_box">取消</view>
+      <view class="btn_box">确定</view>
+    </view> -->
+    <view>
+      <checkbox-group class="group flex_wrap" bindchange="checkboxChange">
+        <view class="label-1" wx:for="{{checkboxItems}}" wx:key="index">
+          <label>
+            <checkbox hidden value="{{item.name}}" checked="{{item.checked}}"></checkbox>
+            <view class="label-1__icon">
+              <view class="label-1__icon-checked" style="opacity:{{item.checked ? 1: 0}}">{{item.checked}}</view>
+            </view>
+            <view class="label-1__text">{{item.value}}</view>
+          </label>
+        </view>
+      </checkbox-group>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,57 @@
+<view class='nav'>
+  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="content">
+  <view class="msg_list">
+    <view class="item name flex_y">
+      <view style="margin-right: 10rpx;">游戏角色名</view>
+      <view>
+        <input placeholder="限制15个字"></input>
+      </view>
+    </view>
+    <view class="item_career">
+      <view class="sel_career flex_sb">
+        <view>职业-种族</view>
+        <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+          <view class="picker">
+            当前选择：{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+          </view>
+        </picker>
+      </view>
+      <view class="sel_service flex_sb">
+        <view>服务器</view>
+        <view bindtap="show_sel">请选择服务器</view>
+      </view>
+    </view>
+    <view class="item_camp flex_sb">
+      <view>阵营</view>
+      <view>
+        <radio-group class="radio-group" bindchange="radioChange">
+          <radio class="radio" wx:for-items="{{items}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+            <text>{{item.value}}</text>
+          </radio>
+        </radio-group>
+      </view>
+    </view>
+    <view class="item_account">
+      <view class="grade flex_sb">
+        <view>等级</view>
+        <picker bindchange="bindPickerChange" value="{{grade_index}}" range="{{grade}}">
+          <view class="picker">
+            当前选择：{{grade[grade_index]}}
+          </view>
+        </picker>
+      </view>
+      <view class="equipped flex_sb">
+        <view>装备评分</view>
+        <view>
+          <input placeholder="请输入装备评分" style="text-align:right;"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="popup" wx:if="{{show_madel}}">
+  <view class="popup_bj" bindtap="show_sel"></view>
+  <view class="popup_box"></view>
+</view>

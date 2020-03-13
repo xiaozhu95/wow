@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/user",
+    "pages/creative/creative",
+    "pages/join-us/join",
+    "pages/room-code/room-code",
+    "pages/role/role",
+    "pages/allocation/allocation",
+    "pages/equipment-add/equipment-add",
+    "pages/equipment-detail/equipment-detail",
+    "pages/role-creation/role-creation",
+    "pages/distributor/distributor",
+    "pages/distributor-detail/distributor-detail"
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "活动",
+        "iconPath": "images/group.png",
+        "selectedIconPath": "images/group1.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me1.png"
+      }
+    ],
+    "selectedColor": "#fff",
+    "color": "#f4af0c",
+    "backgroundColor": "#b08952"
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar"
+  }
+}

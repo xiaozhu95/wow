@@ -1,0 +1,103 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": false,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.10.3",
+  "appid": "wxa07d866227c5c901",
+  "projectname": "%E9%AD%94%E5%85%BD%E5%86%9B%E5%9B%A2%E5%8A%A9%E6%89%8B",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": -1,
+          "name": "创建房间",
+          "pathName": "pages/creative/creative",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "角色添加",
+          "pathName": "pages/role-creation/role-creation",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "金币分配",
+          "pathName": "pages/distributor/distributor",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "房间页面",
+          "pathName": "pages/room-code/room-code",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "房间",
+          "pathName": "pages/room-code/room-code",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

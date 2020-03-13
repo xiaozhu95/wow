@@ -1,0 +1,35 @@
+<view class='main-wraper'>
+  <view class='nav'>
+    <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  </view>
+</view>
+<view>
+  <view class="main">
+    <view class='password-input'>
+      <view>{{inputPassword[0]}}</view>
+      <view>{{inputPassword[1]}}</view>
+      <view>{{inputPassword[2]}}</view>
+      <view>{{inputPassword[3]}}</view>
+      <view>{{inputPassword[4]}}</view>
+      <view>{{inputPassword[5]}}</view>
+    </view>
+    <view class="key_num">
+      <view class='keyboard'>
+        <view class='left number'>
+          <view data-key="1" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>1</view>
+          <view data-key="2" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>2</view>
+          <view data-key="3" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>3</view>
+          <view data-key="4" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>4</view>
+          <view data-key="5" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>5</view>
+          <view data-key="6" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>6</view>
+          <view data-key="7" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>7</view>
+          <view data-key="8" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>8</view>
+          <view data-key="9" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>9</view>
+          <view data-key="X" class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='clear'>退格</view>
+          <view data-key="0" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>0</view>
+          <view data-key="." class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='inputPassword'>确定</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+
+input {
+  height: 21px !important;
+  min-height: 21rpx;
+}
+
+.content {
+  padding: 0 20rpx;
+  font-size: 28rpx;
+}
+
+.msg_list {
+  padding: 0 20rpx;
+  background: #fff;
+  border-radius: 15rpx;
+}
+
+.name {
+  padding: 50rpx 0;
+  font-size: 32rpx;
+}
+
+.item_career, .item_camp, .item_account {
+  border-top: 1rpx solid #a5a5a5;
+}
+
+.sel_career, .sel_service {
+  padding: 20rpx 0;
+}
+
+.item_camp, .grade, .equipped {
+  padding: 20rpx 0;
+}
+
+.radio {
+  padding-left: 20rpx;
+}

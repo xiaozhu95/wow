@@ -1,0 +1,58 @@
+/* pages/room-code/room-code.wxss */
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+.group_head{
+  padding: 10rpx 30rpx;
+}
+.group_head .logo{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius:50%;
+  overflow: hidden; 
+}
+.group_wraper image{
+  width: 100%;
+  height: 100%;
+}
+.look{
+  text-align: center;
+}
+.look_icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+.look .text{
+  font-size:20rpx; 
+}
+.group_head .info{
+  margin-left: 20rpx;
+  width: 100%;
+}
+.group_head .name{
+  font-weight: 600;
+}
+.group_head .level{
+  font-size: 24rpx;
+}
+
+.group_member{
+  padding: 20rpx 30rpx;
+}
+.group_member .title{
+  font-weight: 600;
+}
+.group_member .ul{
+  margin-top: 14rpx;
+}
+.group_member .ul .li .logo{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20rpx;
+}
+.group_member .ul .li .identity{
+  color: #000;
+  font-size: 22rpx;
+}

@@ -1,0 +1,152 @@
+/**app.wxss**/
+
+page {
+  position: relative;
+  height: 100vh;
+  width: 750rpx;
+  background-image: url('https://yig-game.oss-cn-hangzhou.aliyuncs.com/static/uploads/images/2020/03/10/15838109995e6709b7a7c2d.jpg');
+  background-size: cover;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+.flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex-reverse {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.flex-row {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+}
+
+.flex_wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex_end {
+  display: -webkit-flex;
+  display: flex;
+  align-items: flex-end;
+}
+
+.flex_vert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex_y {
+  display: flex;
+  align-items: center;
+}
+
+.flex_x {
+  display: flex;
+  justify-content: center;
+}
+
+.flex_sa {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-col {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}
+
+.flex-grow-0 {
+  min-width: 0;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.flex-grow-1 {
+  min-width: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+}
+
+/* 弹框 */
+
+.popup {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 99;
+}
+
+.popup .popup_bj {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: showbj 0.2s linear forwards;
+}
+
+.popup .popup_box {
+  position: fixed;
+  width: 100%;
+  min-height: 400rpx;
+  background-color: #fff;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  animation: showbox 0.4s linear forwards;
+}
+
+@keyframes showbj {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showbox {
+  0% {
+    bottom: -50%;
+  }
+
+  100% {
+    bottom: 0%;
+  }
+}
+
+/* 弹框 */

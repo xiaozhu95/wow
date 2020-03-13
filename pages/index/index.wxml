@@ -1,0 +1,6 @@
+<view class="main">
+  <view class="content">
+    <view class="creative" bindtap="skip" data-url="/pages/creative/creative">创建活动</view>
+    <view class="join" bindtap="skip" data-url="/pages/join-us/join">加入活动</view>
+  </view>
+</view>

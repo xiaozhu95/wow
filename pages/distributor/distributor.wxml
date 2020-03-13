@@ -1,0 +1,29 @@
+<view class='nav'>
+  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="content">
+  <view class="cash_content">
+    <view>现金统计</view>
+    <view class="cash_money">10000</view>
+    <view class="start" bindtap="skip" data-url="/pages/distributor-detail/distributor-detail">开始分配：50元</view>
+    <view class="cash_detail">
+      <view class="flex_sb" style="padding-bottom:20rpx;">
+        <view>预计分配</view>
+        <view>查看更多</view>
+      </view>
+      <view class="cash_list">
+      </view>
+    </view>
+  </view>
+  <view class="cash_content">
+    <view>现金统计</view>
+    <view class="cash_money">10000</view>
+    <view class="cash_detail">
+      <view class="flex-reverse" style="padding-bottom:20rpx;">
+        <view>查看更多</view>
+      </view>
+      <view class="cash_list">
+      </view>
+    </view>
+  </view>
+</view>

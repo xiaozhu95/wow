@@ -1,0 +1,17 @@
+<view class='main-wraper'>
+  <view class='nav'>
+    <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  </view>
+  <view class="content">
+    <view class="role_list">
+      <view class="role_item flex_y">
+        <view class="user_name"></view>
+        <view class="">
+          <view>布鲁托之手</view>
+          <view>【萨佛龙】部落</view>
+        </view>
+      </view>
+    </view>
+    <view class="creation" bindtap="skip" data-url="/pages/role-creation/role-creation">创建角色</view>
+  </view>
+</view>

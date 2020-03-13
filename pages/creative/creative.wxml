@@ -1,0 +1,265 @@
+<view class='main-wraper'>
+  <view class='nav'>
+    <navBar title='创建房间' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  </view>
+  <view class="main">
+    <view class="info">
+      <!-- 房间名称-->
+      <view class="list flex_y">
+        <view class="title">房间名称</view>
+        <input type="text" class="inputSty" placeholder="请输入房间名称" placeholder-style="color:#000"></input>
+      </view>
+      <!-- 服务器/阵营 -->
+      <view class="list flex_y">
+        <view class="title">服务器/阵营</view>
+        <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" class="picker">
+          <view>
+            <text wx-if="{{multiIndex[0]==-1}}">选择服务/阵营</text>
+            <text style="margin-right:20rpx;">{{multiArray[0][multiIndex[0]]}}</text>
+            <text style="margin-right:20rpx;" wx-if="{{multiIndex[0]!=-1}}">-</text>
+            <!-- <text style="margin-right:20rpx;" wx-if="{{}}">-</text> -->
+            <text>{{multiArray[1][multiIndex[1]]}}</text>
+          </view>
+        </picker>
+      </view>
+      <view class="list flex_y">
+        <view class="title">副本</view>
+        <picker bindchange="checkpointChange" value="{{checkpointIndex}}" range="{{checkpoint}}" class="picker">
+          <view>
+            <text wx-if="{{checkpointIndex[0]==-1}}">选择副本</text> {{checkpoint[checkpointIndex]}}
+          </view>
+        </picker>
+      </view>
+
+      <!-- YY房间号 -->
+      <view class="list flex_y">
+        <view class="title">YY房间号</view>
+        <input type="text" class="inputSty" placeholder="请输入YY房间号" placeholder-style="color:#000"></input>
+      </view>
+      <view class="list flex">
+        <view class="title flex-grow-0">补贴方式</view>
+        <view class="ul flex_wrap">
+          <view wx:for="{{subsidyList}}" wx:key="index" wx:if="{{item.selected}}" class="li lie">
+            <text>{{item.title}}</text>
+            <text>{{item.val=="fined"?"":item.val}}</text>
+            <text wx:if="{{item.val}}">{{subsidyWay==1?"元":subsidyWay==2?"%":""}}</text>
+          </view>
+
+          <view class="li" bindtap="addSubsidy">添加</view>
+        </view>
+
+        <view class="popup" wx:if="{{popupshow}}">
+          <view class="popup_bj" bindtap="close"></view>
+          <view class="popup_box">
+
+            <view class="close" bindtap="close">
+              <image src="../../images/close.png"></image>
+            </view>
+
+            <view class="subsidy_title flex_x">补贴</view>
+
+            <view class="subsidy_title flex_y">
+              选择补贴方式：
+              <view class="section">
+                <radio-group class="radio-group" bindchange="radioChange">
+                  <radio class="radio" wx:for="{{way}}" wx:key="name" value="{{item.type}}" checked="{{item.checked}}">
+                    <text>{{item.value}}</text>
+                  </radio>
+                </radio-group>
+              </view>
+            </view>
+
+            <view class="add_type flex_wrap">
+              <view wx:for="{{subsidyList}}" wx:key="index" class="sli {{item.selected?'selected':''}}" bindtap="selected_subsidy" data-index="{{index}}">{{item.title}}</view>
+            </view>
+
+            <view class="subsidy_ul">
+              <view wx:for="{{subsidyList}}" wx:key="index" wx:if="{{item.selected}}" class="subsidy_li flex_y">
+                <text class="tit">{{item.title}}</text>
+                <input type="number" class="inputSty" data-index="{{index}}" bindinput="setSubsidy" value="{{item.val}}"></input>
+                <text>{{subsidyWay==1?"元":subsidyWay==2?"%":""}}</text>
+              </view>
+            </view>
+
+            <button disabled="{{iSSubsidy.length==0}}" class="subsidy_btn" bindtap="determine_subsidy">确定补贴</button>
+
+          </view>
+        </view>
+      </view>
+      <!-- 分配条件 -->
+      <view class="list flex_y">
+        <view class="title">分配条件</view>
+        <view class="rule">
+          <view class="flex_y rule_li">
+            DPS 需高于第
+            <picker bindchange="outputChange" data-id="DPS" value="{{outputIndex}}" range="{{output}}">
+              <view class="numpicker">
+                {{output[DPSIndex]}}
+              </view>
+            </picker>名的
+            <input type="number" class="ruleInput"></input>%
+          </view>
+          <view class="flex_y rule_li">
+            HPS 需高于第
+            <picker bindchange="outputChange" data-id="HPS" value="{{outputIndex}}" range="{{output}}">
+              <view class="numpicker">
+                {{output[HPSIndex]}}
+              </view>
+            </picker>名的
+            <input type="number" class="ruleInput"></input>%
+          </view>
+        </view>
+      </view>
+      <!-- 地板 -->
+      <view class="list flex">
+        <view class="title">地板</view>
+        <view class="rule">
+          <radio-group class="radio-group" bindchange="floorChange">
+            <radio class="floorRadio" wx:for="{{floor}}" wx:key="name" value="{{item.type}}" checked="{{item.checked}}">
+              <text>{{item.value}}</text>
+            </radio>
+          </radio-group>
+          <checkbox-group bindchange="floorEquipcheckbox" wx:if="{{floorNum==2}}">
+            <label class="floorEquipcheckbox" wx:for="{{floorEquip}}" wx:key="name">
+              <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+            </label>
+          </checkbox-group>
+        </view>
+      </view>
+
+      <!-- 填写装备起拍价格 -->
+      <view class="list flex_vert">
+        <view class="equip_Start" bindtap="equip_boss_Start">填写装备起拍价格</view>
+        <view class="popup" wx:if="{{equip_popup}}">
+          <view class="popup_bj" bindtap="close"></view>
+          <view class="popup_box boss_box">
+
+            <view class="close" bindtap="close_boss_popup">
+              <image src="../../images/close.png"></image>
+            </view>
+
+
+            <view wx:if="{{!select_boss}}">
+              <view class="subsidy_title flex_x boss_title">选择boss</view>
+              <scroll-view scroll-y="{{true}}" class="scroll_h">
+                <view class="ul_box">
+                  <view wx:for="{{boss}}" wx:key="index" class="ul_li" bindtap="set_select_boss">
+                    <view class="boss_name">{{item.name}}</view>
+                    <view class="boss_english">{{item.yname}}</view>
+                  </view>
+                </view>
+              </scroll-view>
+            </view>
+
+
+            <view wx:if="{{select_boss}}">
+              <view class="subsidy_title flex_x boss_title">不洁者海根</view>
+              <view class="ul_box">
+                <view class="ul_li flex_sa">
+                  <view class="select_icon">
+                  </view>
+                  <view class="eqiop_icon">
+                    <view>图标</view>
+                  </view>
+                  <view class="eqiop_name">
+                    <view>名称</view>
+                  </view>
+                  <view class="l1_eqiop">
+                    <view>等级</view>
+                  </view>
+                  <view class="l1_eqiop">
+                    <view>类型</view>
+                  </view>
+                  <view class="eqiop_type">
+                    <view>币种</view>
+                  </view>
+                  <view class="set_up_input">
+                    <view>价格</view>
+                  </view>
+                </view>
+              </view>
+              <scroll-view scroll-y="{{true}}" class="scroll_h boss_equip_h">
+                <view class="ul_box">
+                  <view wx:for="{{boss_equip}}" wx:key="index" class="ul_li flex_sa flex_y boss_equip">
+                    <!-- <view class="boss_name">{{item.name}}</view>
+                    <view class="boss_english">{{item.yname}}</view> -->
+                    <view class="select_icon">
+                      <view class="icon_sty">
+                        <image src="../../images/hook.png"></image>
+                      </view>
+                    </view>
+                    <view class="eqiop_icon">
+                      <image src="../../images/icon.png"></image>
+                    </view>
+                    <view class="eqiop_name">
+                      <view>{{item.name}}</view>
+                      <view class="english_name">{{item.yname}}</view>
+                    </view>
+                    <view class="l1_eqiop">
+                      <view>{{item.grade}}</view>
+                    </view>
+                    <view class="l1_eqiop">
+                      <view>{{item.type}}</view>
+                    </view>
+                    <view class="eqiop_type">
+                      <image src="../../images/drop.png" class="drop"></image>
+                      <picker bindchange="auction_typeChange" value="{{auction_typeIndex}}" range="{{auction_type}}">
+                        <view class="auction_type_picker">
+                          {{auction_type[auction_typeIndex]}}
+                        </view>
+                      </picker>
+
+                    </view>
+                    <view class="set_up_input">
+                      <!-- <view>10</view> -->
+                      <input type="number" class="set_up"></input>
+                    </view>
+                  </view>
+                </view>
+              </scroll-view>
+
+
+              <view class="set_boss_equip">
+                <view class="set_equip_up flex_sa flex_y">
+                  <view class="set_hook">
+                    <view class="icon_sty">
+                      <image src="../../images/hook.png"></image>
+                    </view>
+                    <text>全选</text>
+                  </view>
+                  <view class="li_qu"></view>
+                  <view class="l1_eqiop eqiop_type">
+                    <image src="../../images/drop.png" class="drop"></image>
+                    <picker bindchange="auction_typeChange" value="{{auction_typeIndex}}" range="{{auction_type}}">
+                      <view class="auction_type_picker">
+                        {{auction_type[auction_typeIndex]}}
+                      </view>
+                    </picker>
+
+                  </view>
+                  <view class="l1_eqiop set_up_input">
+                    <!-- <view>10</view> -->
+                    <input type="number" class="set_up"></input>
+                  </view>
+                </view>
+                <view class="set_boss_equip_btn" bindtap="set_boss_equip_btn">
+                  确定
+                </view>
+              </view>
+            </view>
+
+
+
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 填写装备起拍价格 -->
+    <view class="list flex_vert">
+      <view class="confirm_Start" bindtap="confirm_Start">确认创建</view>
+    </view>
+  </view>
+
+</view>

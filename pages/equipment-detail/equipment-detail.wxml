@@ -1,0 +1,28 @@
+<view class='nav'>
+  <navBar title='装备详情' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="content">
+  <view class="auction">
+    <view class="auction_detail">
+      <view class="equipment flex_y">
+        <view class="eq_img"></view>
+        <view>暴风大剑</view>
+      </view>
+      <view class="eq_price">
+        <view>当前竞拍价格：800元</view>
+      </view>
+      <view class="eq_time">拍卖倒计时：2020年3月13日15:20:26</view>
+    </view>
+  </view>
+  <view class="auct_record">
+    <view class="record_list">
+      <view class="record_item flex">
+        <view class="user_img"></view>
+        <view>
+          <view class="time">2020-3-13 15:41:01</view>
+          <view></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,27 @@
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+
+.content {
+  padding: 0 20rpx;
+}
+
+.creation {
+  background: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 25rpx;
+  text-align: center;
+}
+
+.user_name {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  border: 1rpx solid red;
+}
+
+.role_list {
+  padding: 20rpx 0;
+}

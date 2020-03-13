@@ -1,0 +1,82 @@
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+
+.new_moreny {
+  text-align: center;
+}
+
+.hint {
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+.content {
+  padding: 0 20rpx;
+}
+
+.subsidy_list {
+  background: #fff;
+  padding: 0 20rpx;
+}
+
+.item:first-child {
+  border: 0;
+}
+
+.item {
+  padding: 20rpx 0;
+  border-top: 1rpx solid #a5a5a5;
+}
+
+.position {
+  width: 130rpx;
+}
+
+.punishment {
+  margin-top: 20rpx;
+  padding: 0 20rpx;
+  background: #fff;
+}
+
+.amend {
+  width: 300rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  margin: 50rpx auto 0 auto;
+  background: #fff;
+}
+
+/* 多选start */
+
+.popup_box {
+  padding: 0 10rpx 50rpx 10rpx;
+}
+
+.label-1 {
+  margin-top: 20rpx;
+  padding: 0 10rpx;
+  text-align: center;
+  width: 145rpx;
+}
+
+.label-1__icon {
+  width: 100rpx;
+  height: 100rpx;
+  border: 1rpx solid red;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.popup_content {
+  text-align: center;
+  padding: 50rpx 0 30rpx 0;
+}
+
+.btn_box {
+  padding: 0 10rpx;
+  color: red;
+}
+
+/* end */

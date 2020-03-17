@@ -128,6 +128,21 @@ page {
   border-top-right-radius: 10rpx;
   animation: showbox 0.4s linear forwards;
 }
+.popup_title{
+  padding: 30rpx;
+}
+.close {
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+}
+
+.close image {
+  width: 100%;
+  height: 100%;
+}
 
 @keyframes showbj {
   0% {

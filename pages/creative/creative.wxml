@@ -119,11 +119,75 @@
               <text>{{item.value}}</text>
             </radio>
           </radio-group>
-          <checkbox-group bindchange="floorEquipcheckbox" wx:if="{{floorNum==2}}">
-            <label class="floorEquipcheckbox" wx:for="{{floorEquip}}" wx:key="name">
-              <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
-            </label>
-          </checkbox-group>
+
+          <view class="popup" wx:if="{{floor_popup}}">
+            <view class="popup_bj" bindtap="close_floor_btn"></view>
+            <view class="popup_box">
+              <view class="close" bindtap="close_floor_btn">
+                <image src="../../images/close.png"></image>
+              </view>
+              <view class="flex_x popup_title">设置地板</view>
+              <view class="floor_box">
+                <view class="flex_y floor_li">
+                  <view>选择币种</view>
+                  <view>
+                    <radio-group class="radio-group" bindchange="radioChange">
+                      <radio class="radio" wx:for="{{floor_way}}" wx:key="name" value="{{item.type}}" checked="{{item.checked}}">
+                        <text>{{item.value}}</text>
+                      </radio>
+                    </radio-group>
+                  </view>
+                </view>
+                <view class="flex_y floor_li">
+                  <view>起拍价</view>
+                  <view>
+                    <input type="number" class="ruleInput floorEquipIpunt" placeholder="请输入地板起拍价" placeholder-style="color:#bcbcbc"></input>
+                  </view>
+                </view>
+                <view class="flex_y floor_li">
+                  <view>次加价</view>
+                  <view>
+                    <input type="number" class="ruleInput floorEquipIpunt" placeholder="每次加价" placeholder-style="color:#bcbcbc"></input>
+                  </view>
+                </view>
+                <view class="flex_y floor_li">
+                  <view>哪种装备</view>
+                  <view>
+                    <checkbox-group bindchange="floorEquipcheckbox">
+                      <label class="floorEquipcheckbox" wx:for="{{floorEquip}}" wx:key="name">
+                        <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+                      </label>
+                    </checkbox-group>
+                  </view>
+                </view>
+                <view class="flex_y floor_li">
+                  <view>拍卖时间</view>
+                  <view>
+                   <picker bindchange="floor_time_Change" data-id="wap" value="{{floor_time_wap_index}}" range="{{floor_time_wap}}">
+                      <view class="floor_time">
+                        {{floor_time_wap[floor_time_wap_index]}} 分钟
+                      </view>
+                    </picker>
+                  </view>
+                </view>
+                 <view class="flex_y floor_li">
+                  <view>支付时间</view>
+                  <view>
+                    <picker bindchange="floor_time_Change" data-id="pay" value="{{floor_time_pay_index}}" range="{{floor_time_pay}}">
+                      <view class="floor_time">
+                        {{floor_time_pay[floor_time_pay_index]}} 分钟
+                      </view>
+                    </picker>
+                  </view>
+                </view>
+                <view class="set_floor_btn" bindtap="set_floor_btn">
+                  确定
+                </view>
+              </view>
+
+            </view>
+
+          </view>
         </view>
       </view>
 
@@ -137,7 +201,6 @@
             <view class="close" bindtap="close_boss_popup">
               <image src="../../images/close.png"></image>
             </view>
-
 
             <view wx:if="{{!select_boss}}">
               <view class="subsidy_title flex_x boss_title">选择boss</view>

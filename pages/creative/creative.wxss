@@ -3,11 +3,14 @@
 }
 
 .main .info {
-  padding: 20rpx 40rpx;
+  margin: 20rpx 40rpx;
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
 }
 
 .main .info .list {
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
 }
 
 .main .info .list .title {
@@ -15,12 +18,11 @@
   width: 200rpx;
   text-align: right;
   padding-right: 20rpx;
-  color: #fff;
 }
 
 .main .info .list .inputSty {
   flex: 0.9;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #bcbcbc;
   color: #000;
   height: 46rpx;
 }
@@ -29,7 +31,7 @@
   flex: 0.9;
   height: 46rpx;
   line-height: 46rpx;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #bcbcbc;
 }
 
 .main .info .list .li {
@@ -109,18 +111,7 @@ radio .wx-radio-input {
   margin-right: 20rpx;
 }
 
-.close {
-  width: 30rpx;
-  height: 30rpx;
-  position: absolute;
-  top: 30rpx;
-  right: 30rpx;
-}
 
-.close image {
-  width: 100%;
-  height: 100%;
-}
 
 .rule .ruleInput {
   width: 50rpx;
@@ -152,7 +143,13 @@ radio .wx-radio-input {
 
 .floorEquipcheckbox {
   margin-left: 20rpx;
-  margin-top: 20rpx;
+}
+.floorEquipIpunt{
+ width: 100% !important;
+ font-size: 24rpx;
+ border: 1px solid #bbb;
+ margin-left: 40rpx !important;
+ height: 50rpx !important;
 }
 
 .floorEquipcheckbox .wx-checkbox-input {
@@ -312,4 +309,22 @@ radio .wx-radio-input {
 }
 .set_up_input{
   width: 140rpx;
+}
+
+.floor_box{
+  padding: 30rpx;
+}
+.floor_li{
+  margin-bottom: 30rpx;
+}
+.set_floor_btn{
+  width: 100%;
+  line-height: 80rpx;
+  text-align: center;
+  color: #ffd100;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 80rpx;
+}
+.floor_time{
+  margin-left: 30rpx;
 }

@@ -9,8 +9,8 @@ Page({
       ['部落', '联盟']
     ],
     checkpoint: ["玛瑟里顿的巢穴", "格鲁尔的巢穴", "毒蛇神殿", "风暴要塞", "海加尔山", "黑暗神庙"],
-    multiIndex: [-1,-1],
-    checkpointIndex:[-1],
+    multiIndex: [-1, -1],
+    checkpointIndex: [-1],
     popupshow: false,
     subsidyList: [{
         "selected": false,
@@ -55,6 +55,10 @@ Page({
       }
     ],
     output: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    floor_time_wap: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
+    floor_time_pay: ['5', '6', '7', '8', '9', '10'],
+    floor_time_wap_index: 5,
+    floor_time_pay_index: 0,
     DPSIndex: 0,
     HPSIndex: 0,
     floor: [{
@@ -84,9 +88,8 @@ Page({
     ],
     floorEquipNum: 1,
     equip_popup: false,
-    boss:[
-      {
-        "name":"不洁者海根",
+    boss: [{
+        "name": "不洁者海根",
         "yname": "Heigan the Unclean"
       },
       {
@@ -110,12 +113,11 @@ Page({
         "yname": "Grand Widow Faerlina"
       }
     ],
-    boss_equip: [
-      {
+    boss_equip: [{
         "name": "破冰头盔",
         "yname": "Icebane Helmet",
-        "grade":56,
-        "type":"板甲"
+        "grade": 56,
+        "type": "板甲"
       },
       {
         "name": "寒鳞罩帽",
@@ -184,43 +186,66 @@ Page({
         "type": "板甲"
       }
     ],
-    select_boss:false,
-    auction_type:["人民币","金币"],
-    auction_typeIndex:0
+    select_boss: false,
+    auction_type: ["人民币", "金币"],
+    auction_typeIndex: 0,
+    floor_popup: false,
+    floor_way: [{
+        type: 1,
+        value: '人民币',
+        checked: 'true'
+      },
+      {
+        type: 2,
+        value: '金币'
+      }
+    ],
   },
-  onLoad: function (options) {
-  
+  onLoad: function(options) {
+
   },
+
   //确定房间创建
-  confirm_Start(){
+  confirm_Start() {
     wx.redirectTo({
       url: '/pages/room-code/room-code'
     });
   },
 
-
-  //选择boss
-  set_select_boss(){
+  //设置地板
+  set_floor_btn() {
     this.setData({
-      select_boss:true
+      floor_popup: false
+    })
+  },
+  close_floor_btn() {
+    this.setData({
+      floor_popup: false,
+      floorNum:1
+    })
+  },
+  //选择boss
+  set_select_boss() {
+    this.setData({
+      select_boss: true
     })
   },
   //确定装备起拍价格
-  set_boss_equip_btn(){
+  set_boss_equip_btn() {
     this.setData({
       select_boss: false
     })
   },
   //选择boss装备起拍价
-  equip_boss_Start(){
+  equip_boss_Start() {
     this.setData({
       equip_popup: true
     })
   },
   //关闭boss装备起拍价
-  close_boss_popup(){
+  close_boss_popup() {
     this.setData({
-      equip_popup:false,
+      equip_popup: false,
       select_boss: false
     })
   },
@@ -316,10 +341,23 @@ Page({
     // console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
   },
   //副本的选择
-  checkpointChange(e){
+  checkpointChange(e) {
     this.setData({
       checkpointIndex: e.detail.value
     })
+  },
+  //设置地板时间
+  floor_time_Change(e) {
+    let id = e.currentTarget.dataset.id;
+    if (id == "wap") {
+      this.setData({
+        floor_time_wap_index: e.detail.value
+      })
+    } else {
+      this.setData({
+        floor_time_pay_index: e.detail.value
+      })
+    }
   },
   //选择虚高第几名
   outputChange(e) {
@@ -335,13 +373,18 @@ Page({
     }
   },
   //选择起拍类型
-  auction_typeChange(e){
+  auction_typeChange(e) {
     this.setData({
       auction_typeIndex: e.detail.value
     })
   },
   //选择地板
   floorChange(e) {
+    if (e.detail.value == 2) {
+      this.setData({
+        floor_popup: true
+      })
+    }
     this.setData({
       floorNum: e.detail.value
     })

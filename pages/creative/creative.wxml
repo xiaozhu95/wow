@@ -27,7 +27,7 @@
         <view class="title">YY房间号</view>
         <input type="text" class="inputSty" placeholder="请输入YY房间号" placeholder-style="color:#000" bindinput="set_yy"></input>
       </view>
-   
+
       <!-- 补贴方式 -->
       <view class="list flex">
         <view class="title flex-grow-0">补贴方式</view>
@@ -48,13 +48,26 @@
           </view>
         </view>
       </view>
-       <!-- 支出 -->
+      <!-- 支出 -->
       <view class="list flex_y">
         <view class="title">支出</view>
         <input type="text" class="inputSty" placeholder="请输入支出(固定金额)" placeholder-style="color:#000" bindinput="set_expenditure"></input>
       </view>
+      <view class="subsidies">
+        <view wx:for="{{subsidy_data}}" wx:key="index" class="sub_li flex_y">
+          <view class="sub_name">{{item.name}}</view>
+          <view class="sub_ul flex_wrap">
+            <view class="sub_input flex_y" wx:for="{{item.list}}" wx:key="index">
+              <text class="it_name">{{item.name}}</text>
+              <input type="number" class="subsidiesInput" bindinput="subsidiesInput" value="{{item.value}}" data-index="{{index}}"></input>
+              <text>{{subsidies_index==1&&allot_index==2?'元':subsidies_index==2&&allot_index==2?"币":"%"}}</text>
+            </view>
+          </view>
 
-      <view class="subsidies flex_wrap">
+        </view>
+      </view>
+
+      <!-- <view class="subsidies flex_wrap">
         <view wx:for="{{subsidyList}}" wx:key="index" class="subsidies_li flex_y">
           <view class="li">{{item.name}}</view>
           <view class="li flex_y">
@@ -62,8 +75,8 @@
             <text>{{allot_index==1?'%':'元'}}</text>
           </view>
         </view>
-      </view>
-      
+      </view> -->
+
       <!-- 分配条件 -->
       <view class="list flex_y">
         <view class="title">分配条件</view>
@@ -168,13 +181,19 @@
           </view>
         </view>
       </view>
+      <!-- YY房间号 -->
+      <view class="list flex_y">
+        <view class="title">团长备注</view>
+        <!-- <input type="text" class="inputSty" placeholder="备注" placeholder-style="color:#000" bindinput="set_yy"></input> -->
+        <textarea bindblur="bindTextAreaBlur" auto-height placeholder="备注" placeholder-style="color:#000" class="inputSty" />
+      </view>
 
       <!-- 填写装备起拍价格 -->
       <view class="list flex_vert">
         <view class="equip_Start" bindtap="equip_boss_Start">填写装备起拍价格</view>
 
         <van-popup show="{{equip_popup}}" position="bottom" custom-style="height: 1182rpx;">
-         <view class="popup_box boss_box">
+          <view class="popup_box boss_box">
 
             <view class="close" bindtap="close_boss_popup">
               <image src="../../images/close.png"></image>
@@ -194,6 +213,7 @@
 
             <view wx:if="{{select_boss}}">
               <view class="subsidy_title flex_x boss_title">{{boss_list[boss_index].name}}</view>
+
               <view class="ul_box">
                 <view class="ul_li flex_sa">
                   <view class="select_icon">
@@ -243,9 +263,9 @@
                     </view>
                     <view class="eqiop_type">
                       <image src="../../images/drop.png" class="drop"></image>
-                      <picker bindchange="auction_typeChange" value="{{auction_typeIndex}}" range="{{auction_type}}">
+                      <picker bindchange="auction_typeChange" data-index="{{index}}" value="{{item.currency_type}}" range="{{auction_type}}">
                         <view class="auction_type_picker">
-                          {{auction_type[auction_typeIndex]}}
+                          {{auction_type[item.currency_type]}}
                         </view>
                       </picker>
 
@@ -270,7 +290,7 @@
                   <view class="li_qu"></view>
                   <view class="l1_eqiop eqiop_type">
                     <image src="../../images/drop.png" class="drop"></image>
-                    <picker bindchange="auction_typeChange" value="{{auction_typeIndex}}" range="{{auction_type}}">
+                    <picker bindchange="auction_typeChange" data-index="-1" value="{{item.currency_type}}" range="{{auction_type}}">
                       <view class="auction_type_picker">
                         {{auction_type[auction_typeIndex]}}
                       </view>

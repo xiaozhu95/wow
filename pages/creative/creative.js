@@ -32,51 +32,81 @@ Page({
     ],
     allot_index: 2,
     popupshow: false,
-    subsidyList: [{
+    subsidy_data: [{
         "name": "指挥",
-        "value": ""
-      },{
-        "name": "MT",
-        "value": ""
-      },{
-        "name": "FT",
-        "value": ""
-      },{
-        "name": "DPS1st",
-        "value": ""
-      },{
-        "name": "DPS2st",
-        "value": ""
-      }, {
-        "name": "DPS3st",
-        "value": ""
-      }, {
-        "name": "HPS1st",
-        "value": ""
-      }, {
-        "name": "HPS2st",
-        "value": ""
-      }, {
-        "name": "HPS3st",
-        "value": ""
-      }
-    ],
-    subsidyWay: 1,
-    iSSubsidy: "",
-    way: [{
-        type: 1,
-        value: '人民币',
-        checked: 'true'
+        "list": [{
+          "name": "指挥",
+          "value": ""
+        }]
       },
       {
-        type: 2,
-        value: '百分比'
+        "name": "T",
+        "list": [{
+            "name": "MT",
+            "value": ""
+          }, {
+            "name": "FT",
+            "value": ""
+          }, {
+            "name": "火炕",
+            "value": ""
+          },
+          {
+            "name": "酱油",
+            "value": ""
+          }
+        ]
+      }, {
+        "name": "HPS",
+        "list": [{
+          "name": "1st",
+          "value": ""
+        }, {
+          "name": "2st",
+          "value": ""
+        }, {
+          "name": "3st",
+          "value": ""
+        }]
+      }, {
+        "name": "DPS",
+        "list": [{
+          "name": "1st",
+          "value": ""
+        }, {
+          "name": "2st",
+          "value": ""
+        }, {
+          "name": "3st",
+          "value": ""
+        }]
+      }, {
+        "name": "奶",
+        "list": [{
+          "name": "奶",
+          "value": ""
+        }]
+      }, {
+        "name": "其他",
+        "list": [{
+          "name": "驱散",
+          "value": ""
+        }, {
+          "name": "灭火",
+          "value": ""
+        }]
+      }, {
+        "name": "惩罚",
+        "list": [{
+          "name": "惩罚",
+          "value": ""
+        }]
       }
     ],
     output: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
     high_dps: {
-      key:1,
-      value:"0"
+      key: 1,
+      value: "0"
     },
     high_hps: {
       key: 1,
@@ -116,7 +146,7 @@ Page({
     boss_list: [],
     boss_index: "", //选择当前第几个boss
     select_boss: false,
-    check_all:false,  //全选
+    check_all: false, //全选
     auction_type: ["人民币", "金币"],
     auction_typeIndex: 0,
     floor_popup: false,
@@ -130,16 +160,16 @@ Page({
         value: '金币'
       }
     ],
-    floor_info: {           //起拍地板信息
-      currency_type: 1,   //币种，1-人民币，2-金币
-      price: "",           //价格
-      add_price: "",        //每次加价
-      purple: 2,           //紫 1-开启，2-不开启
-      blue: 2,              //蓝 1-开启，2-不开启
-      green: 2,             //绿 1-开启，2-不开启
-      end_time: "30",           //结束时间
-      pay_end_time: "5",        //支付时间
-    }, 
+    floor_info: { //起拍地板信息
+      currency_type: 1, //币种，1-人民币，2-金币
+      price: "", //价格
+      add_price: "", //每次加价
+      purple: 2, //紫 1-开启，2-不开启
+      blue: 2, //蓝 1-开启，2-不开启
+      green: 2, //绿 1-开启，2-不开启
+      end_time: "30", //结束时间
+      pay_end_time: "5", //支付时间
+    },
     user_info: "", //用户信息
     roomNumber: "", //房间号
     yy_room_number: "", //YY房间号
@@ -158,14 +188,14 @@ Page({
   confirm_Start() {
     let current_data = this.data;
 
-    let subsidy={
+    let subsidy = {
       currency_type: this.data.subsidies_index,
       status: this.data.allot_index,
       subsidy: this.data.subsidyList
     }
 
-    let createRoomStr={
-      room_num: current_data.roomNumber,  //房间号
+    let createRoomStr = {
+      room_num: current_data.roomNumber, //房间号
       service_id: 1, //服务器id
       service_name: "地域世界", //服务器名称
       camp_id: 1, //阵营id
@@ -181,13 +211,18 @@ Page({
       high_hps: current_data.high_hps, //HPS需高于第一名的百分比
       floor_status: current_data.floor_status, //是否开启底板，1-开启，2-不开启
       floor_info: current_data.floor_info, //底板信息 
-      user_info: current_data.user_info, //用户信息 
+      user_info: {
+        user_id: 2,
+        user_role_name: "魔兽",
+        role_id: 1,
+        avatar: "",
+      }, //用户信息 
     }
-  
+
 
     app.request({
       url: api.room.createRoom,
-      method:"POST",
+      method: "POST",
       data: createRoomStr,
       success: res => {
         console.log(res);
@@ -198,13 +233,13 @@ Page({
     // });
   },
   //设置yy 房间号
-  set_yy(e){
+  set_yy(e) {
     this.setData({
-      yy_room_number:e.detail.value
+      yy_room_number: e.detail.value
     })
   },
   //设置支出
-  set_expenditure(e){
+  set_expenditure(e) {
     this.setData({
       expenditure: e.detail.value
     })
@@ -224,7 +259,7 @@ Page({
     }
   },
   //设置补贴
-  subsidiesInput(e){
+  subsidiesInput(e) {
     let val = e.detail.value;
     let index = e.currentTarget.dataset.index;
     this.data.subsidyList[index].value = val
@@ -236,7 +271,7 @@ Page({
 
 
   //设置价格
-  set_price(e){
+  set_price(e) {
     let val = e.detail.value;
     let index = e.currentTarget.dataset.index;
     let b_list = this.data.boss_list;
@@ -247,22 +282,19 @@ Page({
     })
   },
   //全选设置价格
-  set_check_price(e){
+  set_check_price(e) {
     let val = e.detail.value;
     let b_list = this.data.boss_list;
     let b_index = this.data.boss_index;
-    b_list[b_index].equipment.forEach(e=>{
-      if (e.is_select){
+    b_list[b_index].equipment.forEach(e => {
+      if (e.is_select) {
         e.clap_price = val
       }
     })
     this.setData({
       boss_list: b_list
     })
-
   },
-
-
   //选择装备
   set_select_equip(e) {
     let index = e.currentTarget.dataset.index;
@@ -271,35 +303,50 @@ Page({
     let b_check = this.data.check_all;
     let is_check = false;
     let current_li = b_list[b_index].equipment[index];
-    if (index=="-1"){
-      if (b_check){
+    if (index == "-1") {
+      if (b_check) {
         is_check = false
-      }else{
+      } else {
         is_check = true
       }
-
-      b_list[b_index].equipment = b_list[b_index].equipment.map(e=>{
+      b_list[b_index].equipment = b_list[b_index].equipment.map(e => {
         e.is_select = is_check;
         return e
       })
 
-      console.log(b_list);
-
-    }else{
+    } else {
       if (current_li.is_select) {
         current_li.is_select = false
       } else {
         current_li.is_select = true
       }
     }
-
-    
     this.setData({
       boss_list: b_list,
       check_all: is_check
     })
+  },
+  //选择装备起拍类型
+  auction_typeChange(e) {
+    let index = e.currentTarget.dataset.index;
+    let val = e.detail.value;
+    let b_list = this.data.boss_list;
+    let b_index = this.data.boss_index;
 
-    // console.log(index);
+    if (index == "-1") {
+      b_list[b_index].equipment = b_list[b_index].equipment.map(e => {
+        if (e.is_select) {
+          e.currency_type = val;
+        }
+        return e
+      })
+    } else {
+      b_list[b_index].equipment[index].currency_type = val;
+    }
+    this.setData({
+      auction_typeIndex: val,
+      boss_list: b_list
+    })
   },
 
 
@@ -346,6 +393,13 @@ Page({
             transcript: str
           })
         } else {
+          res.forEach(e => {
+            e.equipment.forEach(ee => {
+              ee.currency_type = 0
+            })
+          })
+
+
           wx.setStorage({
             key: "transcript" + id,
             data: res
@@ -415,7 +469,7 @@ Page({
       select_boss: true
     })
   },
-  //确定装备起拍价格
+  //确定装备起拍价格和选择的币种
   set_boss_equip_btn() {
     wx.setStorage({
       key: "transcript" + this.data.transcriptText.id,
@@ -448,6 +502,8 @@ Page({
       equip_popup: true
     })
   },
+
+
   //关闭boss装备起拍价
   close_boss_popup() {
     this.setData({
@@ -496,7 +552,7 @@ Page({
     })
   },
   //虚高多少的百分比
-  outputInput(e){
+  outputInput(e) {
     let id = e.currentTarget.dataset.id;
     let DPS = this.data.high_dps;
     let HPS = this.data.high_hps;
@@ -509,14 +565,8 @@ Page({
       high_dps: DPS,
       high_hps: HPS,
     })
-    console.log(this.data.DPSIndex)
   },
-  //选择起拍类型
-  auction_typeChange(e) {
-    this.setData({
-      auction_typeIndex: e.detail.value
-    })
-  },
+
   //选择地板
   floorChange(e) {
     if (e.detail.value == 1) {
@@ -529,14 +579,14 @@ Page({
     })
   },
   //选择地板起拍币种
-  floor_way_Change: function (e) {
+  floor_way_Change: function(e) {
     // console.log('radio发生change事件，携带value值为：', e.detail.value);
     let val = e.detail.value;
     let floor_way = this.data.floor_way;
-    floor_way.forEach(s=>{
-      if (s.type == val){
+    floor_way.forEach(s => {
+      if (s.type == val) {
         s.checked = true
-      }else{
+      } else {
         s.checked = false
       }
     })
@@ -547,18 +597,17 @@ Page({
     })
   },
   //设置地板起拍价格/每次加价金额
-  floor_price(e){
+  floor_price(e) {
     let id = e.currentTarget.dataset.id;
     let val = e.detail.value;
-    if(id=="0"){
+    if (id == "0") {
       this.data.floor_info.price = val;
-    }else{
+    } else {
       this.data.floor_info.add_price = val;
     }
     this.setData({
       floor_info: this.data.floor_info
     })
-    console.log(this.data.floor_info);
   },
   //选择地板装备颜色
   floorEquipcheckbox(e) {
@@ -568,34 +617,32 @@ Page({
     floor_info.purple = 2;
     floor_info.blue = 2;
     floor_info.green = 2;
-    floorEquip = floorEquip.map(s=>{
+    floorEquip = floorEquip.map(s => {
       s.checked = false;
       return s;
     })
-    arr.forEach(s=>{
+    arr.forEach(s => {
       floorEquip = floorEquip.map(a => {
-        if(s==a.name){
+        if (s == a.name) {
           a.checked = true;
         }
         return a;
       })
 
-      if(s=="1"){
+      if (s == "1") {
         floor_info.purple = 1;
-      }else if(s=="2"){
+      } else if (s == "2") {
         floor_info.blue = 1
-      }else if(s=='3'){
+      } else if (s == '3') {
         floor_info.green = 1
       }
     })
 
-    console.log()
 
     this.setData({
       floor_info: floor_info,
       floorEquip: floorEquip
     })
-    console.log(floor_info)
   },
 
   //设置地板时间

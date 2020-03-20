@@ -19,10 +19,42 @@
       <view class="record_item flex">
         <view class="user_img"></view>
         <view>
-          <view class="time">2020-3-13 15:41:01</view>
-          <view></view>
+          <view class="time">陈龙树：2020-3-13 15:41:01</view>
+          <view class="bid">出价：￥128 </view>
+        </view>
+      </view>
+      <view class="record_item flex">
+        <view class="user_img"></view>
+        <view>
+          <view class="time">陈龙树：2020-3-16 13:50:49</view>
+          <view class="bid">出价：￥128 </view>
+        </view>
+      </view>
+      <view class="record_item flex">
+        <view class="user_img"></view>
+        <view>
+          <view class="time">陈龙树：2020-3-16 13:50:55</view>
+          <view class="bid">出价：￥128 </view>
+        </view>
+      </view>
+      <view class="record_item flex">
+        <view class="user_img"></view>
+        <view>
+          <view class="time">陈龙树：2020-3-16 13:50:55</view>
+          <view class="bid">出价：￥128 </view>
+        </view>
+      </view>
+      <view class="record_item flex">
+        <view class="user_img"></view>
+        <view>
+          <view class="time">陈龙树：2020-3-16 13:50:55</view>
+          <view class="bid">出价：￥128 </view>
         </view>
       </view>
     </view>
   </view>
+  <view class="join_auct">
+    <input placeholder="请输入竞拍金额"></input>
+  </view>
 </view>
+<view class="join_btn">参加竞拍</view>

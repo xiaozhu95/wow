@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='角色列表' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   </view>
   <view class="content">
     <view class="role_list">

@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/user/user",
+    "pages/user-info/user-info",
     "pages/creative/creative",
     "pages/join-us/join",
     "pages/room-code/room-code",
@@ -11,7 +12,12 @@
     "pages/equipment-detail/equipment-detail",
     "pages/role-creation/role-creation",
     "pages/distributor/distributor",
-    "pages/distributor-detail/distributor-detail"
+    "pages/distributor-detail/distributor-detail",
+    "pages/bill/bill",
+    "pages/account/account",
+    "pages/offered/offered",
+    "pages/feedback/feedback",
+    "pages/ios-pay/ios-pay"
   ],
   "tabBar": {
     "list": [
@@ -20,6 +26,12 @@
         "text": "活动",
         "iconPath": "images/group.png",
         "selectedIconPath": "images/group1.png"
+      },
+      {
+        "pagePath": "pages/bill/bill",
+        "text": "账单",
+        "iconPath": "images/bill.png",
+        "selectedIconPath": "images/bill1.png"
       },
       {
         "pagePath": "pages/user/user",
@@ -42,6 +54,11 @@
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "components/navBar/navBar",
+    "van-tabbar": "vant-weapp/tabbar/index",
+    "van-tabbar-item": "vant-weapp/tabbar-item/index",
+    "van-popup": "vant-weapp/popup/index",
+    "van-dialog": "vant-weapp/dialog/index",
+    "van-picker": "vant-weapp/picker/index"
   }
 }

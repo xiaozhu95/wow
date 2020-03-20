@@ -1,0 +1,67 @@
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+
+.main {
+  padding: 0 20rpx;
+}
+
+.header {
+  /* height: 300rpx; */
+  background: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 25rpx;
+}
+
+.score_title {
+  padding-top: 20rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.score_number {
+  font-size: 60rpx;
+  padding-top: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.recharge {
+  padding: 30rpx 0 20rpx 0;
+  font-size: 28rpx;
+  text-align: center;
+  font-weight: bold;
+}
+
+.rech_box {
+  padding: 0 20rpx;
+}
+
+.tab_bar {
+  /* position: fixed; */
+  top: 130rpx;
+  height: 100rpx;
+  width: 100%;
+  background: #fff;
+}
+
+.tab_title {
+  text-align: center;
+}
+
+.line-height {
+  height: 80rpx;
+  width: 1rpx;
+  background: #a5a5a5;
+}
+
+.list {
+  padding: 0 20rpx;
+  background: #fff;
+}
+
+.item {
+  height: 138rpx;
+  border-top: 1rpx solid #e7e7e7;
+}

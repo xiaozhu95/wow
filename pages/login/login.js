@@ -10,14 +10,15 @@ Page({
   },
   onLoad: function(e) {
     wx.hideShareMenu();
-    t.pageOnLoad(this);
-    this.agreement();
+    // t.pageOnLoad(this);
+    // this.agreement();
   },
   onReady: function() {
-    t.pageOnReady(this);
+    // t.pageOnReady(this);
   },
   onShow: function() {
-    t.pageOnShow(this);
+    console.log(e.passport.login, "13");
+    // t.pageOnShow(this);
   },
   onHide: function() {
     t.pageOnHide(this);
@@ -46,6 +47,7 @@ Page({
     })
   },
   getUserInfo: function(t) {
+    console.log(t.detail.rawData, "50");
     var that = this;
     "getUserInfo:ok" == t.detail.errMsg && (wx.showLoading({
       title: "正在登录",
@@ -59,17 +61,22 @@ Page({
           data: {
             code: n,
             user_info: t.detail.rawData,
-            encrypted_data: t.detail.encryptedData,
+            encryptedData: t.detail.encryptedData,
             iv: t.detail.iv,
             signature: t.detail.signature
           },
           success: function(e) {
-            if (0 == e.code) {
+            console.log(e, "69");
+            if (1 == e.status) {
               wx.setStorageSync("access_token", e.data.token);
+              wx.setStorageSync("user_info", e.data);
               wx.showToast({
                 title: "授权成功",
                 icon: "none"
               });
+              that.setData({
+                show_madel: true
+              })
               that.get_user();
 
             } else wx.showModal({
@@ -107,7 +114,6 @@ Page({
               access_token: a.data.access
             },
             success: function(n) {
-
               0 == n.code ? a.setData({
                 PhoneNumber: n.data.dataObj
               }) : wx.showToast({

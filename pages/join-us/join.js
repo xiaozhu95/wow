@@ -31,11 +31,15 @@ Page({
     });
   },
   inputPassword(e) {
+
+    wx.redirectTo({
+      url: '/pages/room-code/room-code'
+    })
     //键盘输入的密码 赋值给inputPassword
     if (this.data.inputPassword.length >= 6) {
-      wx.showToast({
-        title: '啊哈哈哈',
-      })
+
+    
+
     } else {
       this.data.inputPassword = this.data.inputPassword + e.currentTarget.dataset.key;
       console.log(this.data.inputPassword, "36");

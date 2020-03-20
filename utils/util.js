@@ -1,19 +1,15 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+function isIphoneX() {
+  let o = wx.getSystemInfoSync(), is;
+
+  if (o.model.indexOf('iPhone X') >= "0") {
+    is = true
+  } else {
+    is = false
+  }
+  return is;
+
 }
-
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
-
 module.exports = {
-  formatTime: formatTime
+  isIphoneX
 }

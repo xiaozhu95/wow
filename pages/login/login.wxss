@@ -5,6 +5,7 @@
 
 .login-btn {
   border: none;
+  width: 600rpx !important;
   height: 88rpx;
   line-height: 88rpx;
   background: #64b265;
@@ -13,6 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+ 
 }
 
 .login-btn::after {
@@ -92,6 +94,7 @@
 
 .getphone {
   border: none;
+  width: 68rpx !important;
   background: none;
   line-height: none;
   color: #04be01;
@@ -123,18 +126,22 @@ button::after {
   align-items: center;
   justify-content: center;
 }
+
 .van-checkbox__label {
   margin-left: 10rpx !important;
   color: #a5a5a5 !important;
   font-size: 28rpx;
 }
+
 .van-checkbox {
   align-items: center;
 }
+
 .legal_text {
   font-size: 28rpx;
   color: #ffc76e;
 }
+
 .legal_fill .title {
   font-size: 28rpx;
   color: #363636;
@@ -143,6 +150,7 @@ button::after {
   padding: 10rpx 0px;
   border-bottom: 1px solid #eee;
 }
+
 .article {
   padding: 20rpx;
   font-size: 28rpx;

@@ -11,12 +11,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    var log_state = wx.getStorageSync("access_token") == "" ? false : true
-    this.setData({
-      log_state: log_state
-    })
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -29,7 +24,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    var log_state = wx.getStorageSync("user_info") == "" ? false : true;
+    var a = {
+      user_info: log_state ? wx.getStorageSync("user_info") : '',
+      log_state: log_state
+    }
+    this.setData(a)
   },
   skip(e) {
     var url = e.currentTarget.dataset.url

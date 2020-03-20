@@ -1,0 +1,109 @@
+.lxy-nav-bar {
+  background-color: transparent !important;
+}
+
+.header {
+  padding: 0 20rpx;
+  border-radius: 20rpx;
+}
+
+.header_content {
+  background: #fff;
+  border-radius: 25rpx;
+}
+
+.header .title {
+  /* background: #fff; */
+  text-align: center;
+  padding: 30rpx 0;
+  font-weight: bold;
+}
+
+.input {
+  padding: 20rpx;
+}
+
+.input_content {
+  padding: 0 20rpx 20rpx 20rpx;
+  border-radius: 25rpx;
+  background: #fff;
+}
+
+.input .title {
+  text-align: left;
+  color: #363636;
+  font-weight: 600;
+  /* text-align: center; */
+  font-size: 30rpx;
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+  border-radius: 20rpx;
+}
+
+.input .textarea {
+  background-color: #f9f9f9;
+  border-radius: 20rpx;
+  width: 625rpx;
+  height: 300rpx;
+  padding: 20rpx;
+  border: 1px solid #e7e7e7;
+}
+
+.button {
+  padding: 20rpx;
+}
+
+.question_list {
+  padding: 20rpx;
+}
+
+.label-2 {
+  padding: 20rpx 0;
+  border-top: 1rpx solid #e7e7e7;
+}
+
+.group .wx-radio-input {
+  /* 自定义样式.... */
+  height: 40rpx;
+  width: 40rpx;
+  margin-top: -4rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+  background: transparent;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+
+radio .wx-radio-input.wx-radio-input-checked {
+  border: none;
+  background: #fff;
+}
+
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+  border-radius: 50%; /* 圆角 */
+  width: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 40rpx; /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 40rpx;
+  text-align: center;
+  font-size: 30rpx; /* 对勾大小 30rpx */
+  color: #fff; /* 对勾颜色 白色 */
+  background: #fb986e;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.is_btn {
+  padding: 0 20rpx;
+}
+
+.submit {
+  padding: 20rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 20rpx;
+  background: #fb986e;
+  margin-bottom: 20rpx;
+}

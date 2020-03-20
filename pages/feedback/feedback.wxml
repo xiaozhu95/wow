@@ -1,0 +1,34 @@
+<view class='nav'>
+  <navBar title='意见反馈' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="content">
+  <view class="header">
+    <view class="header_content">
+      <view class="title">请选择你的问题类型</view>
+      <view class="question_list">
+        <radio-group class="group" bindchange="radioChange">
+          <view class="label-2 flex_sb" wx:for="{{radioItems}}">
+            <view>{{item.name}}</view>
+            <radio id="{{item.name}}" value="{{item.name}}" checked="{{item.checked}}" color="#fff;"></radio>
+            <!-- <view class="label-2__icon">
+              <view class="label-2__icon-checked" style="opacity:{{item.checked ? 1: 0}}"></view>
+            </view> -->
+            <!-- <label class="label-2__text" for="{{item.name}}">
+              <text>{{item.name}}</text>
+            </label> -->
+          </view>
+        </radio-group>
+      </view>
+    </view>
+  </view>
+  <view class="input">
+    <view class="input_content">
+      <view class="title">建议 *</view>
+      <textarea placeholder="谢谢您的宝贵意见~" class="textarea" placeholder-style="color:#CDCDCD; font-size:28rpx;" value="{{textarea}}" bindinput="bindtextarea" cursor-spacing="0" />
+    </view>
+  </view>
+</view>
+
+<view class="is_btn">
+  <view class="submit">提交</view>
+</view>

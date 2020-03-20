@@ -5,7 +5,7 @@ module.exports = function(a) {
     wx.request({
       url: a.url,
       header: a.header || {
-        "content-type": "application/x-www-form-urlencoded"
+        'content-type': 'application/json'
       },
       data: a.data || {},
       method: a.method || "GET",

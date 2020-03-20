@@ -1,38 +1,45 @@
 <view class="main">
-  <view class="personal">
-    <view class="message">
-      <view class="user_img flex_sb flex_y">
-        <view class="flex_y" wx:if="{{log_state}}">
-          <view class="portrait"></view>
-          <view style="padding-left:10rpx;">
-            <view>嗄锕吉萨</view>
-            <view>游戏id：</view>
-          </view>
+  <view class="header">
+    <view class="user-info">
+      <view class="flex_y" wx:if="{{log_state}}">
+        <view class="flex_y" bindtap="skip" data-url="/pages/user-info/user-info">
+          <image class="portrait" src="{{user_info.avatar}}"></image>
+          <view>{{user_info.nickname}}</view>
         </view>
-        <view class="not_log" wx:else bindtap="skip" data-url="/pages/login/login">未登录</view>
-        <view>
-          <image class="r_icon" src="../../images/right.png"></image>
+        <view style="padding-left: 30rpx;">
+          <view>账户</view>
         </view>
       </view>
+      <view class="not_log" wx:else bindtap="skip" data-url="/pages/login/login">未登录</view>
+    </view>
+  </view>
+  <view class="personal">
+    <view class="message">
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/role/role">
         <view>我的角色</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y">
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/account/account">
+        <view>账户</view>
+        <view>
+          <image class="r_icon" src="../../images/right.png"></image>
+        </view>
+      </view>
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/offered/offered">
         <view>我参加过的团</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y">
-        <view>我赚的钱</view>
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/ios-pay/ios-pay">
+        <view>ios充值问题</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y">
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/feedback/feedback">
         <view>意见反馈</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>

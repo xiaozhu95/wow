@@ -5,10 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    top_bar_index:1,
+    top_bar_index: 1,
     group_info_popup: false,
     team_info_popup: false,
-    open_game:false,
+    open_game: false,
     equip_popup: false,
     boss: [{
       "name": "不洁者海根",
@@ -111,12 +111,12 @@ Page({
     select_boss: false,
     auction_type: ["人民币", "金币"],
     auction_typeIndex: 0,
-    add_equip_popup:false,
+    add_equip_popup: false,
     floor_time_wap: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
     floor_time_pay: ['5', '6', '7', '8', '9', '10'],
     floor_time_wap_index: 5,
     floor_time_pay_index: 0,
-    pat_popup:false
+    pat_popup: false
   },
 
   /**
@@ -126,12 +126,18 @@ Page({
 
   },
   //立即拍
-  pat_popup(){
-    
+  pat_popup() {
+
   },
-  close_pat_popup(){
+  skip(e) {
+    var url = e.currentTarget.dataset.url
+    wx.navigateTo({
+      url: url
+    })
+  },
+  close_pat_popup() {
     this.setData({
-      pat_popup:false
+      pat_popup: false
     })
   },
   set_pat_popup() {
@@ -141,13 +147,13 @@ Page({
   },
 
   //点击确定 设定时间
-  set_eqiop_btn(){
+  set_eqiop_btn() {
     this.setData({
       equip_popup: false,
       add_equip_popup: false
     })
   },
-  add_equip_btn(){
+  add_equip_btn() {
     this.setData({
       equip_popup: true,
     })
@@ -159,7 +165,7 @@ Page({
       select_boss: false
     })
   },
-  add_equip(){
+  add_equip() {
     this.setData({
       add_equip_popup: true
     })
@@ -176,7 +182,7 @@ Page({
       })
     }
   },
-  close_add_popup(){
+  close_add_popup() {
     this.setData({
       add_equip_popup: false
     })
@@ -189,12 +195,12 @@ Page({
   },
 
   //开始副本
-  open_game(){
+  open_game() {
     this.setData({
       open_game: true
     })
   },
-  sw_bar(e){
+  sw_bar(e) {
     // console.log(e); 
     let index = e.currentTarget.dataset.index;
     this.setData({
@@ -213,14 +219,14 @@ Page({
     })
   },
   //关闭和打开房间详情
-  group_popup(){
+  group_popup() {
     this.setData({
       group_info_popup: true
     })
   },
-  close_group_popup(){
+  close_group_popup() {
     this.setData({
-      group_info_popup:false
+      group_info_popup: false
     })
   },
   //返回首页
@@ -241,6 +247,12 @@ Page({
         });
       }
     });
+  },
+  //返回首页
+  handlerGohomeClick() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
   },
 
   /**

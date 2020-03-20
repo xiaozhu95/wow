@@ -1,0 +1,27 @@
+<view class='nav'>
+  <navBar title='账户' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="main">
+  <view class="header">
+    <view class="score_title">当前账户余额</view>
+    <view class="score_number">10</view>
+    <view class="recharge flex_vert">
+      <view class="rech_box" style="border-right: 1rpx solid #a5a5a5;">充值</view>
+      <view class="rech_box">提现</view>
+    </view>
+  </view>
+  <view class="tab_bar flex_y">
+    <view class="tab_title flex-grow-1">账户明细</view>
+    <!-- <view class="line-height"></view>
+    <view class="tab_title flex-grow-1">账户充值</view> -->
+  </view>
+  <view class="list">
+    <view class="item flex_sb flex_y">
+      <view>
+        <view>积分签到5个积分</view>
+        <view style="padding-top:10rpx;">2020-3-17 16:20:47</view>
+      </view>
+      <view>+5</view>
+    </view>
+  </view>
+</view>

@@ -37,13 +37,13 @@
 
 .auct_record {
   margin-top: 20rpx;
-  height: 300rpx;
+  /* height: 300rpx; */
   background: #fff;
   border: 1rpx solid red;
 }
 
 .record_item {
-  padding: 0 20rpx;
+  padding: 10rpx 20rpx;
 }
 
 .user_img {
@@ -52,4 +52,29 @@
   margin-right: 10rpx;
   border-radius: 50%;
   border: 1rpx solid red;
+}
+
+.bid {
+  padding: 10rpx 50rpx;
+  border: 1rpx solid red;
+  border-radius: 0 25rpx 25rpx 25rpx;
+}
+
+.join_auct {
+  margin-top: 50rpx;
+  background: #fff;
+  padding: 20rpx;
+  text-align: center;
+  border-radius: 25rpx;
+}
+
+.join_btn {
+  position: fixed;
+  bottom: 0;
+  height: 100rpx;
+  width: 100%;
+  line-height: 100rpx;
+  text-align: center;
+  background: #fff;
+  border-top: 1rpx solid #a5a5a5;
 }

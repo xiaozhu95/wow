@@ -41,7 +41,7 @@ Page({
         delta: delta
       });
     } else {
-      wx.navigateTo({
+      wx.switchTab({
         url: '/pages/index/index'
       });
     }

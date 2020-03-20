@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='输入房间号' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   </view>
 </view>
 <view>
@@ -27,7 +27,7 @@
           <view data-key="9" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>9</view>
           <view data-key="X" class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='clear'>退格</view>
           <view data-key="0" hover-class='active' hover-stay-time='100' bindtap='inputPassword'>0</view>
-          <view data-key="." class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='inputPassword'>确定</view>
+          <view  class='ctr-btn-item' hover-class='active' hover-stay-time='100' bindtap='inputPassword'>确定</view>
         </view>
       </view>
     </view>

@@ -27,6 +27,7 @@
 .look_icon {
   width: 40rpx;
   height: 40rpx;
+  margin: 0px auto;
 }
 
 .look .text {
@@ -108,8 +109,8 @@
   width: 100%;
   height: 100%;
 }
-.auction_wraper{
-  padding-bottom: 80rpx;
+.auction_wraper {
+  padding-bottom: 100rpx;
 }
 .auction_ul {
   margin: 10rpx 20rpx;
@@ -136,7 +137,7 @@
   height: 70rpx;
   margin: 10rpx 20rpx;
 }
-.top_bar_li{
+.top_bar_li {
   flex: 1;
 }
 .bar_item {
@@ -150,99 +151,97 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: #f7b10a;
 }
-.equip_ul{
-  max-height:800rpx; 
+.equip_ul {
+  max-height: 800rpx;
 }
-.equip_li image{
+.equip_li image {
   width: 100%;
   height: 100%;
 }
-.equip_li{
+.equip_li {
   margin: 10rpx 20rpx;
   padding: 10rpx;
   background-color: #fff;
 }
-.equip_li .icon{
+.equip_li .icon {
   width: 100rpx;
 }
-.equip_li .cover{
+.equip_li .cover {
   width: 80rpx;
   height: 80rpx;
-  border-radius:50%;
-  overflow: hidden; 
+  border-radius: 50%;
+  overflow: hidden;
 }
-.equip_li .info{
+.equip_li .info {
   width: 500rpx;
   padding-left: 20rpx;
 }
-.equip_li .fun{
+.equip_li .fun {
   width: 150rpx;
 }
-.equip_li .current_price{
+.equip_li .current_price {
   font-size: 24rpx;
   margin-top: 10rpx;
 }
-.equip_li .level{
-  font-size: 22rpx; 
+.equip_li .level {
+  font-size: 22rpx;
   margin-left: 10rpx;
 }
 
-.fun_btn{
+.fun_btn {
   position: fixed;
-  height: 80rpx;
   width: 100%;
   left: 0px;
   bottom: 0px;
 }
-.fun_btn .bnt1{
-   flex: 1;
-  height: 80rpx;
-  line-height: 80rpx;
+.fun_btn .bnt1 {
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
   background-color: rgba(0, 0, 0, 0.9);
   color: #f7b10a;
   text-align: center;
 }
-.right_border{
+.right_border {
   border-right: 1px solid rgba(247, 176, 10, 0.3);
 }
 
-
 /* 房间详细信息 */
-.group_box{
+.group_box {
   padding: 30rpx;
   max-height: 1082rpx;
 }
-.group_box .li{
+.group_box .li {
   font-size: 24rpx;
   margin-bottom: 10rpx;
   color: rgba(0, 0, 0, 0.8);
 }
-.group_box .title{
+.group_box .title {
   width: 200rpx;
   text-align: right;
   padding-right: 20rpx;
-   font-size: 26rpx;
-   color: #000;
+  font-size: 26rpx;
+  color: #000;
 }
 /* 成员信息 */
-.team_ul{
+.team_ul {
   height: 1082rpx;
 }
-.team_li{
+.team_li {
   margin: 0rpx;
 }
-.team_li .info{
+.team_li .info {
   width: 390rpx !important;
   padding-left: 20rpx;
 }
-.team_li .info text{
+.team_li .info text {
   margin-right: 10rpx;
 }
-.team_li .fun{
+.team_li .fun {
   width: 120rpx !important;
-  text-align: center; 
+  text-align: center;
 }
-.team_li .btn_sty{
+.team_li .btn_sty {
   padding: 4rpx 20rpx;
   display: inline;
   background-color: #eee;
@@ -250,7 +249,7 @@
   border-radius: 30rpx;
 }
 
-.group_flex{
+.group_flex {
   flex: 1;
 }
 
@@ -288,17 +287,17 @@
 .eqiop_name .english_name {
   font-size: 22rpx;
 }
-.eqiop_icon{
+.eqiop_icon {
   width: 80rpx;
   text-align: center;
 }
-.eqiop_icon image{
+.eqiop_icon image {
   width: 50rpx;
   height: 50rpx;
 }
 .l1_eqiop {
   width: 80rpx;
-  position: relative
+  position: relative;
 }
 
 .select_icon {
@@ -322,7 +321,7 @@
   height: 37rpx;
 }
 
-.set_up{
+.set_up {
   width: 90rpx;
   height: 34rpx;
   background-color: #fff;
@@ -331,60 +330,60 @@
   text-align: center;
   font-size: 24rpx;
 }
-.set_boss_equip{
+.set_boss_equip {
   width: 100%;
   height: 160rpx;
 }
-.set_boss_equip .set_hook{
+.set_boss_equip .set_hook {
   height: 80rpx;
   color: #fff;
   width: 70rpx;
   padding-top: 8rpx;
   box-sizing: border-box;
 }
-.set_hook text{
+.set_hook text {
   font-size: 22rpx;
   text-align: center;
   padding-top: 8rpx;
   padding-left: 10rpx;
 }
-.li_qu{
+.li_qu {
   width: 440rpx;
 }
-.set_boss_equip .set_boss_equip_btn{
+.set_boss_equip .set_boss_equip_btn {
   text-align: center;
   line-height: 80rpx;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
 }
-.auction_type_picker{
+.auction_type_picker {
   color: #ffd100;
   font-size: 24rpx;
   text-align: left;
 }
-.drop{
+.drop {
   width: 16rpx;
   height: 16rpx;
   position: absolute;
   top: 0rpx;
   right: 0rpx;
 }
-.eqiop_type{
+.eqiop_type {
   width: 100rpx;
   position: relative;
 }
-.set_up_input{
+.set_up_input {
   width: 140rpx;
 }
-.equip_popup_title{
+.equip_popup_title {
   color: #fff;
 }
 
 /* 设置时间 */
-.floor_li{
+.floor_li {
   margin-bottom: 30rpx;
 }
-.set_floor_btn{
+.set_floor_btn {
   width: 100%;
   line-height: 80rpx;
   text-align: center;
@@ -392,10 +391,10 @@
   background-color: rgba(0, 0, 0, 0.6);
   margin-top: 80rpx;
 }
-.floor_time{
+.floor_time {
   margin-left: 30rpx;
 }
-.floorEquipIpunt{
+.floorEquipIpunt {
   border: 1px solid #190f00;
   width: 200rpx;
   font-size: 24rpx;
@@ -404,85 +403,83 @@
 }
 /* 添加装备 */
 
-
-
 /* 立即拍 */
-.pat_title{
+.pat_title {
   background-color: #2d2d2d;
   color: #fff;
 }
-.pat_box{
+.pat_box {
   height: 1082rpx;
   background-color: #2d2d2d;
 }
-.pat_box image{
+.pat_box image {
   width: 100%;
   height: 100%;
 }
-.pat_box{
+.pat_box {
   padding: 30rpx;
 }
-.pat_box .cover{
+.pat_box .cover {
   margin: 0rpx;
 }
-.pat_box .info{
+.pat_box .info {
   flex: 1;
   padding-left: 20rpx;
   color: #ffd100;
 }
-.record_box{
+.record_box {
   margin-top: 30rpx;
 }
-.record_box .title{
+.record_box .title {
   color: #fff;
 }
-.scroll_record{
+.scroll_record {
   height: 400rpx;
   margin-top: 20rpx;
   border: 1px solid rgba(0, 0, 0, 0.582);
   padding: 20rpx;
 }
-.record_li{
+.record_li {
   margin-bottom: 10rpx;
   color: #b4b4b4;
 }
-.record_li .cover_box{
+.record_li .cover_box {
   width: 80rpx;
 }
-.record_li .cover_box .cover{
+.record_li .cover_box .cover {
   width: 60rpx;
   height: 60rpx;
 }
-.record_box .name{
+.record_box .name {
   width: 270rpx;
 }
-.record_box .timer{
+.record_box .timer {
   font-size: 24rpx;
   width: 150rpx;
 }
-.record_box .price{
+.record_box .price {
   width: 150rpx;
   font-size: 24rpx;
   text-align: center;
   color: #ffd100;
 }
-.pat_price_box{
+.pat_price_box {
   margin-top: 60rpx;
 }
-.pat_price{
+.pat_price {
   width: 100%;
   height: 80rpx;
   background: #b4b4b4;
   border-radius: 40rpx;
   text-align: center;
 }
-.note{
+.note {
   color: #f7b10a;
   font-size: 24rpx;
   text-align: center;
   margin-top: 10rpx;
 }
-.set_pat{
+.set_pat {
   width: 100%;
   height: 80rpx;
   line-height: 80rpx;
@@ -491,6 +488,5 @@
   color: #f7b10a;
   border-radius: 10rpx;
   margin-top: 80rpx;
-
 }
 /* 立即拍 */

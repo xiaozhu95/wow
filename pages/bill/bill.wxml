@@ -1,0 +1,31 @@
+<view class='main-wraper'>
+  <view class='nav'>
+    <navBar title='房间' background='rgba(0, 0, 0, 0)' color='#fff' home="{{true}}" iconTheme='white' bindhome="handlerGohomeClick"></navBar>
+  </view>
+
+  <view class="bill-wraper">
+    <view class="bill_list" wx:for="{{10}}" wx:key="index">
+      <view class="flex_y">
+        <view class="icon flex-grow-0">
+          <image src="../../images/icon.png"></image>
+        </view>
+        <view class="info">
+          <view class="name">玛拉达斯，黑龙军团的符文之剑</view>
+          <view class="configuration">
+            <text>单手剑</text>
+            <text>lv75</text>
+          </view>
+        </view>
+      </view>
+      <view class="pay">
+        共1件装备 应付金额：
+        <text>27.90元</text>
+      </view>
+      <view class="pay_for flex_y flex_end">
+        <view class="pay_time flex_y">
+          <image src="../../images/timer.png"></image> 支付剩余 9分50 </view>
+        <view class="btn">去支付</view>
+      </view>
+    </view>
+  </view>
+</view>

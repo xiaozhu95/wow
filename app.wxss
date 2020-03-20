@@ -4,10 +4,16 @@ page {
   position: relative;
   height: 100vh;
   width: 750rpx;
-  background-image: url('https://yig-game.oss-cn-hangzhou.aliyuncs.com/static/uploads/images/2020/03/10/15838109995e6709b7a7c2d.jpg');
+  background-image: url("https://yig-game.oss-cn-hangzhou.aliyuncs.com/static/uploads/images/2020/03/10/15838109995e6709b7a7c2d.jpg");
   background-size: cover;
   box-sizing: border-box;
   font-size: 28rpx;
+}
+
+button {
+  font-size: 11pt;
+  font-family: inherit;
+  box-sizing: border-box;
 }
 
 .container {
@@ -29,6 +35,11 @@ page {
   display: -webkit-flex;
   display: flex;
   flex-direction: row-reverse;
+}
+.flex-column {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .flex-row {
@@ -100,6 +111,10 @@ page {
   flex-shrink: 1;
 }
 
+.setIphoneX {
+  padding-bottom: 20rpx;
+}
+
 /* 弹框 */
 
 .popup {
@@ -128,20 +143,23 @@ page {
   border-top-right-radius: 10rpx;
   animation: showbox 0.4s linear forwards;
 }
-.popup_title{
+
+.popup_title {
   padding: 30rpx;
 }
+
 .close {
-  width: 30rpx;
-  height: 30rpx;
+  width: 50rpx;
+  height: 50rpx;
   position: absolute;
-  top: 30rpx;
-  right: 30rpx;
+  top: 25rpx;
+  right: 10rpx;
 }
 
 .close image {
-  width: 100%;
-  height: 100%;
+  width: 30rpx;
+  height: 30rpx;
+  margin:10rpx;
 }
 
 @keyframes showbj {
@@ -165,3 +183,55 @@ page {
 }
 
 /* 弹框 */
+
+/* 职业颜色 */
+
+/* 战士 */
+
+.warrior_color {
+  color: #964b00;
+}
+
+/* 牧师 */
+
+.priest_color {
+  color: #fff;
+}
+
+/* 法师 */
+
+.mage_color {
+  color: #0080ff;
+}
+
+/* 盗贼 */
+
+.thieves_color {
+  color: #ff0;
+}
+
+/* 猎人 */
+
+.hunter_color {
+  color: #0f0;
+}
+
+/* 术士 */
+
+.warlock_color {
+  color: #800080;
+}
+
+/* 德鲁伊 */
+
+.druids_color {
+  color: #fa8072;
+}
+
+/* 圣骑士、萨满祭司 */
+
+.knight_color {
+  color: #ffc0cb;
+}
+
+/* 职业颜色 */

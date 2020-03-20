@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -25,7 +25,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.10.3",
 	"appid": "wxa07d866227c5c901",
-	"projectname": "%E9%AD%94%E5%85%BD%E5%86%9B%E5%9B%A2%E5%8A%A9%E6%89%8B",
+	"projectname": "%E5%8A%A9%E6%89%8B%E5%B0%8F%E7%A8%8B%E5%BA%8F",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -89,6 +89,19 @@
 					"name": "房间页面",
 					"pathName": "pages/room-code/room-code",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "ios 支付",
+					"pathName": "pages/ios-pay/ios-pay",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "账单",
+					"pathName": "pages/bill/bill",
 					"scene": null
 				}
 			]

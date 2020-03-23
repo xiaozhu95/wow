@@ -326,7 +326,7 @@ radio .wx-radio-input {
   text-align: center;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
-  margin-top: 80rpx;
+  margin: 80rpx 0;
 }
 .floor_time {
   margin-left: 30rpx;

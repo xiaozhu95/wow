@@ -18,6 +18,18 @@ Page({
       log_state: log_state
     })
   },
+  create(){
+    if (this.data.log_state) {
+      wx.navigateTo({
+        url: '/pages/role/role'
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    }
+  },
+
   skip(e) {
     var url = e.currentTarget.dataset.url;
     wx.navigateTo({

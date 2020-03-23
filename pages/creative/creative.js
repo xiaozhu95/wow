@@ -170,12 +170,27 @@ Page({
       end_time: "30", //结束时间
       pay_end_time: "5", //支付时间
     },
-    user_info: "", //用户信息
+    user_info: "", //用户信息,
+    role_info:"",  //角色信息
     roomNumber: "", //房间号
     yy_room_number: "", //YY房间号
-    expenditure: "", //支出
+    expenditure: "",  //支出
+    note:"", //团长备注
+    floor_status:1,
   },
   onLoad: function(options) {
+    var role_info = wx.getStorageSync("role-info");
+    if (role_info){
+      this.setData({
+        role_info: role_info
+      })
+    }else{
+      wx.redirectTo({
+        url: '/pages/role/role'
+      })
+    }
+
+
     var user_info = wx.getStorageSync("user_info");
     this.setData({
       user_info: user_info
@@ -191,7 +206,16 @@ Page({
     let subsidy = {
       currency_type: this.data.subsidies_index,
       status: this.data.allot_index,
-      subsidy: this.data.subsidyList
+      subsidy: this.data.subsidy_data
+    }
+
+    let id = this.data.transcriptText.id;
+    if (id == -1) {
+      wx.showToast({
+        title: '请选择副本',
+        icon: 'none',
+      })
+      return;
     }
 
     let createRoomStr = {
@@ -211,11 +235,12 @@ Page({
       high_hps: current_data.high_hps, //HPS需高于第一名的百分比
       floor_status: current_data.floor_status, //是否开启底板，1-开启，2-不开启
       floor_info: current_data.floor_info, //底板信息 
+      note: current_data.note, //底板信息 
       user_info: {
-        user_id: 2,
-        user_role_name: "魔兽",
-        role_id: 1,
-        avatar: "",
+        user_id: this.data.user_info.id,
+        user_role_name: this.data.role_info.role_name,
+        role_id: this.data.role_info.id,
+        avatar: this.data.user_info.avatar,
       }, //用户信息 
     }
 
@@ -226,11 +251,26 @@ Page({
       data: createRoomStr,
       success: res => {
         console.log(res);
+        if(res.code==0){
+          wx.redirectTo({
+            url: '/pages/room-code/room-code?team_id=' + res.data.team_id
+          })
+        }else{
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+          })
+        }
       }
     })
     // wx.redirectTo({
     //   url: '/pages/room-code/room-code'
     // });
+  },
+  setNote(e){
+    this.setData({
+      note: e.detail.value
+    })
   },
   //设置yy 房间号
   set_yy(e) {
@@ -262,12 +302,12 @@ Page({
   subsidiesInput(e) {
     let val = e.detail.value;
     let index = e.currentTarget.dataset.index;
-    this.data.subsidyList[index].value = val
+    let idx = e.currentTarget.dataset.idx;
+    this.data.subsidy_data[index].list[idx].value = val
     this.setData({
-      subsidyList: this.data.subsidyList
+      subsidy_data: this.data.subsidy_data
     })
   },
-
 
 
   //设置价格
@@ -512,23 +552,6 @@ Page({
     })
   },
 
-
-
-
-  close() {
-    let item = this.data.subsidyList;
-    let arr = item.map(str => {
-      if (str.selected == true) {
-        str.selected = false;
-        str.val = "";
-      }
-      return str;
-    })
-    this.setData({
-      subsidyList: arr,
-      popupshow: false
-    })
-  },
   //副本的选择
   checkpointChange(e) {
     this.setData({
@@ -571,11 +594,12 @@ Page({
   floorChange(e) {
     if (e.detail.value == 1) {
       this.setData({
-        floor_popup: true
+        floor_popup: true,
       })
     }
     this.setData({
-      floorNum: e.detail.value
+      floorNum: e.detail.value,
+      note: e.detail.value
     })
   },
   //选择地板起拍币种

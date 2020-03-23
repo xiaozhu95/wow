@@ -4,11 +4,17 @@
   </view>
   <view class="content">
     <view class="role_list">
-      <view class="role_item flex_y">
-        <view class="user_name"></view>
+      <view class="role_item flex_y" wx:for="{{role_lsit}}" wx:key="index" bindtap="go_back" data-index="{{index}}">
+        <!-- <view class="user_name"></view> -->
         <view class="">
-          <view>布鲁托之手</view>
-          <view>【萨佛龙】部落</view>
+          <view>
+            <text style="color:#FB986E;">{{item.role_name}}</text>
+            <text style="padding-left:20rpx;">{{item.race_name}} {{item.occupation_name}}</text>
+          </view>
+          <view>
+            <text>【{{item.service_name}}】</text>
+            <text style="color:{{item.camp_id == 1 ? 'red' : 'blue'}};">{{item.camp_name}}</text>
+          </view>
         </view>
       </view>
     </view>

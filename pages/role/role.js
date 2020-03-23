@@ -1,4 +1,5 @@
-// pages/role/role.js
+var api = require("../../api.js");
+const http = getApp();
 Page({
 
   /**
@@ -26,12 +27,35 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.gain_role();
+  },
+  gain_role() {
+    http.request({
+      url: api.role.role_lsit,
+      data: {
+        user_id: wx.getStorageSync("user_info").id,
+      },
+      success: res => {
+        console.log(res, "37");
+        this.setData({
+          role_lsit: res.data.data
+        })
+      }
+    })
   },
   skip(e) {
     var url = e.currentTarget.dataset.url
     wx.navigateTo({
       url: url
+    })
+  },
+  go_back(e) {
+    var index = e.currentTarget.dataset.index;
+    var role_message = this.data.role_lsit[index];
+    console.log(role_message, "55");
+    wx.setStorageSync("role-info", role_message)
+    wx.navigateBack({
+      delta: 1,
     })
   },
   handlerGobackClick(delta) {

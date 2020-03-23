@@ -5,7 +5,7 @@
       <view style="padding:60rpx 0 48rpx;text-align: center">
         <image src="/images/lo.png" style="width: 200rpx;height: 200rpx;  border-radius:50%;" />
       </view>
-      <button bindgetuserinfo="getUserInfo" class="login-btn" openType="getUserInfo" disabled="{{!legalchecked}}" style="background:{{legalchecked?'#64b265':'#AAAAAA'}};color:#fff">
+      <button bindgetuserinfo="getUserInfo" class="login-btn" openType="getUserInfo" disabled="{{false}}" style="background:{{legalchecked?'#64b265':'#AAAAAA'}};color:#fff">
         <van-icon name="/images/icon_vx@3x.png" size="45rpx" color="#fff" /> 微信用户一键登录
       </button>
     </view>

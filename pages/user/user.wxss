@@ -46,6 +46,10 @@
   border-radius: 50%;
 }
 
+.message-item:first-child {
+  border: none;
+}
+
 .message-item {
   padding: 20rpx 20rpx;
   border-top: 1rpx solid #a5a5a5;

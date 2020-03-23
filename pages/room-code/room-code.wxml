@@ -6,16 +6,16 @@
   <view class="group_wraper">
     <view class="group_head flex_end">
       <view class="logo">
-        <image src="../../images/logo.png"></image>
+        <image src="{{team_list[0].avatar}}"></image>
       </view>
-      <view class="info flex_sb">
+      <view class="info flex_y flex_sb">
         <view>
           <view class="name">
-            时光撕裂者
+            {{team_list[0].user_role_name}}
           </view>
-          <view class="level">
+          <!-- <view class="level">
             <text>等级：60</text>
-          </view>
+          </view> -->
         </view>
         <view class="look" bindtap="group_popup">
           <view class="look_icon">
@@ -27,17 +27,17 @@
     </view>
     <view class="group_member">
       <view class="title flex_sb">
-        <text>成员信息(9)</text>
+        <text>成员信息({{team_list.length}})</text>
         <text bindtap="team_popup">管理</text>
       </view>
       <view class="ul flex-row ">
-        <view class="li" wx:for="{{8}}" wx:key="index">
+        <view class="li" wx:for="{{team_list}}" wx:key="index" wx:if="{{index<7}}">
           <view class="logo">
-            <image src="../../images/logo.png"></image>
+            <image src="{{item.avatar}}"></image>
           </view>
-          <view class="identity">待加入</view>
+          <view class="identity">{{item.identityName}}</view>
         </view>
-        <view class="li" bindtap="team_popup">
+        <view class="li" bindtap="team_popup" wx:if="{{team_list.length>7}}">
           ......
         </view>
       </view>
@@ -55,7 +55,7 @@
     </view>
   </view>
 
-  <view class="price_wraper flex_sa">
+  <!-- <view class="price_wraper flex_sa">
     <view class="price_li buy_record">
       <view class="cover">
         <image src="../../images/logo.png"></image>
@@ -68,7 +68,7 @@
       </view>
       <view class="text">最高消费</view>
     </view>
-  </view>
+  </view> -->
 
 
   <view class="auction_wraper">
@@ -209,52 +209,35 @@
 
       <view class="team_box">
         <scroll-view class="team_ul" scroll-y="{{true}}">
-          <view class="equip_li flex_y team_li" wx:for="{{3}}" wx:key="index">
+          <view class="equip_li flex_y team_li" wx:for="{{team_list}}" wx:key="index">
             <view class="icon">
               <view class="cover">
-                <image src="../../images/icon.png"></image>
+                <image src="{{item.avatar}}"></image>
               </view>
             </view>
             <view class="info">
               <view>
-                <text>满世界跑</text>
-                <text class="level">lv60</text>
+                <text>{{item.user_role_name}}</text>
+                <text class="level">lv{{item.grade}}</text>
               </view>
-              <view class="current_price ">
-                <text>人族</text>
-                <text>装等：130</text>
+              <view class="current_price">
+                <text>{{item.occupation_name}}</text>
+                <text>装等：{{item.equipment_grade}}</text>
+                <text class="">{{item.identityName}}</text>
               </view>
             </view>
-            <view class="fun">
+          
+            <view class="fun" wx:if="{{item.identity==3}}">
               <view class="btn_sty">不通过</view>
             </view>
             <view class="fun">
-              <view class="btn_sty">通过</view>
+              <view class="btn_sty" wx:if="{{item.identity==3}}">通过</view>
             </view>
-          </view>
-          <view class="equip_li flex_y team_li" wx:for="{{3}}" wx:key="index">
-            <view class="icon">
-              <view class="cover">
-                <image src="../../images/icon.png"></image>
-              </view>
-            </view>
-            <view class="info">
-              <view>
-                <text>满世界跑</text>
-                <text class="level">lv60</text>
-              </view>
-              <view class="current_price">
-                <text>人族</text>
-                <text>装等：130</text>
-              </view>
-            </view>
-            <view class="fun">
-
-            </view>
-            <view class="fun">
+            <view class="fun" wx:if="{{item.identity==2}}">
               <view class="btn_sty">踢出</view>
             </view>
           </view>
+
         </scroll-view>
       </view>
     </view>

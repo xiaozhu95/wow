@@ -24,11 +24,16 @@
 }
 
 .role_list {
-  padding: 20rpx 0;
+  padding: 0 20rpx;
   background: #fff;
   border-radius: 15rpx;
 }
 
+.role_item:first-child {
+  border: none;
+}
+
 .role_item {
-  padding: 0 20rpx;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #a5a5a5;
 }

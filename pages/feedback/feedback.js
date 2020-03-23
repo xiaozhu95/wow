@@ -1,36 +1,30 @@
-// pages/feedback/feedback.js
+// pages/question/question.js
+var wxApp = getApp(),
+  http = require("../../api.js");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    radioItems: [{
-        name: 'USA',
-        value: '美国'
-      },
-      {
-        name: 'CHN',
-        value: '中国',
-        checked: 'true'
-      },
-      {
-        name: 'BRA',
-        value: '巴西'
-      },
-      {
-        name: 'JPN',
-        value: '日本'
-      },
-      {
-        name: 'ENG',
-        value: '英国'
-      },
-      {
-        name: 'TUR',
-        value: '法国'
-      },
-    ],
+    question: [{
+      id: 0,
+      content: "你觉得怎么样"
+    }, {
+      id: 1,
+      content: "好吗？"
+    }, {
+      id: 2,
+      content: "不好"
+    }, {
+      id: 3,
+      content: "怎么了"
+    }, ],
+    radio: '',
+    fileList: [],
+    disabled: true,
+    textarea: '',
+    fileListImg: []
   },
 
   /**
@@ -38,8 +32,89 @@ Page({
    */
   onLoad: function(options) {
 
+    wx.hideShareMenu();
+  },
+  //问题提交
+  feedback() {
+    let that = this,
+      arrImg = "";
+    that.data.fileListImg.forEach(element => {
+      arrImg += element + "#"
+    });
+    wxApp.request({
+      url: http.user.feedback,
+      method: "POST",
+      data: {
+        question_id: that.data.radio,
+        content: that.data.textarea,
+        url: arrImg
+      },
+      success: res => {
+        if (res.code == 0) {
+          wx.showModal({
+            title: '提示',
+            content: "提交成功",
+            showCancel: false,
+            success(res) {
+              if (res.confirm) {
+                // console.log('用户点击确定')
+                wx.redirectTo({
+                  url: '/pages/index/index'
+                })
+              } else if (res.cancel) {
+                // console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+  radioChange(event) {
+    this.setData({
+      radio: event.detail
+    });
+    if (this.data.radio.length > 0 && this.data.textarea.length > 0) {
+      this.setData({
+        disabled: false
+      });
+    }
+  },
+  onClick(event) {
+    const {
+      name
+    } = event.currentTarget.dataset;
+    this.setData({
+      radio: String(name)
+    });
+    if (this.data.radio.length > 0 && this.data.textarea.length > 0) {
+      this.setData({
+        disabled: false
+      });
+    }
   },
 
+  delete(event) {
+    this.data.fileList.splice(event.detail.index, 1);
+    this.setData({
+      fileList: this.data.fileList
+    });
+  },
+  bindtextarea(event) {
+    const {
+      value
+    } = event.detail;
+    let isdisabled = "";
+    if (this.data.radio.length > 0 && value.length > 0) {
+      isdisabled = false;
+    } else if (this.data.radio.length == 0 || value.length == 0) {
+      isdisabled = true;
+    }
+    this.setData({
+      textarea: value,
+      disabled: isdisabled
+    });
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -53,35 +128,7 @@ Page({
   onShow: function() {
 
   },
-  radioChange: function(e) {
-    var checked = e.detail.value
-    var changed = {}
-    for (var i = 0; i < this.data.radioItems.length; i++) {
-      if (checked.indexOf(this.data.radioItems[i].name) !== -1) {
-        changed['radioItems[' + i + '].checked'] = true
-      } else {
-        changed['radioItems[' + i + '].checked'] = false
-      }
-    }
-    this.setData(changed)
-  },
-  handlerGobackClick(delta) {
-    const pages = getCurrentPages();
-    if (pages.length >= 2) {
-      wx.navigateBack({
-        delta: delta
-      });
-    } else {
-      wx.navigateTo({
-        url: '/pages/index/index'
-      });
-    }
-  },
-  handlerGohomeClick() {
-    wx.navigateTo({
-      url: '/pages/index/index'
-    });
-  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -93,50 +93,50 @@ Page({
       fail: function(e) {}
     }));
   },
-  getPhoneNumber: function(t) {
-    var a = this;
-    "getPhoneNumber:fail user deny" == t.detail.errMsg ? wx.showModal({
-      title: "提示",
-      showCancel: !1,
-      content: "未授权",
-      success: function(n) {}
-    }) : wx.login({
-      success: function(i) {
-        if (i.code) {
-          var o = i.code;
-          getApp().request({
-            url: e.user.wxappInfo,
-            method: "POST",
-            data: {
-              iv: t.detail.iv,
-              encryptedData: t.detail.encryptedData,
-              code: o,
-              access_token: a.data.access
-            },
-            success: function(n) {
-              0 == n.code ? a.setData({
-                PhoneNumber: n.data.dataObj
-              }) : wx.showToast({
-                title: "授权失败,请重试"
-              });
-              if (0 == n.code) {
-                a.data.user_info.mobile = n.data.mobile;
-                wx.setStorageSync('user_info', a.data.user_info);
-                wx.showToast({
-                  title: "手机号授权成功",
-                  icon: "none"
-                });
-                a.refuse();
-              }
-            }
-          });
-        } else wx.showToast({
-          title: "获取用户登录态失败！" + i.errMsg,
-          image: "/images/icon-warning.png"
-        });
-      }
-    });
-  },
+  // getPhoneNumber: function(t) {
+  //   var a = this;
+  //   "getPhoneNumber:fail user deny" == t.detail.errMsg ? wx.showModal({
+  //     title: "提示",
+  //     showCancel: !1,
+  //     content: "未授权",
+  //     success: function(n) {}
+  //   }) : wx.login({
+  //     success: function(i) {
+  //       if (i.code) {
+  //         var o = i.code;
+  //         getApp().request({
+  //           url: e.user.wxappInfo,
+  //           method: "POST",
+  //           data: {
+  //             iv: t.detail.iv,
+  //             encryptedData: t.detail.encryptedData,
+  //             code: o,
+  //             access_token: a.data.access
+  //           },
+  //           success: function(n) {
+  //             0 == n.code ? a.setData({
+  //               PhoneNumber: n.data.dataObj
+  //             }) : wx.showToast({
+  //               title: "授权失败,请重试"
+  //             });
+  //             if (0 == n.code) {
+  //               a.data.user_info.mobile = n.data.mobile;
+  //               wx.setStorageSync('user_info', a.data.user_info);
+  //               wx.showToast({
+  //                 title: "手机号授权成功",
+  //                 icon: "none"
+  //               });
+  //               a.refuse();
+  //             }
+  //           }
+  //         });
+  //       } else wx.showToast({
+  //         title: "获取用户登录态失败！" + i.errMsg,
+  //         image: "/images/icon-warning.png"
+  //       });
+  //     }
+  //   });
+  // },
   refuse() {
     // this.goback();
     wx.navigateBack({
@@ -149,18 +149,18 @@ Page({
     });
   },
   //文章详情接口
-  agreement() {
-    t.request({
-      url: e.user.agreement + "?type=user_agreement",
-      // data: { article_id: id },
-      success: res => {
-        var str = res.data.content.replace(/\<img/gi, '<img style="display: block; width: 100%;height: auto;margin:20px 0px;"');
-        this.setData({
-          mes_content: str,
-        })
-      }
-    })
-  },
+  // agreement() {
+  //   t.request({
+  //     url: e.user.agreement + "?type=user_agreement",
+  //     // data: { article_id: id },
+  //     success: res => {
+  //       var str = res.data.content.replace(/\<img/gi, '<img style="display: block; width: 100%;height: auto;margin:20px 0px;"');
+  //       this.setData({
+  //         mes_content: str,
+  //       })
+  //     }
+  //   })
+  // },
   legalClose() {
     this.setData({
       legal_show: false

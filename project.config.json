@@ -85,10 +85,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "房间页面",
 					"pathName": "pages/room-code/room-code",
-					"query": "",
+					"query": "team_id= 50",
 					"scene": null
 				},
 				{
@@ -102,6 +102,16 @@
 					"id": -1,
 					"name": "账单",
 					"pathName": "pages/bill/bill",
+					"query": "",
+<<<<<<< HEAD
+=======
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "角色创建",
+					"pathName": "pages/role-creation/role-creation",
+>>>>>>> 9f3546ed4e0758c87c9ea35559ce5a69e2442acc
 					"scene": null
 				}
 			]

@@ -4,7 +4,6 @@
 <view class="main">
   <view class="user_img">
     <image class="portrait" src="{{user_info.avatar}}" />
-    <view class="port_title" bindtap="setAvatar">点击修改头像</view>
   </view>
   <view class="block" style=" background: #eee;" />
   <view class="user_info">

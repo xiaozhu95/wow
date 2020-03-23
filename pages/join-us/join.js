@@ -1,3 +1,5 @@
+var api = require("../../api.js");
+const http = getApp();
 Page({
 
   /**
@@ -38,8 +40,6 @@ Page({
     //键盘输入的密码 赋值给inputPassword
     if (this.data.inputPassword.length >= 6) {
 
-    
-
     } else {
       this.data.inputPassword = this.data.inputPassword + e.currentTarget.dataset.key;
       console.log(this.data.inputPassword, "36");
@@ -73,5 +73,33 @@ Page({
       });
     }
   },
-
+  join_room() {
+    var role_mesage = wx.getStorageSync("role-info");
+    var user_info = wx.getStorageSync("user_info")
+    var user = {};
+    user.user_id = user_info.id;
+    user.user_role_name = role_mesage.role_name;
+    user.role_id = role_mesage.id;
+    user.avatar = user_info.avatar;
+    http.request({
+      url: api.user.room,
+      method: "POST",
+      data: {
+        room_number: "512725",
+        role_id: role_mesage.id,
+        service_id: role_mesage.service_id,
+        camp_id: role_mesage.camp_id,
+        user_info: user
+      },
+      success: res => {
+        console.log(res);
+        if (res == 1) {
+          return wx.showToast({
+            title: res.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
 })

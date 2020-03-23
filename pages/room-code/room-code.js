@@ -1,4 +1,6 @@
 // pages/room-code/room-code.js
+var api = require("../../api.js");
+var app = getApp();
 Page({
 
   /**
@@ -116,19 +118,34 @@ Page({
     floor_time_pay: ['5', '6', '7', '8', '9', '10'],
     floor_time_wap_index: 5,
     floor_time_pay_index: 0,
-    pat_popup: false
+    pat_popup: false,
+    team_list:"",              //团员信息  
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
+    this.team_list(this.options.team_id);
+  },  
   //立即拍
   pat_popup() {
 
   },
+  //成员信息
+  team_list(id){
+    app.request({
+      url: api.team.team_list +"?team_id="+id,
+      method: "get",
+      success: res => {
+        this.setData({
+          team_list: res.data
+        })
+        console.log(res);
+      }
+    })
+  },
+
   skip(e) {
     var url = e.currentTarget.dataset.url
     wx.navigateTo({

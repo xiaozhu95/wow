@@ -15,7 +15,7 @@
       </view>
       <view class="list flex_y">
         <view class="title">服务器/阵营</view>
-        <view>地狱世界 - 部落</view>
+        <view>{{role_info.service_name}} - {{role_info.camp_name}}</view>
       </view>
       <view class="list flex_y">
         <view class="title">副本</view>
@@ -51,15 +51,17 @@
       <!-- 支出 -->
       <view class="list flex_y">
         <view class="title">支出</view>
-        <input type="text" class="inputSty" placeholder="请输入支出(固定金额)" placeholder-style="color:#000" bindinput="set_expenditure"></input>
+        <input type="text" class="inputSty" placeholder="请输入支出(固定)" placeholder-style="color:#000" bindinput="set_expenditure"></input>
+        {{subsidies_index==1?'元':'币'}}
       </view>
+
       <view class="subsidies">
         <view wx:for="{{subsidy_data}}" wx:key="index" class="sub_li flex_y">
           <view class="sub_name">{{item.name}}</view>
           <view class="sub_ul flex_wrap">
-            <view class="sub_input flex_y" wx:for="{{item.list}}" wx:key="index">
+            <view class="sub_input flex_y" wx:for="{{item.list}}" wx:key="index" wx:for-index="idx">
               <text class="it_name">{{item.name}}</text>
-              <input type="number" class="subsidiesInput" bindinput="subsidiesInput" value="{{item.value}}" data-index="{{index}}"></input>
+              <input type="number" class="subsidiesInput" bindinput="subsidiesInput" value="{{item.value}}" data-index="{{index}}" data-idx="{{idx}}"></input>
               <text>{{subsidies_index==1&&allot_index==2?'元':subsidies_index==2&&allot_index==2?"币":"%"}}</text>
             </view>
           </view>
@@ -135,12 +137,12 @@
                     <input type="number" class="ruleInput floorEquipIpunt" placeholder="请输入地板起拍价" placeholder-style="color:#bcbcbc" value="{{floor_info.price}}" bindinput="floor_price" data-id="0"></input>
                   </view>
                 </view>
-                <view class="flex_y floor_li">
+                <!-- <view class="flex_y floor_li">
                   <view>次加价</view>
                   <view>
                     <input type="number" class="ruleInput floorEquipIpunt" placeholder="每次加价" placeholder-style="color:#bcbcbc" value="{{floor_info.add_price}}" bindinput="floor_price" data-id="1"></input>
                   </view>
-                </view>
+                </view> -->
                 <view class="flex_y floor_li">
                   <view>哪种装备</view>
                   <view>
@@ -151,7 +153,7 @@
                     </checkbox-group>
                   </view>
                 </view>
-                <view class="flex_y floor_li">
+                <!-- <view class="flex_y floor_li">
                   <view>拍卖时间</view>
                   <view>
                     <picker bindchange="floor_time_Change" data-id="wap" value="{{floor_time_wap_index}}" range="{{floor_time_wap}}">
@@ -169,8 +171,8 @@
                         {{floor_info.pay_end_time}} 分钟
                       </view>
                     </picker>
-                  </view>
-                </view>
+                  </view> 
+                </view>-->
                 <view class="set_floor_btn" bindtap="set_floor_btn">
                   确定
                 </view>
@@ -185,7 +187,7 @@
       <view class="list flex_y">
         <view class="title">团长备注</view>
         <!-- <input type="text" class="inputSty" placeholder="备注" placeholder-style="color:#000" bindinput="set_yy"></input> -->
-        <textarea bindblur="bindTextAreaBlur" auto-height placeholder="备注" placeholder-style="color:#000" class="inputSty" />
+        <textarea bindblur="setNote" auto-height placeholder="备注" placeholder-style="color:#000" class="inputSty" />
       </view>
 
       <!-- 填写装备起拍价格 -->

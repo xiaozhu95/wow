@@ -25,9 +25,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-    console.log(wx.getSystemInfoSync(), "29");
-  },
+  onShow: function() {},
   handlerGobackClick(delta) {
     const pages = getCurrentPages();
     if (pages.length >= 2) {

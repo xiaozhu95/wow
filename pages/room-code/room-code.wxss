@@ -58,13 +58,16 @@
 .group_member .ul {
   margin-top: 14rpx;
 }
-
+.group_member .ul .li{
+  margin-right: 20rpx;
+  text-align: center;
+}
 .group_member .ul .li .logo {
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 20rpx;
+  
 }
 
 .group_member .ul .li .identity {
@@ -187,7 +190,6 @@
   font-size: 22rpx;
   margin-left: 10rpx;
 }
-
 .fun_btn {
   position: fixed;
   width: 100%;

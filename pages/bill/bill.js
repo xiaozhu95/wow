@@ -1,4 +1,6 @@
 // pages/bill/bill.js
+var api = require("../../api.js");
+var app = getApp();
 Page({
 
   /**
@@ -12,12 +14,41 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-  handlerGohomeClick(){
-    wx.redirectTo({
-      url: '/pages/room-code/room-code'
+    let user_info = wx.getStorageSync("user_info");
+    this.setData({
+      user_id: user_info.id,
     })
+  },
+  //我的交易
+  transaction() {
+    app.request({
+      url: api.equipment.transaction,
+      method: "post",
+      data: {
+        team_id: '',
+        user_id: this.data.user_id
+      },
+      success: res => {
+        // console.log(res);
+        // if (res.code == 0) {
+        //   this.setData({
+        //     trading_list: res.data
+        //   })
+        // }
+      }
+    })
+  },
+  handlerGobackClick(delta) {
+    const pages = getCurrentPages();
+    if (pages.length >= 2) {
+      wx.navigateBack({
+        delta: delta
+      });
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index'
+      });
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

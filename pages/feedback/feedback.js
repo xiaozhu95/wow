@@ -1,6 +1,6 @@
 // pages/question/question.js
-var wxApp = getApp(),
-  http = require("../../api.js");
+var api = require("../../api.js");
+var app = getApp();
 Page({
 
   /**
@@ -9,16 +9,19 @@ Page({
   data: {
     question: [{
       id: 0,
-      content: "你觉得怎么样"
+      content: "无法打开小程序"
     }, {
       id: 1,
-      content: "好吗？"
+      content: "卡顿"
     }, {
       id: 2,
-      content: "不好"
+      content: "小程序死机"
     }, {
       id: 3,
-      content: "怎么了"
+      content: "界面错误"
+    }, {
+      id: 4,
+      content: "其他异常"
     }, ],
     radio: '',
     fileList: [],
@@ -31,23 +34,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    let user_info = wx.getStorageSync("user_info");
+    this.setData({
+      user_id: user_info.id,
+    })
     wx.hideShareMenu();
   },
   //问题提交
   feedback() {
     let that = this,
       arrImg = "";
-    that.data.fileListImg.forEach(element => {
-      arrImg += element + "#"
-    });
-    wxApp.request({
-      url: http.user.feedback,
+
+    app.request({
+      url: api.user.addQusetion,
       method: "POST",
       data: {
-        question_id: that.data.radio,
-        content: that.data.textarea,
-        url: arrImg
+        user_id: this.data.user_id,
+        content: {
+          title: this.data.question[this.data.radio].content,
+          content: that.data.textarea,
+        },
       },
       success: res => {
         if (res.code == 0) {
@@ -58,11 +64,9 @@ Page({
             success(res) {
               if (res.confirm) {
                 // console.log('用户点击确定')
-                wx.redirectTo({
+                wx.switchTab({
                   url: '/pages/index/index'
                 })
-              } else if (res.cancel) {
-                // console.log('用户点击取消')
               }
             }
           })

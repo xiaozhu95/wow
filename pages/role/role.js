@@ -13,8 +13,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
-  },
+    if (this.options.id){
+      this.setData({
+        id: this.options.id
+      })
+    }
+   
+  },  
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -28,6 +33,16 @@ Page({
    */
   onShow: function() {
     this.gain_role();
+
+    let data = wx.getStorageSync('role-info-index');
+
+    let indexdata = {
+      index: data.index,
+      wx_index: data.wx_index,
+    }
+    this.setData({
+      indexdata: indexdata
+    }) 
   },
   gain_role() {
     http.request({
@@ -36,7 +51,6 @@ Page({
         user_id: wx.getStorageSync("user_info").id,
       },
       success: res => {
-        console.log(res, "37");
         this.setData({
           role_lsit: res.data.data
         })
@@ -50,13 +64,40 @@ Page({
     })
   },
   go_back(e) {
+
+
     var index = e.currentTarget.dataset.index;
-    var role_message = this.data.role_lsit[index];
-    console.log(role_message, "55");
-    wx.setStorageSync("role-info", role_message)
-    wx.navigateBack({
-      delta: 1,
-    })
+    var wx_index = e.currentTarget.dataset.wx_index;
+
+
+    let indexdata = {
+      index: index,
+      wx_index: wx_index,
+    }
+    this.setData({
+      indexdata: indexdata
+    }) 
+    var role_message = this.data.role_lsit[wx_index].list[index];
+    wx.setStorageSync("role-info", role_message);
+    wx.setStorageSync("role-info-index", indexdata);
+    
+    if (this.data.id){
+      if (this.data.id == 0) {
+        wx.navigateBack({
+          delta: 1,
+        })
+      } if (this.data.id == 1) {
+        wx.navigateTo({
+          url: "/pages/join-us/join"
+        })
+      } else if(this.data.id == 2){
+        wx.navigateTo({
+          url: "/pages/creative/creative"
+        })
+      }
+    }
+   
+    
   },
   handlerGobackClick(delta) {
     const pages = getCurrentPages();

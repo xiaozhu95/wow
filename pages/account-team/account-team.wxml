@@ -1,0 +1,23 @@
+<view class="content">
+  <view class="list" wx:if="{{account_list.length > 0}}">
+    <view class="item" wx:for="{{account_list}}" wx:key="index" bindtap="skip" data-url="/pages/account-team-detail/account-team-detail?team_id={{item.team_id}}" data-index="{{index}}">
+      <view class="room" style="border-bottm:1rpx solid #a5a5a5;">房间码：{{item.room_num}}</view>
+      <view class="team_content flex_y flex_sb">
+        <view class="" style="text-align: center;">
+          <image src="{{item.avatar}}"></image>
+          <!-- <view>团长</view> -->
+        </view>
+        <view class="unity flex-grow-1">
+          <view class="flex_sb">
+            <view>{{item.user_role_name}}的团</view>
+            <view>阵营-服务器：{{item.camp_name}}-{{item.service_name}}</view>
+          </view>
+          <view style="padding-top:20rpx;">副本：{{item.transcript_name}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class="hint">暂无账单</view>
+  </view>
+</view>

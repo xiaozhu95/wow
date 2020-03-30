@@ -4,14 +4,21 @@
 
 .content {
   position: relative;
+  padding: 0 20rpx;
 }
 
 .allot_item {
   padding: 0 20rpx;
+  background: #fff;
+}
+
+.allot_box:first-child {
+  border: none;
 }
 
 .allot_box {
-  padding-top: 25rpx;
+  padding: 25rpx 0;
+  border-top: 1rpx solid #a5a5a5;
 }
 
 .allot_box .img {
@@ -20,7 +27,6 @@
   margin-right: 20rpx;
   text-align: center;
   line-height: 80rpx;
-  border: 1rpx solid red;
   border-radius: 50%;
 }
 
@@ -31,4 +37,25 @@
   line-height: 80rpx;
   background: #fff;
   margin: 80rpx auto 0 auto;
+}
+
+.popup_content {
+  width: 700rpx;
+  height: 300rpx;
+  padding: 0 20rpx;
+}
+
+.hint {
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+.pay {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-radius: 15rpx;
+  color: #fff;
+  background: #64b265;
 }

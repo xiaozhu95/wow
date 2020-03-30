@@ -7,7 +7,7 @@
   </view>
   <view class="block" style=" background: #eee;" />
   <view class="user_info">
-    <view class="user_name flex_y" bindtap="setNameShow">
+    <view class="user_name flex_y">
       <view>
         <text class="case">昵称</text> {{user_info.nickname}}
       </view>

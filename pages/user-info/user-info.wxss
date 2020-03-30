@@ -1,6 +1,3 @@
-.lxy-nav-bar {
-  background-color: transparent !important;
-}
 
 page {
   background-image: none;

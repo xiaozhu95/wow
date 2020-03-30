@@ -65,3 +65,24 @@
   height: 138rpx;
   border-top: 1rpx solid #e7e7e7;
 }
+
+.popup_content {
+  width: 700rpx;
+  height: 300rpx;
+  padding: 0 20rpx;
+}
+
+.hint {
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+.pay {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-radius: 15rpx;
+  color: #fff;
+  background: #64b265;
+}

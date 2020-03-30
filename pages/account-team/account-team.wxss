@@ -1,0 +1,43 @@
+page {
+  background-image: none;
+  background: #eee;
+}
+
+.list {
+  padding: 0 20rpx;
+}
+
+.item {
+  margin-top: 20rpx;
+  padding: 0 20rpx;
+  background: #fff;
+}
+
+.item image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: block;
+}
+
+.team_content {
+  padding: 10rpx 0;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.room {
+  padding: 20rpx 0;
+  font-weight: bold;
+  border-bottom: 1rpx solid #a5a5a5;
+}
+
+.unity {
+  padding-left: 10rpx;
+}
+
+.hint {
+  padding: 50rpx 0;
+  text-align: center;
+  font-size: 32rpx;
+}

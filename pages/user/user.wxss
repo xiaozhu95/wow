@@ -6,12 +6,6 @@
   padding: 0 20rpx;
 }
 
-.portrait {
-  /* width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%; */
-}
-
 .user-info {
   padding: 30rpx 20rpx;
   margin-bottom: 20rpx;
@@ -32,10 +26,11 @@
 .message {
   background: #fff;
   border-radius: 25rpx;
+  padding: 0 20rpx;
 }
 
 .user_img {
-  padding: 30rpx 20rpx;
+  padding: 30rpx 0;
 }
 
 .portrait {
@@ -53,4 +48,23 @@
 .message-item {
   padding: 20rpx 20rpx;
   border-top: 1rpx solid #a5a5a5;
+}
+
+.not_log image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+.log_out {
+  padding-top: 10rpx;
+  text-align: center;
+}
+
+.vertical {
+  height: 90rpx;
+  width: 2rpx;
+  background: #a5a5a5;
 }

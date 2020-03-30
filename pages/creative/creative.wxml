@@ -132,9 +132,9 @@
                   </view>
                 </view>
                 <view class="flex_y floor_li">
-                  <view>起拍价</view>
+                  <view>售卖价</view>
                   <view>
-                    <input type="number" class="ruleInput floorEquipIpunt" placeholder="请输入地板起拍价" placeholder-style="color:#bcbcbc" value="{{floor_info.price}}" bindinput="floor_price" data-id="0"></input>
+                    <input type="number" class="ruleInput floorEquipIpunt" placeholder="请输入价格" placeholder-style="color:#bcbcbc" value="{{floor_info.price}}" bindinput="floor_price" data-id="0"></input>
                   </view>
                 </view>
                 <!-- <view class="flex_y floor_li">

@@ -4,24 +4,34 @@
 <view class="content">
   <view class="allot_list">
     <view class="allot_item">
-      <view class="title">战士</view>
       <view class="allot_detail">
-        <view class="allot_box flex_y">
-          <view class="img">头像</view>
-          <view>
-            <view>名称：阿达数据库</view>
-            <view>收入：50元</view>
+        <view class="allot_box flex_sb flex_y" wx:for="{{allocation_list}}" wx:key="index">
+          <view class="flex_y">
+            <image class="img" src="{{item.userInfo.avatar}}"></image>
+            <view>
+              <view>名称：{{item.userInfo.user_role_name}}</view>
+              <view>
+                <text>收入：{{item.money}}￥ </text>
+                <text wx:if="{{item.deduction}}">扣除：{{item.deduction}}</text>
+              </view>
+            </view>
           </view>
-        </view>
-        <view class="allot_box flex_y">
-          <view class="img">头像</view>
-          <view>
-            <view>名称：阿达数据库</view>
-            <view>收入：50元</view>
+          <view class="" bindtap="show_modal" data-index="{{index}}">
+            扣除金额
           </view>
         </view>
       </view>
     </view>
   </view>
-  <view class="grant">确定分配</view>
+  <view class="grant" bindtap="suer_distribution">确定分配</view>
 </view>
+<van-popup show="{{ show }}" bind:close="showPopup" round>
+  <view class="popup_content">
+    <view class="hint">充值</view>
+    <view class="flex_y" style="padding-bottom: 20rpx;">
+      <view style="padding-right:20rpx;">金额</view>
+      <input placeholder="请输入金额" bindinput="deduct" value="{{money}}" type="number" />
+    </view>
+    <view class="pay" bindtap="money_pay">充值</view>
+  </view>
+</van-popup>

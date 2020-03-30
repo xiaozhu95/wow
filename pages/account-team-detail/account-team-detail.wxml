@@ -1,0 +1,52 @@
+<view class="main" style="padding-bottom:100rpx;">
+  <view class="room_introductory">
+    <view>房间码：{{room_message.room_num}}</view>
+    <view class="flex_sb flex_y room_content">
+      <image src="{{room_message.avatar}}"></image>
+      <view class="flex-grow-1">
+        <view class="flex_sb">
+          <view>{{room_message.user_role_name}}的团</view>
+          <view>阵营-服务器：{{room_message.camp_name}}-{{room_message.service_name}}</view>
+        </view>
+        <view class="flex_sb" style="padding-top:20rpx;">
+          <view>副本：{{room_message.transcript_name}}</view>
+          <view>
+            <text style="padding-right:20rpx;">{{allot.length}}人团</text>
+            <text>{{allot_info.voteDate.disagreeNum}}人反对/</text>
+            <text>{{allot_info.voteDate.agreeNum}}人同意</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view></view>
+  </view>
+  <view class="allot_list">
+    <view class="allot_item" wx:for="{{allot}}" wx:key="index">
+      <view class="title">{{item.userInfo.user_role_name}}</view>
+      <view class="allot_content flex_sb flex_y">
+        <image class="allot_img" src="{{item.userInfo.avatar}}"></image>
+        <view class="allot_detail flex-grow-1">
+          <view class="flex_sb">
+            <view>+{{item.money}}￥</view>
+            <view>
+              <view wx:if="{{item.vote_status && item.vote_status == 1}}">已同意</view>
+              <view wx:elif="{{!item.vote_status}}">考虑中</view>
+            </view>
+          </view>
+          <view class="flex_sb" style="padding-top:20rpx;">
+            <view> +{{item.goldGoin}}金币</view>
+            <view wx:if="{{item.vote_status && item.vote_status == 2}}">不同意</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="base">
+  <view>
+  </view>
+  <view class="sure_btn flex_sb">
+    <view class="btn1 flex-grow-1" bindtap="save_select" data-status="2">不同意</view>
+    <view class="btn2 flex-grow-1" bindtap="save_select" data-status="1">同意</view>
+  </view>
+</view>

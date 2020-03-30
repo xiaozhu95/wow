@@ -1,4 +1,3 @@
-// pages/user-info/user-info.js
 var wxApp = getApp(),
   http = require("../../api.js");
 Page({
@@ -34,49 +33,10 @@ Page({
         user_info: user,
         // index: parseInt(user.sex),
         index: 0,
-        // mobile: user.mobile
-        mobile: ""
+        mobile: user.mobile
+        // mobile: ""
       })
     }
-  },
-  setAvatar() {
-    var token = wx.getStorageSync('access_token'),
-      that = this;
-    wx.chooseImage({
-      success: function(res) {
-        var tempFilePaths = res.tempFilePaths
-        wx.uploadFile({
-          url: http.image_upload.imageUpload, //仅为示例，非真实的接口地址
-          filePath: tempFilePaths[0],
-          name: 'file',
-          formData: {
-            token: token
-          },
-          success: function(res) {
-            let imageInfo = JSON.parse(res.data);
-            that.data.user_info.avatar = imageInfo.data.url;
-            that.setData({
-              user_info: that.data.user_info
-            });
-            wx.setStorageSync('user_info', that.data.user_info);
-            that.avatar(imageInfo.data.url);
-          }
-        })
-      }
-    })
-  },
-  //修改图片接口
-  avatar(avatar) {
-    wxApp.request({
-      url: http.user.changeAvatar,
-      method: "POST",
-      data: {
-        avatar: avatar
-      },
-      success: res => {
-        // console.log(res);
-      }
-    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -236,7 +196,8 @@ Page({
       url: http.user.smsLogin,
       data: {
         mobile: that.data.mobile_input,
-        code: that.data.code_input
+        code: that.data.code_input,
+        user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
         console.log(res);

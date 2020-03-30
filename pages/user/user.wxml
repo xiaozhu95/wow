@@ -1,34 +1,44 @@
 <view class="main">
   <view class="header">
     <view class="user-info">
-      <view class="flex_y" wx:if="{{log_state}}">
+      <view wx:if="{{log_state}}" class="flex_sa flex_y">
         <view class="flex_y" bindtap="skip" data-url="/pages/user-info/user-info">
           <image class="portrait" src="{{user_info.avatar}}"></image>
           <view>{{user_info.nickname}}</view>
         </view>
-        <view style="padding-left: 30rpx;">
-          <view>账户</view>
+        <view class="vertical"></view>
+        <view class="account" bindtap="skip" data-url="/pages/account/account">
+          <view>账户余额：{{user_info.balance}}</view>
         </view>
       </view>
-      <view class="not_log" wx:else bindtap="skip" data-url="/pages/login/login">未登录</view>
+      <view class="not_log" wx:else bindtap="go_login" data-url="/pages/login/login">
+        <image src="../../images/not-log.png"></image>
+        <view class="log_out">未登录</view>
+      </view>
     </view>
   </view>
   <view class="personal">
     <view class="message">
-      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/role/role">
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/role/role?id=0">
         <view>我的角色</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/account/account">
-        <view>账户</view>
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/account-team/account-team">
+        <view>团账单</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/offered/offered">
         <view>我参加过的团</view>
+        <view>
+          <image class="r_icon" src="../../images/right.png"></image>
+        </view>
+      </view>
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/bill/bill">
+        <view>已拍的</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>

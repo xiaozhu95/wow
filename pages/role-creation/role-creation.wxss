@@ -42,7 +42,7 @@ input {
 }
 
 .talent, .sel_service, .item_account {
-  border-top: 1rpx solid #a5a5a5;
+  border-top: 1rpx solid #e7e7e7;
 }
 
 .sel_career, .sel_service, .talent {
@@ -99,6 +99,7 @@ input {
 
 .server_sure {
   border-top: 1rpx solid #e7e7e7;
+  text-align: center;
   padding: 20rpx 0;
 }
 
@@ -117,6 +118,7 @@ input {
 
 .camp_select {
   padding-top: 20rpx;
+  color: red;
   padding-bottom: 20rpx;
 }
 

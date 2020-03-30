@@ -17,14 +17,13 @@ Page({
     // t.pageOnReady(this);
   },
   onShow: function() {
-    console.log(e.passport.login, "13");
     // t.pageOnShow(this);
   },
   onHide: function() {
-    t.pageOnHide(this);
+    // t.pageOnHide(this);
   },
   onUnload: function() {
-    t.pageOnUnload(this);
+    // t.pageOnUnload(this);
   },
   get_user() {
     getApp().request({
@@ -47,7 +46,6 @@ Page({
     })
   },
   getUserInfo: function(t) {
-    console.log(t.detail.rawData, "50");
     var that = this;
     "getUserInfo:ok" == t.detail.errMsg && (wx.showLoading({
       title: "正在登录",
@@ -66,8 +64,8 @@ Page({
             signature: t.detail.signature
           },
           success: function(e) {
-            console.log(e, "69");
-            if (1 == e.status) {
+            wx.hideLoading();
+            if (1 == e.code) {
               wx.setStorageSync("access_token", e.data.token);
               wx.setStorageSync("user_info", e.data);
               wx.showToast({
@@ -75,10 +73,10 @@ Page({
                 icon: "none"
               });
               that.setData({
-                show_madel: true
+                show_madel: true,
+                user_info: e.data
               })
-              that.get_user();
-
+              // that.get_user();
             } else wx.showModal({
               title: "提示",
               content: e.msg,
@@ -86,57 +84,58 @@ Page({
             });
           },
           complete: function() {
-            wx.hideLoading();
+
           }
         });
       },
       fail: function(e) {}
     }));
   },
-  // getPhoneNumber: function(t) {
-  //   var a = this;
-  //   "getPhoneNumber:fail user deny" == t.detail.errMsg ? wx.showModal({
-  //     title: "提示",
-  //     showCancel: !1,
-  //     content: "未授权",
-  //     success: function(n) {}
-  //   }) : wx.login({
-  //     success: function(i) {
-  //       if (i.code) {
-  //         var o = i.code;
-  //         getApp().request({
-  //           url: e.user.wxappInfo,
-  //           method: "POST",
-  //           data: {
-  //             iv: t.detail.iv,
-  //             encryptedData: t.detail.encryptedData,
-  //             code: o,
-  //             access_token: a.data.access
-  //           },
-  //           success: function(n) {
-  //             0 == n.code ? a.setData({
-  //               PhoneNumber: n.data.dataObj
-  //             }) : wx.showToast({
-  //               title: "授权失败,请重试"
-  //             });
-  //             if (0 == n.code) {
-  //               a.data.user_info.mobile = n.data.mobile;
-  //               wx.setStorageSync('user_info', a.data.user_info);
-  //               wx.showToast({
-  //                 title: "手机号授权成功",
-  //                 icon: "none"
-  //               });
-  //               a.refuse();
-  //             }
-  //           }
-  //         });
-  //       } else wx.showToast({
-  //         title: "获取用户登录态失败！" + i.errMsg,
-  //         image: "/images/icon-warning.png"
-  //       });
-  //     }
-  //   });
-  // },
+  getPhoneNumber: function(t) {
+    var a = this;
+    "getPhoneNumber:fail user deny" == t.detail.errMsg ? wx.showModal({
+      title: "提示",
+      showCancel: !1,
+      content: "未授权",
+      success: function(n) {}
+    }) : wx.login({
+      success: function(i) {
+        if (i.code) {
+          var o = i.code;
+          getApp().request({
+            url: e.user.wxappInfo,
+            method: "POST",
+            data: {
+              iv: t.detail.iv,
+              encryptedData: t.detail.encryptedData,
+              code: o,
+              user_id: a.data.user_info.id
+            },
+            success: function(n) {
+              0 == n.code ? a.setData({
+                PhoneNumber: n.data.dataObj
+              }) : wx.showToast({
+                title: "授权失败,请重试",
+                icon: "none"
+              });
+              if (0 == n.code) {
+                a.data.user_info.mobile = n.data.mobile;
+                wx.setStorageSync('user_info', a.data);
+                wx.showToast({
+                  title: "手机号授权成功",
+                  icon: "none"
+                });
+                a.refuse();
+              }
+            }
+          });
+        } else wx.showToast({
+          title: "获取用户登录态失败！" + i.errMsg,
+          image: "/images/icon-warning.png"
+        });
+      }
+    });
+  },
   refuse() {
     // this.goback();
     wx.navigateBack({

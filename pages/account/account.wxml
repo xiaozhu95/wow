@@ -6,7 +6,7 @@
     <view class="score_title">当前账户余额</view>
     <view class="score_number">10</view>
     <view class="recharge flex_vert">
-      <view class="rech_box" style="border-right: 1rpx solid #a5a5a5;">充值</view>
+      <view class="rech_box" style="border-right: 1rpx solid #a5a5a5;" bindtap="showPopup">充值</view>
       <view class="rech_box">提现</view>
     </view>
   </view>
@@ -25,3 +25,13 @@
     </view>
   </view>
 </view>
+<van-popup show="{{ show }}" bind:close="showPopup" round>
+  <view class="popup_content">
+    <view class="hint">充值</view>
+    <view class="flex_y" style="padding-bottom: 20rpx;">
+      <view style="padding-right:20rpx;">金额</view>
+      <input placeholder="请输入金额" bindinput="money" value="{{money}}" type="number" />
+    </view>
+    <view class="pay" bindtap="money_pay">充值</view>
+  </view>
+</van-popup>

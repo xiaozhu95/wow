@@ -1,4 +1,5 @@
-// pages/user/user.js
+var api = require("../../api.js");
+const http = getApp();
 Page({
 
   /**
@@ -11,7 +12,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -24,38 +27,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var log_state = wx.getStorageSync("user_info") == "" ? false : true;
-    var a = {
-      user_info: log_state ? wx.getStorageSync("user_info") : '',
-      log_state: log_state
-    }
-    this.setData(a)
+    this.team_account();
   },
   skip(e) {
-    if (!this.data.log_state) {
-      return wx.showModal({
-        title: '提示',
-        content: '您还未登录，请登录后操作',
-        success(res) {
-          if (res.confirm) {
-            wx.navigateTo({
-              url: "/pages/login/login"
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
-    }
-    var url = e.currentTarget.dataset.url
+    var index = e.currentTarget.dataset.index
+    var message = this.data.account_list[index]
     wx.navigateTo({
-      url: url
+      url: "/pages/account-team-detail/account-team-detail?room_message=" + JSON.stringify(message)
     })
   },
-  go_login(e) {
-    var url = e.currentTarget.dataset.url
-    wx.navigateTo({
-      url: url
+  team_account() {
+    http.request({
+      url: api.account.team_account,
+      method: "POST",
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        console.log(res, "40");
+        if (res.code == 0) {
+          this.setData({
+            account_list: res.data
+          })
+        }
+      }
     })
   },
   /**

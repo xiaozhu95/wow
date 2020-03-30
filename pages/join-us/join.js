@@ -33,10 +33,6 @@ Page({
     });
   },
   inputPassword(e) {
-
-    wx.redirectTo({
-      url: '/pages/room-code/room-code'
-    })
     //键盘输入的密码 赋值给inputPassword
     if (this.data.inputPassword.length >= 6) {
 
@@ -74,6 +70,13 @@ Page({
     }
   },
   join_room() {
+    console.log(this.data.inputPassword.length < 6, "73");
+    if (this.data.inputPassword.length < 6) {
+      return wx.showToast({
+        title: '请输入完整房间码',
+        icon: 'none'
+      })
+    }
     var role_mesage = wx.getStorageSync("role-info");
     var user_info = wx.getStorageSync("user_info")
     var user = {};
@@ -85,7 +88,7 @@ Page({
       url: api.user.room,
       method: "POST",
       data: {
-        room_number: "512725",
+        room_number: this.data.inputPassword,
         role_id: role_mesage.id,
         service_id: role_mesage.service_id,
         camp_id: role_mesage.camp_id,
@@ -93,10 +96,15 @@ Page({
       },
       success: res => {
         console.log(res);
-        if (res == 1) {
+        if (res.code == 1) {
           return wx.showToast({
             title: res.msg,
             icon: 'none'
+          })
+        }
+        if (res.code == 0) {
+          wx.redirectTo({
+            url: '/pages/room-code/room-code?team_id=' + res.data
           })
         }
       }

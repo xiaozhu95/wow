@@ -59,25 +59,25 @@ Page({
       }, {
         "name": "HPS",
         "list": [{
-          "name": "1st",
+          "name": "H1st",
           "value": ""
         }, {
-          "name": "2st",
+          "name": "H2st",
           "value": ""
         }, {
-          "name": "3st",
+          "name": "H3st",
           "value": ""
         }]
       }, {
         "name": "DPS",
         "list": [{
-          "name": "1st",
+          "name": "D1st",
           "value": ""
         }, {
-          "name": "2st",
+          "name": "D2st",
           "value": ""
         }, {
-          "name": "3st",
+          "name": "D3st",
           "value": ""
         }]
       }, {
@@ -93,12 +93,6 @@ Page({
           "value": ""
         }, {
           "name": "灭火",
-          "value": ""
-        }]
-      }, {
-        "name": "惩罚",
-        "list": [{
-          "name": "惩罚",
           "value": ""
         }]
       }
@@ -220,10 +214,10 @@ Page({
 
     let createRoomStr = {
       room_num: current_data.roomNumber, //房间号
-      service_id: 1, //服务器id
-      service_name: "地域世界", //服务器名称
-      camp_id: 1, //阵营id
-      camp_name: "部落", //阵营名称
+      service_id: this.data.role_info.service_id, //服务器id
+      service_name: this.data.role_info.service_name, //服务器名称
+      camp_id: this.data.role_info.camp_id, //阵营id
+      camp_name: this.data.role_info.camp_name, //阵营名称
       transcript_id: current_data.transcriptText.id, //副本id 
       transcript_name: current_data.transcriptText.name, //副本id 
       team_type: "自强", //
@@ -435,7 +429,7 @@ Page({
         } else {
           res.forEach(e => {
             e.equipment.forEach(ee => {
-              ee.currency_type = 0
+              ee.currency_type = "0"
             })
           })
 
@@ -626,8 +620,10 @@ Page({
     let val = e.detail.value;
     if (id == "0") {
       this.data.floor_info.price = val;
+      // this.data.floor_info.price = 0;
     } else {
-      this.data.floor_info.add_price = val;
+      // this.data.floor_info.add_price = val;
+      this.data.floor_info.add_price = 0;
     }
     this.setData({
       floor_info: this.data.floor_info
@@ -677,9 +673,11 @@ Page({
     let floor_time_wap = this.data.floor_time_wap;
     let floor_time_pay = this.data.floor_time_pay;
     if (id == "wap") {
-      floor_info.end_time = floor_time_wap[val]
+      // floor_info.end_time = floor_time_wap[val]
+      floor_info.end_time = 0
     } else {
-      floor_info.pay_end_time = floor_time_pay[val]
+      // floor_info.pay_end_time = floor_time_pay[val]
+      floor_info.pay_end_time = 0
     }
     this.setData({
       floor_info: floor_info

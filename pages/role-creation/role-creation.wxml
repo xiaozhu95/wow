@@ -65,7 +65,7 @@
   <view class="madel_box">
     <view class="sever_title">
       <view>请选择服务器</view>
-      <view class="ser_close">x</view>
+      <view class="ser_close" bindtap="show_sel">x</view>
     </view>
     <view class="server_message">
       <view class="section">国服</view>

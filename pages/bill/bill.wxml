@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='房间' background='rgba(0, 0, 0, 0)' color='#fff' home="{{true}}" iconTheme='white' bindhome="handlerGohomeClick"></navBar>
+    <navBar title='房间' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   </view>
 
   <view class="bill-wraper">

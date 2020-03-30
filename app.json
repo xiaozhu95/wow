@@ -17,7 +17,10 @@
     "pages/account/account",
     "pages/offered/offered",
     "pages/feedback/feedback",
-    "pages/ios-pay/ios-pay"
+    "pages/ios-pay/ios-pay",
+    "pages/login/login",
+    "pages/account-team/account-team",
+    "pages/account-team-detail/account-team-detail"
   ],
   "tabBar": {
     "list": [
@@ -26,12 +29,6 @@
         "text": "活动",
         "iconPath": "images/group.png",
         "selectedIconPath": "images/group1.png"
-      },
-      {
-        "pagePath": "pages/bill/bill",
-        "text": "账单",
-        "iconPath": "images/bill.png",
-        "selectedIconPath": "images/bill1.png"
       },
       {
         "pagePath": "pages/user/user",
@@ -65,6 +62,8 @@
     "van-cell-group": "vant-weapp/cell-group/index",
     "van-radio": "vant-weapp/radio/index",
     "van-radio-group": "vant-weapp/radio-group/index",
-    "van-button": "vant-weapp/button/index"
+    "van-button": "vant-weapp/button/index",
+    "van-checkbox": "vant-weapp/checkbox/index",
+    "van-count-down": "vant-weapp/count-down/index"
   }
 }

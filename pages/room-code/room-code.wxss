@@ -5,7 +5,7 @@
 }
 
 .group_head {
-  padding: 10rpx 30rpx;
+  padding: 10rpx 0rpx 10rpx 30rpx;
 }
 
 .group_head .logo {
@@ -36,7 +36,7 @@
 
 .group_head .info {
   margin-left: 20rpx;
-  width: 100%;
+  width: 600rpx;
 }
 
 .group_head .name {
@@ -58,25 +58,22 @@
 .group_member .ul {
   margin-top: 14rpx;
 }
-.group_member .ul .li{
+
+.group_member .ul .li {
   margin-right: 20rpx;
   text-align: center;
 }
+
 .group_member .ul .li .logo {
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
   overflow: hidden;
-  
 }
 
 .group_member .ul .li .identity {
   color: #000;
   font-size: 22rpx;
-}
-
-.price_wraper {
-  margin-top: 20rpx;
 }
 
 .price_wraper .price_li {
@@ -112,14 +109,51 @@
   width: 100%;
   height: 100%;
 }
+
 .auction_wraper {
   padding-bottom: 100rpx;
 }
+
 .auction_ul {
   margin: 10rpx 20rpx;
   background-color: #fff;
   padding: 10rpx 20rpx;
 }
+
+.auction_ul .floor_type {
+  font-size: 20rpx;
+  margin-left: 10rpx;
+  padding: 4rpx 8rpx;
+  background-color: #d3d3d3;
+  border-radius: 8rpx;
+}
+
+.auction_box .floor_price {
+  font-size: 22rpx;
+  margin-top: 10rpx;
+}
+
+.floor_gm image{
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+.floor_gm text{
+  font-size: 24rpx;
+  margin-right: 10rpx;
+  color: #999;
+}
+.floor_gm .sh{
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #f7b10a;
+  text-align: center;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  line-height: 44rpx;
+  padding: 0rpx 16rpx;
+}
+
 
 .auction_box .title {
   font-weight: 600;
@@ -132,7 +166,8 @@
   text-align: center;
   font-size: 24rpx;
   margin-top: 10rpx;
-  line-height: 48rpx;
+  line-height: 44rpx;
+  padding: 0rpx 16rpx;
 }
 
 .top_bar {
@@ -140,9 +175,12 @@
   height: 70rpx;
   margin: 10rpx 20rpx;
 }
+
 .top_bar_li {
   flex: 1;
+  font-size: 24rpx;
 }
+
 .bar_item {
   display: inline-block;
   padding: 30rpx 16rpx;
@@ -154,48 +192,70 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: #f7b10a;
 }
+
 .equip_ul {
   max-height: 800rpx;
 }
+
 .equip_li image {
   width: 100%;
   height: 100%;
 }
+
 .equip_li {
   margin: 10rpx 20rpx;
   padding: 10rpx;
   background-color: #fff;
 }
+
 .equip_li .icon {
   width: 100rpx;
 }
+
 .equip_li .cover {
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
   overflow: hidden;
 }
+
 .equip_li .info {
   width: 500rpx;
   padding-left: 20rpx;
 }
+
 .equip_li .fun {
   width: 150rpx;
 }
+
 .equip_li .current_price {
   font-size: 24rpx;
   margin-top: 10rpx;
 }
+
 .equip_li .level {
-  font-size: 22rpx;
+  font-size: 20rpx;
   margin-left: 10rpx;
+  padding: 4rpx 8rpx;
+  background-color: #d3d3d3;
+  border-radius: 8rpx;
 }
+
+.equip_li .type {
+  font-size: 20rpx;
+  margin-left: 10rpx;
+  padding: 4rpx 8rpx;
+  background-color: #d3d3d3;
+  border-radius: 8rpx;
+}
+
 .fun_btn {
   position: fixed;
   width: 100%;
   left: 0px;
   bottom: 0px;
 }
+
 .fun_btn .bnt1 {
   flex: 1;
   height: 100rpx;
@@ -204,20 +264,25 @@
   color: #f7b10a;
   text-align: center;
 }
+
 .right_border {
   border-right: 1px solid rgba(247, 176, 10, 0.3);
 }
 
 /* 房间详细信息 */
+
 .group_box {
-  padding: 30rpx;
+  padding: 20rpx;
   max-height: 1082rpx;
+  min-height: 800rpx;
 }
+
 .group_box .li {
   font-size: 24rpx;
-  margin-bottom: 10rpx;
+  margin-bottom: 18rpx;
   color: rgba(0, 0, 0, 0.8);
 }
+
 .group_box .title {
   width: 200rpx;
   text-align: right;
@@ -225,24 +290,73 @@
   font-size: 26rpx;
   color: #000;
 }
-/* 成员信息 */
-.team_ul {
-  height: 1082rpx;
+
+.subsidies .type {
+  font-size: 20rpx;
+  padding: 2rpx 8rpx;
+  background-color: #d3d3d3;
+  border-radius: 10rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
 }
+
+/* 成员信息 */
+
+.team_ul {
+  height: 982rpx;
+}
+
+.team_ul .name {
+  padding: 10rpx;
+  font-size: 24rpx;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.team_ul .icon {
+  width: 60rpx;
+}
+
 .team_li {
   margin: 0rpx;
+  background-color: rgba(0, 0, 0, 0.2);
 }
+
+.team_ul .cover {
+  width: 50rpx;
+  height: 50rpx;
+}
+
 .team_li .info {
   width: 390rpx !important;
   padding-left: 20rpx;
 }
+
+.team_li .user_role_name {
+  font-weight: 600;
+}
+
 .team_li .info text {
   margin-right: 10rpx;
+  font-size: 22rpx;
+  color: #424242;
 }
+
 .team_li .fun {
-  width: 120rpx !important;
+  width: 280rpx !important;
   text-align: center;
 }
+
+.team_li .btn_sty {
+  float: right;
+  margin-left: 20rpx;
+}
+
+.team_li .level {
+  font-size: 20rpx !important;
+  padding: 2rpx 4rpx;
+  background-color: #dddcdc;
+}
+
 .team_li .btn_sty {
   padding: 4rpx 20rpx;
   display: inline;
@@ -255,7 +369,18 @@
   flex: 1;
 }
 
+.funBtn {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #000;
+  text-align: center;
+  font-size: 28rpx;
+  color: #f7b10a;
+}
+
 /* 添加装备 */
+
 .boss_box {
   height: 1180rpx;
   background-color: #2d2d2d !important;
@@ -289,14 +414,17 @@
 .eqiop_name .english_name {
   font-size: 22rpx;
 }
+
 .eqiop_icon {
   width: 80rpx;
   text-align: center;
 }
+
 .eqiop_icon image {
   width: 50rpx;
   height: 50rpx;
 }
+
 .l1_eqiop {
   width: 80rpx;
   position: relative;
@@ -332,10 +460,12 @@
   text-align: center;
   font-size: 24rpx;
 }
+
 .set_boss_equip {
   width: 100%;
   height: 160rpx;
 }
+
 .set_boss_equip .set_hook {
   height: 80rpx;
   color: #fff;
@@ -343,26 +473,31 @@
   padding-top: 8rpx;
   box-sizing: border-box;
 }
+
 .set_hook text {
   font-size: 22rpx;
   text-align: center;
   padding-top: 8rpx;
   padding-left: 10rpx;
 }
+
 .li_qu {
   width: 440rpx;
 }
+
 .set_boss_equip .set_boss_equip_btn {
   text-align: center;
   line-height: 80rpx;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
 .auction_type_picker {
   color: #ffd100;
   font-size: 24rpx;
   text-align: left;
 }
+
 .drop {
   width: 16rpx;
   height: 16rpx;
@@ -370,21 +505,26 @@
   top: 0rpx;
   right: 0rpx;
 }
+
 .eqiop_type {
   width: 100rpx;
   position: relative;
 }
+
 .set_up_input {
   width: 140rpx;
 }
+
 .equip_popup_title {
   color: #fff;
 }
 
 /* 设置时间 */
+
 .floor_li {
   margin-bottom: 30rpx;
 }
+
 .set_floor_btn {
   width: 100%;
   line-height: 80rpx;
@@ -393,9 +533,11 @@
   background-color: rgba(0, 0, 0, 0.6);
   margin-top: 80rpx;
 }
+
 .floor_time {
   margin-left: 30rpx;
 }
+
 .floorEquipIpunt {
   border: 1px solid #190f00;
   width: 200rpx;
@@ -403,71 +545,91 @@
   margin-left: 30rpx;
   text-align: center;
 }
+
 /* 添加装备 */
 
 /* 立即拍 */
+
 .pat_title {
   background-color: #2d2d2d;
   color: #fff;
 }
+
 .pat_box {
   height: 1082rpx;
   background-color: #2d2d2d;
 }
+
 .pat_box image {
   width: 100%;
   height: 100%;
 }
+
 .pat_box {
   padding: 30rpx;
 }
+
 .pat_box .cover {
   margin: 0rpx;
 }
+
 .pat_box .info {
   flex: 1;
   padding-left: 20rpx;
   color: #ffd100;
 }
+
 .record_box {
   margin-top: 30rpx;
 }
+
 .record_box .title {
   color: #fff;
 }
+
 .scroll_record {
   height: 400rpx;
   margin-top: 20rpx;
   border: 1px solid rgba(0, 0, 0, 0.582);
   padding: 20rpx;
 }
+
 .record_li {
   margin-bottom: 10rpx;
   color: #b4b4b4;
 }
+
 .record_li .cover_box {
-  width: 80rpx;
+  width: 50rpx;
 }
+
 .record_li .cover_box .cover {
-  width: 60rpx;
-  height: 60rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
+
 .record_box .name {
   width: 270rpx;
-}
-.record_box .timer {
   font-size: 24rpx;
-  width: 150rpx;
 }
+
+.record_box .timer {
+  font-size: 22rpx;
+  width: 180rpx;
+  text-align: center;
+}
+
 .record_box .price {
   width: 150rpx;
-  font-size: 24rpx;
+  font-size: 22rpx;
   text-align: center;
   color: #ffd100;
 }
+
 .pat_price_box {
   margin-top: 60rpx;
 }
+
 .pat_price {
   width: 100%;
   height: 80rpx;
@@ -475,12 +637,14 @@
   border-radius: 40rpx;
   text-align: center;
 }
+
 .note {
   color: #f7b10a;
   font-size: 24rpx;
   text-align: center;
   margin-top: 10rpx;
 }
+
 .set_pat {
   width: 100%;
   height: 80rpx;
@@ -491,4 +655,149 @@
   border-radius: 10rpx;
   margin-top: 80rpx;
 }
+
+.pat_box .type {
+  padding: 2rpx 10rpx;
+  background-color: #b4b4b4;
+  font-size: 22rpx;
+  margin-left: 20rpx;
+  color: #000;
+  border-radius: 8rpx;
+}
+
+.pat_count_down {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+}
+
+.pat_count_down .van-count-down {
+  color: #f7b10a;
+  font-size: 24rpx;
+  margin-left: 10rpx;
+}
+
+.pat_count_down .timer {
+  font-size: 24rpx;
+}
+
+.empty_list {
+  margin: 10rpx 20rpx;
+  background-color: #fff;
+  font-size: 24rpx;
+  line-height: 300rpx;
+  text-align: center;
+}
+
+/* 我的交易 */
+
+.bill_list {
+  background-color: #fff;
+  margin: 20rpx;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.bill_list image {
+  width: 100%;
+  height: 100%;
+}
+
+.bill_list .icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.bill_list .info {
+  flex: 1;
+  padding: 0rpx 20rpx;
+}
+
+.bill_list .info .name {
+  font-size: 28rpx;
+  color: #464646;
+}
+
+.bill_list .info .configuration {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  color: #a1a1a1;
+}
+
+.bill_list .info .configuration text {
+  margin-right: 20rpx;
+}
+
+.bill_list .pay {
+  padding: 15rpx 0rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #a1a1a1;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.bill_list .pay image {
+  border-radius: 50%;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.bill_list .pay text {
+  color: #464646;
+}
+
+.pay_for {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.on_pay {
+  position: absolute;
+  top: -34rpx;
+  right: 0px;
+  width: 138rpx !important;
+  height: 138rpx !important;
+}
+
+.pay_for .btn {
+  background-image: linear-gradient(135deg, #2c0403, #350802 70%, #2e0d00);
+  box-shadow: 0 3px 6px 0 rgba(36, 6, 2, 0.2);
+  color: #f7b10a;
+  border: none;
+  height: 54rpx;
+  line-height: 54rpx;
+  text-align: center;
+  width: 140rpx;
+  border-radius: 28rpx;
+}
+
+.pay_for .pay_time {
+  flex: 1;
+  font-size: 24rpx;
+  color: #a1a1a1;
+}
+
+.pay_for image {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+/* 我的交易 */
+
 /* 立即拍 */
+
+.open_game_title {
+  text-align: center;
+  margin: 60rpx;
+  font-weight: 600;
+}
+
+.boss_title {
+  color: #fff;
+  border-bottom: 1px solid #190f00;
+}
+
+.subsidy_title {
+  padding: 30rpx;
+}

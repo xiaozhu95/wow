@@ -17,8 +17,8 @@ Page({
     auction_type: ["人民币", "金币"],
     auction_typeIndex: 0,
     add_equip_popup: false,
-    floor_time_wap: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
-    floor_time_pay: ['5', '6', '7', '8', '9', '10'],
+    floor_time_wap: ['2','5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
+    floor_time_pay: ['2','5', '6', '7', '8', '9', '10'],
     floor_time_wap_index: 5,
     floor_time_pay_index: 0,
     pat_popup: false,
@@ -55,11 +55,11 @@ Page({
     that.equipment_list(this.data.top_bar_index);
     that.teamStatus();
 
-    this.data.info_setInterval = setInterval(e=>{
-      that.userTeamIdentity(that.options.team_id, user_info.id);
-      that.equipment_list(that.data.top_bar_index);
-      that.teamStatus();
-    },5000)
+    // this.data.info_setInterval = setInterval(e=>{
+    //   that.userTeamIdentity(that.options.team_id, user_info.id);
+    //   that.equipment_list(that.data.top_bar_index);
+    //   that.teamStatus();
+    // },5000)
 
     this.setData({
       info_setInterval: this.data.info_setInterval
@@ -136,45 +136,41 @@ Page({
 
 
     if (index == "-1") {
-      if (currency_type == 1) {
-        wx.showModal({
-          title: '地板售卖',
-          content: '你确定要支付' + room_info.floorInfo.price + dan + "成为地板吗？",
-          success(res) {
-            if (res.confirm) {
-              app.request({
-                url: api.payment.auction_pay,
-                method: "POST",
-                data: str,
-                success: res => {
-                  // console.log(res);
-                }
-              })
-            } else if (res.cancel) {
-              // console.log('用户点击取消')
-            }
-          }
-        })
+      let text = '';
+      if (room_info.floorInfo.currency_type == 2) {
+        text = '你确定要支付' + parseFloat(room_info.floorInfo.price)  + "元成为了地板";
       } else {
-        wx.showModal({
-          title: '地板售卖',
-          content: '你确定要支付' + room_info.floorInfo.price + dan + "成为地板吗？",
-          success(res) {
-            if (res.confirm) {
-              app.request({
-                url: api.payment.auction_pay,
-                method: "POST",
-                data: str,
-                success: res => {
-                  // console.log(res);
-                }
-              })
-            } else if (res.cancel) {
-              // console.log('用户点击取消')
-            }
-          }
-        })
+        text = '你已经在游戏中向团长转' + parseFloat(room_info.floorInfo.price)  + "金币了吗";
       }
+
+
+      wx.showModal({
+        title: '地板售卖',
+        content: text,
+        success(res) {
+          if (res.confirm) {
+            app.request({
+              url: api.payment.auction_pay,
+              method: "POST",
+              data: str,
+              success: res => {
+                let txt ='';
+                if (room_info.floorInfo.currency_type == 2) {
+                  txt = '你已经成功成为地板';
+                } else {
+                  txt = '请等待团长审核，你提交的金币';
+                }
+                wx.showModal({
+                  title: '提示',
+                  content: text
+                })
+              }
+            })
+          } else if (res.cancel) {
+            // console.log('用户点击取消')
+          }
+        }
+      })
 
     } else {
       app.request({
@@ -232,9 +228,9 @@ Page({
       method: "get",
       success: res => {
         if (res.code == 0) {
-          that.set_room_info(res.data.data[0].room_id, team_id);
+          that.set_room_info(res.data.room_id, team_id);
           this.setData({
-            team_info: res.data.data
+            team_info: res.data
           })
 
         }
@@ -526,8 +522,10 @@ Page({
   close_pat_popup() {
     let that = this;
     clearInterval(this.data.pay_setInterval);
+
     this.setData({
       pat_popup: false,
+      pay_setInterval:''
     })
   },
   //我的交易
@@ -597,7 +595,7 @@ Page({
 
     this.data.pay_setInterval = setInterval(e=>{
       that.auction_equip();
-    },3000)
+    },5000)
 
 
     let index = e.currentTarget.dataset.index;
@@ -617,10 +615,11 @@ Page({
   },
   //拍卖装备详情倒数时间结束
   set_equip_finish() {
+    clearInterval(this.data.pay_setInterval);
     if (this.data.pat_popup) {
-      wx.showModal({
-        title: '提示',
-        content: '当前装备拍卖已结束',
+      wx.showToast({
+        title: '拍卖结束',
+        icon: 'none',
       })
     }
   },
@@ -838,6 +837,7 @@ Page({
       },
       success: res => {
         if (res.code == 0) {
+
           if (res.data.teamMemberInfo.is_del==2){
             clearInterval(that.data.info_setInterval);
             wx.showModal({
@@ -851,9 +851,21 @@ Page({
                 
               }
             })
-            
           }
 
+          if (res.data.teamInfo.isdel == 2) {
+            clearInterval(that.data.info_setInterval);
+            wx.showModal({
+              title: '提示',
+              content: '团长已经解散这个团了！',
+              showCancel: false,
+              success(res) {
+                wx.switchTab({
+                  url: "/pages/index/index"
+                })
+              }
+            })
+          }
 
           // if (res.data.distributionInfo==1){
           //   clearInterval(that.data.info_setInterval);
@@ -969,6 +981,7 @@ Page({
    */
   onPullDownRefresh: function() {
     this.userTeamIdentity(this.data.team_id, this.data.user_id);
+    this.set_room_info(this.data.team_id, this.data.user_id);
     this.equipment_list(this.data.top_bar_index);
     this.teamStatus();
     this.transaction();

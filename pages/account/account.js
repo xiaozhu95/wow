@@ -29,7 +29,7 @@ Page({
   onShow: function() {},
   money(e) {
     this.setData({
-      money: e.delta.value
+      money: e.detail.value
     })
   },
   money_pay() {

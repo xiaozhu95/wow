@@ -6,12 +6,12 @@
   <view class="group_wraper">
     <view class="group_head flex_end">
       <view class="logo">
-        <image src="{{team_info[0].avatar}}"></image>
+        <image src="{{team_info.avatar}}"></image>
       </view>
       <view class="info flex_y flex_sb">
         <view>
           <view class="name">
-            {{team_info[0].user_role_name}}
+            {{team_info.user_role_name}}
           </view>
         </view>
         <view class="look" bindtap="group_popup">
@@ -43,11 +43,11 @@
 
   <view class="price_wraper flex_sa">
     <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor">
-      <view>{{team_info[0].amount}}</view>
+      <view>{{team_info.amount}}</view>
       <view class="text">总金额</view>
     </view>
     <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor">
-      <view>{{team_info[0].gold_coin}} </view>
+      <view>{{team_info.gold_coin}} </view>
       <view class="text">总金币</view>
     </view>
   </view>
@@ -79,7 +79,7 @@
             <text class="floor_type" wx:if="{{room_info.floorInfo.blue==1}}">蓝</text>
             <text class="floor_type" wx:if="{{room_info.floorInfo.green==1}}">绿</text>
           </view>
-          <view class="floor_price">售价 {{room_info.floorInfo.price}} {{room_info.floorInfo.currency_type=='1'?'元':'币'}}</view>
+          <view class="floor_price">售价 {{room_info.floorInfo.price}} {{room_info.floorInfo.currency_type=='2'?'元':'币'}}</view>
         </view>
         <view wx:if="{{floor.is_floor==0}}">
           <view class="btn_sty" bindtap="auction_pay" data-index="-1">成为地板</view>
@@ -248,14 +248,11 @@
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==3&&item.is_team==trading_list.is_team}}" style="width:280rpx;" bindtap="auction_pay" data-index="{{index}}">我已向团长支付金币</view>
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==4&&identity==1}}" style="width:180rpx;" bindtap="setReview" data-index="{{index}}">审核</view>
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==4&&identity!=1}}" style="width:180rpx;">待审核</view>
-                <view wx:if="{{identity==1&&item.is_team==1}}">
-                  <view class="btn" wx:if="{{item.currency_type==2&&item.end_after_pay!=0}}">去支付</view>
+                <view wx:if="{{item.type==3}}">
+                  <view class="btn" wx:if="{{item.currency_type==2&&item.end_after_pay!=0}}" bindtap="auction_pay" data-index="{{index}}">去支付</view>
                 </view>
 
 
-                <view wx:if="{{identity!=1&&item.is_team==0}}">
-                  <view class="btn" wx:if="{{item.currency_type==2&&item.end_after_pay!=0}}">去支付</view>
-                </view>
                 <!-- <view wx:if="{{item.end_after_pay==0&&item.is_team==trading_list.is_team}}">已失效</view> -->
                 <view wx:if="{{item.type==1}}">交易成功</view>
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==1&&item.is_team==0}}" style="background-color:#999;background-image:none;">通过审核</view>

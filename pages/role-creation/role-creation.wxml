@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <navBar title='角色添加' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="msg_list">
@@ -53,7 +53,7 @@
       <view class="equipped flex_sb">
         <view>装备评分</view>
         <view>
-          <input placeholder="请输入装备评分" style="text-align:right;" bindinput="rank" value="{{new_rank}}" />
+          <input placeholder="请输入装备评分" type="number" style="text-align:right;" bindinput="rank" value="{{new_rank}}" />
         </view>
       </view>
     </view>

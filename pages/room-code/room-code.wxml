@@ -18,7 +18,7 @@
           <view class="look_icon">
             <image src="../../images/look.png"></image>
           </view>
-          <view class="text">房间查看</view>
+          <view class="text">开团规则</view>
         </view>
       </view>
     </view>
@@ -42,11 +42,11 @@
   </view>
 
   <view class="price_wraper flex_sa">
-    <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor">
+    <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
       <view>{{team_info.amount}}</view>
       <view class="text">总金额</view>
     </view>
-    <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor">
+    <view class="price_li" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
       <view>{{team_info.gold_coin}} </view>
       <view class="text">总金币</view>
     </view>
@@ -68,8 +68,8 @@
   </view> -->
 
 
-  <view class="auction_wraper" wx:if="{{room_info.floor_status==1}}" style="margin-top:20rpx;">
-    <view class="auction_box">
+  <view class="auction_wraper" style="margin-top:20rpx;">
+    <view class="auction_box" wx:if="{{room_info.floor_status==1}}">
       <view class="title">地板拍卖</view>
       <view class="auction_ul flex_y flex_sb">
         <view>
@@ -82,7 +82,7 @@
           <view class="floor_price">售价 {{room_info.floorInfo.price}} {{room_info.floorInfo.currency_type=='2'?'元':'币'}}</view>
         </view>
         <view wx:if="{{floor.is_floor==0}}">
-          <view class="btn_sty" bindtap="auction_pay" data-index="-1">成为地板</view>
+          <view class="btn_sty" bindtap="auction_pay" data-index="-1">购买地板</view>
         </view>
         <view wx:if="{{floor.is_floor==1}}">
           <view class="floor_gm flex_y">
@@ -139,8 +139,11 @@
                 </view>
               </view>
               <view class="fun">
-                <view class="flex_y">剩余
-                  <van-count-down time="{{item.end_time*1000}}" format="mm:ss" />
+                <view class="flex_y" wx:if="{{item.end_time>0}}">剩余
+                  <van-count-down time="{{item.end_time*1000}}" format="mm:ss" bind:finish="set_equip_finish" data-index="{{index}}" data-id="0" />
+                </view>
+                <view class="flex_y" wx:if="{{item.end_time==0}}" style="font-size:22rpx;color:#f7b10a;">
+                  已结束，计算中
                 </view>
                 <view class="btn_sty" bindtap="set_pat_popup" data-index="{{index}}">立即拍</view>
               </view>
@@ -242,14 +245,16 @@
                 <view class="pay_time flex_y" wx:if="{{item.type!=1}}">
                   <image src="../../images/timer.png"></image>
                   支付剩余
-                  <van-count-down time="{{item.end_after_pay*1000}}" format="mm:ss" />
+                  <van-count-down time="{{item.end_after_pay*1000}}" format="mm:ss" bind:finish="set_equip_finish" data-index="{{index}}" data-id="1" />
                 </view>
 
-                <view class="btn" wx:if="{{item.currency_type==1&&item.type==3&&item.is_team==trading_list.is_team}}" style="width:280rpx;" bindtap="auction_pay" data-index="{{index}}">我已向团长支付金币</view>
+
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==4&&identity==1}}" style="width:180rpx;" bindtap="setReview" data-index="{{index}}">审核</view>
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==4&&identity!=1}}" style="width:180rpx;">待审核</view>
                 <view wx:if="{{item.type==3}}">
                   <view class="btn" wx:if="{{item.currency_type==2&&item.end_after_pay!=0}}" bindtap="auction_pay" data-index="{{index}}">去支付</view>
+                  <view class="btn" wx:if="{{item.currency_type==1&&item.end_after_pay!=0&&item.is_team==trading_list.is_team}}" style="width:280rpx;" bindtap="auction_pay" data-index="{{index}}">我已向团长支付金币</view>
+                  <view class="btn" wx:if="{{item.end_after_pay==0&&item.is_team==trading_list.is_team}}" style="width:280rpx;background-color:#999;background-image:none;">交易已结束，正在计算中</view>
                 </view>
 
 
@@ -284,7 +289,7 @@
   </view>
   <view class="fun_btn flex_vert" wx:if="{{identity==1&&teamInfo.isdel==1}}">
     <view class="bnt1 right_border" bindtap="add_equip_btn">添加装备</view>
-    <view class="bnt1" bindtap="skip" data-url="/pages/distributor/distributor">分配金额</view>
+    <view class="bnt1" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">分配金额</view>
   </view>
 
   <!-- 查看团队详细资料 -->
@@ -302,10 +307,17 @@
           <view>天使的房间</view>
         </view> -->
         <view class="li flex">
+          <view class="title flex-grow-0">房间号：</view>
+          <view class="flex_sb group_flex">
+            <view>{{room_info.room_num}}</view>
+            <view bindtap="copyBtn">复制</view>
+          </view>
+        </view>
+        <view class="li flex">
           <view class="title flex-grow-0">副本：</view>
           <view>{{room_info.transcript_name}}</view>
         </view>
-        <view class="li flex">
+        <view class="li flex" wx:if="{{room_info.yy_room_number.length>0}}">
           <view class="title flex-grow-0">YY房间：</view>
           <view>{{room_info.yy_room_number}}</view>
         </view>
@@ -313,11 +325,14 @@
           <view class="title flex-grow-0">服务器/阵营：</view>
           <view>{{room_info.service_name}}-{{room_info.camp_name}}</view>
         </view>
-
+        <view class="li flex" wx:if="{{room_info.expenditure>0}}">
+          <view class="title flex-grow-0">支出：</view>
+          <view>{{room_info.expenditure}}{{room_info.subsidy.currency_type==2?'元':room_info.subsidy.currency_type==1?'币':''}}</view>
+        </view>
         <view class="li flex">
           <view class="title flex-grow-0">补贴方式：</view>
           <view class="subsidies flex_wrap">
-            <view class="type" wx:for="{{room_info.subsidy.subsidy}}" wx:key="index">{{item.name}}-{{item.value}}{{room_info.subsidy.status==1?'%-':''}}{{room_info.subsidy.currency_type==1&&room_info.subsidy.status==2?'元':room_info.subsidy.currency_type==2&&room_info.subsidy.status==2?'币':''}}</view>
+            <view class="type" wx:for="{{room_info.subsidy.subsidy}}" wx:key="index" wx:if="{{item.value.length>0}}">{{item.name}}-{{item.value}}{{room_info.subsidy.status==1?'%-':''}}{{room_info.subsidy.currency_type==2&&room_info.subsidy.status==2?'元':room_info.subsidy.currency_type==1&&room_info.subsidy.status==2?'币':''}}</view>
           </view>
         </view>
         <view class="li flex">
@@ -335,18 +350,12 @@
               <text wx:if="{{room_info.floorInfo.purple==1}}">紫、</text>
               <text wx:if="{{room_info.floorInfo.blue==1}}">蓝、</text>
               <text wx:if="{{room_info.floorInfo.green==1}}">绿</text>
-              <text style="margin-left:20rpx;">售卖 {{room_info.floorInfo.price}} {{room_info.floorInfo.currency_type==1?'元':'币'}}</text>
+              <text style="margin-left:20rpx;">售卖 {{room_info.floorInfo.price}} {{room_info.floorInfo.currency_type==2?'元':'币'}}</text>
             </view>
           </view>
         </view>
-        <view class="li flex">
-          <view class="title flex-grow-0">房间密码：</view>
-          <view class="flex_sb group_flex">
-            <view>{{room_info.room_num}}</view>
-            <view bindtap="copyBtn">复制</view>
-          </view>
-        </view>
-        <view class="li flex">
+
+        <view class="li flex" wx:if="{{room_info.note.length>0}}">
           <view class="title flex-grow-0">团长备注：</view>
           <view>
             {{room_info.note}}
@@ -543,22 +552,24 @@
         </view>
         <view class="flex_y floor_li">
           <view>拍卖时间</view>
-          <view>
+          <view class="time_wap">
             <picker bindchange="floor_time_Change" data-id="wap" value="{{floor_time_wap_index}}" range="{{floor_time_wap}}">
               <view class="floor_time">
                 {{floor_time_wap[floor_time_wap_index]}} 分钟
               </view>
             </picker>
+            <image src="../../images/drop1.png" class="drop"></image>
           </view>
         </view>
         <view class="flex_y floor_li">
           <view>支付时间</view>
-          <view>
+          <view class="time_wap">
             <picker bindchange="floor_time_Change" data-id="pay" value="{{floor_time_pay_index}}" range="{{floor_time_pay}}">
               <view class="floor_time">
                 {{floor_time_pay[floor_time_pay_index]}} 分钟
               </view>
             </picker>
+            <image src="../../images/drop1.png" class="drop"></image>
           </view>
         </view>
         <view class="set_floor_btn" bindtap="set_eqiop_btn">
@@ -593,7 +604,7 @@
             <view class="flex_sb pat_count_down">
               <view>{{now_equip_info.auction_info.is_visit==1?'当前最高':'起拍价'}} {{now_equip_info.auction_info.equipment_price}} {{now_equip_info.auction_info.currency_type==2?'元':'币'}}</view>
               <view class="flex timer">剩余时间
-                <van-count-down time="{{now_equip_info.auction_info.end_time*1000}}" format="mm:ss" bind:finish="set_equip_finish" />
+                <van-count-down time="{{now_equip_info.auction_info.end_time*1000}}" format="mm:ss" bind:finish="set_equip_finish" data-index="{{index}}" />
               </view>
             </view>
           </view>
@@ -620,7 +631,7 @@
         </view>
 
         <view class="pat_price_box">
-          <input type="number" class="pat_price" placeholder="请输入参与的价格" bindinput="pat_price"></input>
+          <input type="number" class="pat_price" placeholder="请输入参与的价格" bindinput="pat_price" value="{{now_pat_price}}"></input>
           <view class="note">每次加价不能少于{{now_equip_info.auction_info.add_price}}{{now_equip_info.auction_info.currency_type==2?'元':'币'}}</view>
         </view>
 

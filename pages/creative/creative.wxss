@@ -150,7 +150,7 @@ radio .wx-radio-input {
   font-size: 24rpx;
   border: 1px solid #bbb;
   margin-left: 40rpx !important;
-  height: 50rpx !important;
+  height: 60rpx !important;
 }
 
 .floorEquipcheckbox .wx-checkbox-input {
@@ -166,8 +166,8 @@ radio .wx-radio-input {
   color: #f7b10a;
   border: 1px solid #c77e19;
   font-size: 26rpx;
-  height: 70rpx;
-  line-height: 68rpx;
+  height: 80rpx;
+  line-height: 78rpx;
   text-align: center;
   width: 400rpx;
   margin-top: 20rpx;
@@ -178,8 +178,8 @@ radio .wx-radio-input {
   color: #f7b10a;
   border: 1px solid #c77e19;
   font-size: 26rpx;
-  height: 92rpx;
-  line-height: 90rpx;
+  height: 100rpx;
+  line-height: 100rpx;
   text-align: center;
   width: 400rpx;
   margin-top: 40rpx;
@@ -201,7 +201,7 @@ radio .wx-radio-input {
 }
 
 .boss_equip_h {
-  height: 858rpx;
+  height: 838rpx;
 }
 
 .boss_equip {
@@ -290,7 +290,7 @@ radio .wx-radio-input {
 }
 .set_boss_equip .set_boss_equip_btn {
   text-align: center;
-  line-height: 80rpx;
+  line-height: 100rpx;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
 }
@@ -322,7 +322,7 @@ radio .wx-radio-input {
 }
 .set_floor_btn {
   width: 100%;
-  line-height: 80rpx;
+  line-height: 90rpx;
   text-align: center;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);

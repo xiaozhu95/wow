@@ -30,12 +30,24 @@ Page({
   onShow: function() {
     this.get_message();
     this.member();
+    this.getPayList();
+  },
+  getPayList() {
+    http.request({
+      url: api.team.getPayList + "?team_id=" + this.options.team_id,
+      method: "get",
+      success: res => {
+        this.setData({
+          teaminfo: res.data.teaminfo
+        })
+      }
+    })
   },
   member() {
     http.request({
       url: api.room.member,
       data: {
-        team_id: 4
+        team_id: this.options.team_id
       },
       success: res => {
         var troops = res.data;
@@ -43,8 +55,12 @@ Page({
           troops[i].checked = false;
           troops[i].select = false;
         }
+        var team_k = res.data.filter(item => {
+          return item.identity == 1
+        });
         this.setData({
-          team_list: res.data
+          team_list: res.data,
+          team_k: team_k
         })
       }
     })
@@ -59,8 +75,8 @@ Page({
     http.request({
       url: api.room.room_detail,
       data: {
-        room_id: 4,
-        team_id: 4
+        room_id: this.options.room_id,
+        team_id: this.options.team_id
       },
       success: res => {
         this.setData({
@@ -72,9 +88,16 @@ Page({
   },
   show_madel(e) {
     var profession = e.currentTarget.dataset.index;
+    
+    this.data.team_list.forEach(e=>{
+      e.checked = false
+    })
+    
+
     this.setData({
       show_member: !this.data.show_member,
-      prof_index: profession
+      prof_index: profession,
+      team_list: this.data.team_list
     })
   },
   show_punishment() {
@@ -102,6 +125,7 @@ Page({
     })
   },
   sure_people() {
+    
     var new_index = this.data.prof_index;
     var people_id = [];
     var select_people = this.data.team_list.filter(res => {
@@ -112,6 +136,55 @@ Page({
     }
     this.data.subsidy_list[new_index].user_id = people_id;
     this.data.subsidy_list[new_index].user_info = select_people;
+
+
+
+    let subsidy_list = this.data.subsidy_list;
+    let now_price = 0;
+    subsidy_list.forEach(e => {
+      if (e.value) {
+        let num = 0, num_price = 0
+        if (e.user_id) {
+          num = e.user_id.length;
+          num_price = num * parseFloat(e.value);
+        }
+        now_price = now_price + num_price;
+      }
+    })
+
+    if (this.data.subsidy.status==1){
+      if (now_price > 100) {
+        wx.showToast({
+          title: '当前选择的人数累计百分比' + now_price + '%，已超过100%',
+          icon: 'none',
+          duration: 3000
+        })
+        return;
+      }
+    }else{
+      if (this.data.subsidy.currency_type == 2) {
+        if (now_price > parseFloat(this.data.teaminfo.amount)) {
+          wx.showToast({
+            title: '当前选择的人数累计补贴' + now_price + '元，已超过当前总金额' + this.data.teaminfo.amount + '元',
+            icon: 'none',
+            duration: 3000
+          })
+          return;
+        }
+      } else {
+        if (now_price > parseInt(this.data.gold_coin)) {
+          wx.showToast({
+            title: '当前选择的人数累计补贴' + now_price + '金币，已超过当前总金币' + this.data.teaminfo.amount + '金币',
+            icon: 'none',
+            duration: 3000
+          })
+          return;
+        }
+      }
+    }
+    
+
+
     this.setData({
       show_member: !this.data.show_member,
       subsidy_list: this.data.subsidy_list
@@ -126,10 +199,19 @@ Page({
       show_punishment: !this.data.show_punishment
     })
   },
+  close_madel() {
+    this.setData({
+      show_member: false
+    })
+  },
+  close_punishment() {
+    this.setData({
+      show_punishment: false
+    })
+  },
   checkboxChange: function(e) {
     var checked = e.detail.value
     var changed = {}
-    console.log(this.data.team_list, "108");
     for (var i = 0; i < this.data.team_list.length; i++) {
       if (checked.indexOf(this.data.team_list[i].user_role_name) !== -1) {
         changed['team_list[' + i + '].checked'] = true;
@@ -174,14 +256,14 @@ Page({
       url: api.room.allowance,
       method: "POST",
       data: {
-        room_id: 4,
-        team_id: 4,
+        room_id: this.options.room_id,
+        team_id: this.options.team_id,
         currency_type: this.data.subsidy.currency_type,
         status: this.data.subsidy.status,
+        user_id: this.data.team_k[0].user_id,
         subsidy: new_subsidy
       },
       success: res => {
-        console.log(res, "130");
         if (res.code == 0) {
           wx.navigateTo({
             url: '/pages/distributor-sure/distributor-sure?allocation=' + JSON.stringify(res.data)

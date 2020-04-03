@@ -30,7 +30,7 @@
             <view>+{{item.money}}￥</view>
             <view>
               <view wx:if="{{item.vote_status && item.vote_status == 1}}">已同意</view>
-              <view wx:elif="{{!item.vote_status}}">考虑中</view>
+              <view wx:elif="{{!item.vote_status}}">{{}}考虑中</view>
             </view>
           </view>
           <view class="flex_sb" style="padding-top:20rpx;">
@@ -43,10 +43,15 @@
   </view>
 </view>
 <view class="base">
-  <view>
+  <view class="" wx:if="{{allot_info.status == 2 || allot_info.status == 3}}">
+    <view wx:if="{{allot_info.status == 2}}" class="sure_btn btn1">分账成功</view>
+    <view wx:if="{{allot_info.status == 3}}" class="sure_btn btn2">分账失败，请等团长从新分账</view>
   </view>
-  <view class="sure_btn flex_sb">
-    <view class="btn1 flex-grow-1" bindtap="save_select" data-status="2">不同意</view>
-    <view class="btn2 flex-grow-1" bindtap="save_select" data-status="1">同意</view>
+  <view wx:else>
+    <view wx:if="{{allot[0].vote_status}}" class="sure_btn hint">您已投过票，正在统计中{{allot_info.status == 2}}</view>
+    <view class="sure_btn flex_sb" wx:else>
+      <view class="btn1 flex-grow-1" bindtap="save_select" data-status="2">不同意</view>
+      <view class="btn2 flex-grow-1" bindtap="save_select" data-status="1">同意</view>
+    </view>
   </view>
 </view>

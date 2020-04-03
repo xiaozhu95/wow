@@ -1,25 +1,29 @@
 <view class='nav'>
-  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <navBar title='分配' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
-  <view class="new_moreny">当前总金额：1000</view>
+  <view class="new_moreny flex_sa flex_y">
+    <view class="amount">{{teaminfo.amount}}元</view>
+    <view class="vertical"></view>
+    <view class="amount">{{teaminfo.gold_coin}}金币</view>
+  </view>
 
   <view class="subsidy_list">
-    <view class="hint">补贴</view>
-    <view class="item flex_sb" wx:for="{{subsidy_list}}" wx:key="index">
+    <view class="hint">补贴方式</view>
+    <view class="item flex_sb" wx:for="{{subsidy_list}}" wx:key="index" wx:if="{{item.value}}">
       <view class="flex_y">
         <view class="position">{{item.name}}</view>
         <view>{{item.value}}
           <text wx:if="{{subsidy.status == 1}}">%</text>
           <text wx:eles>
-            <text wx:if="{{subsidy.currency_type == 1}}">元</text>
-          <text wx:if="{{subsidy.currency_type == 2}}">金币</text>
+            <text wx:if="{{subsidy.currency_type == 1}}">金币</text>
+          <text wx:if="{{subsidy.currency_type == 2}}">元</text>
           </text>
         </view>
       </view>
       <view bindtap="show_madel" data-index="{{index}}">
         <view wx:if="{{item.user_info && item.user_info.length > 0}}" class="flex_y">
-          <view wx:for="{{item.user_info}}" wx:for-item="user_message">
+          <view wx:for="{{item.user_info}}" wx:for-item="user_message" wx:key="index">
             <image class="user_img" src="{{user_message.avatar}}"></image>
           </view>
         </view>
@@ -39,7 +43,7 @@
   <view class="popup_bj" bindtap="show_madel"></view>
   <view class="popup_box">
     <view class="popup_content flex_sb flex_y">
-      <view class="btn_box">取消</view>
+      <view class="btn_box" bindtap="close_madel">取消</view>
       <view>成员列表</view>
       <view class="btn_box" bindtap="sure_people">确定</view>
     </view>
@@ -57,7 +61,7 @@
               <view> </view>
               <!-- <view class="label-1__icon-checked" style="opacity:{{item.checked ? 1: 0}}">{{item.checked}}</view> -->
             </view>
-            <view class="label-1__text {{item.checked ? 'checked': ''}}">{{item.user_role_name}}</view>
+            <view class="label-1__text {{item.checked ? 'checked': ''}}" style="font-size:22rpx;">{{item.user_role_name}}</view>
           </label>
         </view>
       </checkbox-group>
@@ -68,7 +72,7 @@
   <view class="popup_bj" bindtap="show_punishment"></view>
   <view class="popup_box">
     <view class="popup_content flex_sb flex_y">
-      <view class="btn_box">取消</view>
+      <view class="btn_box" bindtap="close_punishment">取消</view>
       <view>成员列表</view>
       <view class="btn_box" bindtap="sure_punishment">确定</view>
     </view>

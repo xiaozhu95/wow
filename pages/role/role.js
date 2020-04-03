@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    title:'角色列表'
   },
 
   /**
@@ -16,6 +16,16 @@ Page({
     if (this.options.id){
       this.setData({
         id: this.options.id
+      })
+      let tit = "";
+      if (this.options.id == 1) {
+        tit = "加入活动"
+      } else if (this.options.id==2){
+        tit = "创建活动"
+      }
+
+      this.setData({
+        title:tit
       })
     }
    
@@ -40,9 +50,70 @@ Page({
       index: data.index,
       wx_index: data.wx_index,
     }
+    this.checkUserRoomExit();
     this.setData({
       indexdata: indexdata
     }) 
+  },
+  //判断这个用户是否已经进入过房间
+  checkUserRoomExit() {
+    http.request({
+      url: api.room.checkUserRoomExit,
+      method: "POST",
+      data: { user_id: wx.getStorageSync("user_info").id },
+      success: res => {
+        if (res.code == 0) {
+          this.setData({
+            code_id: res.code
+          })
+        } else if (res.code == 2) {
+          this.setData({
+            code_id: res.code,
+            checkUserRoomExit: res.data
+          })
+        }
+
+      }
+    })
+  },
+  role_delete(e) {
+
+    if (this.data.code_id==0){
+      var index = e.currentTarget.dataset.index;
+      var wx_index = e.currentTarget.dataset.wx_index;
+      var role_message = this.data.role_lsit[wx_index].list[index];
+      http.request({
+        url: api.role.role_delete,
+        data: {
+          id: role_message.id,
+          user_id: wx.getStorageSync("user_info").id,
+        },
+        success: res => {
+          console.log(res);
+          if (res.code == 0) {
+            wx.showToast({
+              title: res.data,
+              icon:'none'
+            })
+            this.data.role_lsit[wx_index].list.splice(index, 1);
+            this.setData({
+              role_lsit: this.data.role_lsit
+            })
+          } else {
+            wx.showToast({
+              title: res.msg,
+            })
+          }
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '你当前正在房间中，请结束之后再来删除',
+        icon:'none'
+      })
+    }
+
+ 
   },
   gain_role() {
     http.request({
@@ -82,11 +153,8 @@ Page({
     wx.setStorageSync("role-info-index", indexdata);
     
     if (this.data.id){
-      if (this.data.id == 0) {
-        wx.navigateBack({
-          delta: 1,
-        })
-      } if (this.data.id == 1) {
+
+      if (this.data.id == 1) {
         wx.navigateTo({
           url: "/pages/join-us/join"
         })

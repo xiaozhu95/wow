@@ -17,8 +17,8 @@ Page({
     auction_type: ["人民币", "金币"],
     auction_typeIndex: 0,
     add_equip_popup: false,
-    floor_time_wap: ['2','5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
-    floor_time_pay: ['2','5', '6', '7', '8', '9', '10'],
+    floor_time_wap: ['1','5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
+    floor_time_pay: ['1','5', '6', '7', '8', '9', '10','60'],
     floor_time_wap_index: 5,
     floor_time_pay_index: 0,
     pat_popup: false,
@@ -55,11 +55,13 @@ Page({
     that.equipment_list(this.data.top_bar_index);
     that.teamStatus();
 
-    // this.data.info_setInterval = setInterval(e=>{
-    //   that.userTeamIdentity(that.options.team_id, user_info.id);
-    //   that.equipment_list(that.data.top_bar_index);
-    //   that.teamStatus();
-    // },5000)
+    this.data.info_setInterval = setInterval(e=>{
+      that.userTeamIdentity(that.options.team_id, user_info.id);
+      that.equipment_list(that.data.top_bar_index);
+      that.teamStatus();
+      that.transaction();
+      that.team_list(that.data.team_id, that.data.user_id);
+    },5000)
 
     this.setData({
       info_setInterval: this.data.info_setInterval
@@ -100,13 +102,11 @@ Page({
       return;
     }
 
-
     let index = e.currentTarget.dataset.index;
     let room_info = this.data.room_info;
     let trading_list = "", trading_dan="";
     let str = "";
     let dan = room_info.floorInfo.currency_type == 2 ? '元' : '金币';
-    let currency_type = 1;
     if (index == "-1") {
       str = {
         team_id: this.data.team_id,
@@ -115,8 +115,7 @@ Page({
         equipment_name: 0,
         user_id: this.data.user_id,
         price: parseFloat(room_info.floorInfo.price),
-        // currency_type: room_info.floorInfo.currency_type,
-        currency_type: currency_type,
+        currency_type: room_info.floorInfo.currency_type,
         auction_log_id: 0,
       }
     } else {
@@ -182,13 +181,27 @@ Page({
           let text = "";
           if(res.code==0){
             text = '你成功支付' + parseFloat(trading_list.price) + trading_dan;
+            wx.showModal({
+              title: '提示',
+              content: text
+            })
           }else{
             text = res.msg;
+            wx.showModal({
+              title: '提示',
+              content: text,
+              success(res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: "/pages/account/account"
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
           }
-          wx.showModal({
-            title: '提示',
-            content: text
-          })
+         
 
         }
       })
@@ -230,7 +243,8 @@ Page({
         if (res.code == 0) {
           that.set_room_info(res.data.room_id, team_id);
           this.setData({
-            team_info: res.data
+            team_info: res.data,
+            room_id:res.data.room_id
           })
 
         }
@@ -363,7 +377,6 @@ Page({
             title: '退出成功',
             icon: "none"
           });
-
           wx.switchTab({
             url: '/pages/index/index'
           })
@@ -516,13 +529,14 @@ Page({
   skip(e) {
     var url = e.currentTarget.dataset.url
     wx.navigateTo({
-      url: url
+      url: url + "&room_id=" + this.data.room_id
     })
   },
+  //关闭拍卖详情
   close_pat_popup() {
     let that = this;
     clearInterval(this.data.pay_setInterval);
-
+    this.equipment_list(this.data.top_bar_index);
     this.setData({
       pat_popup: false,
       pay_setInterval:''
@@ -578,6 +592,11 @@ Page({
             content: res.msg
           })
         }
+
+        this.setData({
+          now_pat_price: ""
+        })
+
       }
     })
   },
@@ -614,14 +633,43 @@ Page({
     })
   },
   //拍卖装备详情倒数时间结束
-  set_equip_finish() {
+  set_equip_finish(e) {
+    let index = e.currentTarget.dataset.index; 
+    let id = e.currentTarget.dataset.id; 
+    
+    
     clearInterval(this.data.pay_setInterval);
     if (this.data.pat_popup) {
       wx.showToast({
         title: '拍卖结束',
         icon: 'none',
       })
+    }else{
+      if(id=="0"){
+        let auction_equip = this.data.equip_list[index];
+        wx.showToast({
+          title: "当前" + auction_equip.equipment_name + "装备拍卖已结束",
+          icon: 'none',
+          duration: 5000
+        })
+        this.equipment_list(this.data.top_bar_index);
+
+      }else if(id=="1"){
+        console.log(this.data.trading_list);
+
+        let trading_list = this.data.trading_list.data[index];
+        wx.showToast({
+          title: "当前" + trading_list.equipment_name + "装备付款已结束，你没有付款！",
+          icon: 'none',
+          duration: 5000
+        })
+        this.transaction();
+      }
     }
+
+    this.setData({
+      pay_setInterval:""
+    })
   },
   //参加拍卖详情接口
   auction_equip() {
@@ -867,19 +915,19 @@ Page({
             })
           }
 
-          // if (res.data.distributionInfo==1){
-          //   clearInterval(that.data.info_setInterval);
-          //   wx.showModal({
-          //     title: '提示',
-          //     content: '团长已分账，请前往分账页面查看。',
-          //     showCancel:false,
-          //     success(res) {
-          //       wx.navigateTo({
-          //         url: "/pages/account-team/account-team"
-          //       })
-          //     }
-          //   })
-          // }
+          if (res.data.distributionInfo==1){
+            clearInterval(that.data.info_setInterval);
+            wx.showModal({
+              title: '提示',
+              content: '团长已分账，请前往分账页面查看。',
+              showCancel:false,
+              success(res) {
+                wx.navigateTo({
+                  url: "/pages/account-team/account-team"
+                })
+              }
+            })
+          }
           
 
           this.setData({
@@ -935,17 +983,20 @@ Page({
     })
   },
   //复制
-  copyBtn: function(e) {
-    var that = this;
+  copyBtn() {
+    var room_num = String(this.data.room_info.room_num);
+
     wx.setClipboardData({
       //去找上面的数据
-      data: this.data.room_info.room_num,
-      success: function(res) {
+      data: room_num,
+      success:function(res) {
         wx.showToast({
           title: '复制成功',
         });
       }
     });
+
+
   },
   //返回首页
   handlerGohomeClick() {
@@ -967,6 +1018,9 @@ Page({
    */
   onHide: function() {
     clearInterval(this.data.info_setInterval);
+    this.setData({
+      info_setInterval: ""
+    })
   },
 
   /**
@@ -974,17 +1028,27 @@ Page({
    */
   onUnload: function() {
     clearInterval(this.data.info_setInterval);
+    this.setData({
+      info_setInterval: ""
+    })
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.userTeamIdentity(this.data.team_id, this.data.user_id);
-    this.set_room_info(this.data.team_id, this.data.user_id);
-    this.equipment_list(this.data.top_bar_index);
-    this.teamStatus();
-    this.transaction();
+  
+    wx.showNavigationBarLoading()
+
+    setTimeout(() => {
+      wx.hideNavigationBarLoading()
+      this.userTeamIdentity(this.data.team_id, this.data.user_id);
+      this.set_room_info(this.data.team_id, this.data.user_id);
+      this.equipment_list(this.data.top_bar_index);
+      this.teamStatus();
+      this.transaction();
+      wx.stopPullDownRefresh()
+    }, 2000);
   },
 
   /**
@@ -998,6 +1062,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      path: "/pages/index/index",
+      title: "大家一起来组团"
+    };
   }
 })

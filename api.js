@@ -13,7 +13,8 @@ var _api_root = "{$_api_root}",
       addQusetion: _api_root + "user_question/addQusetion",
       wxappInfo: _api_root + "user/wxappInfo",
       sms: _api_root + "sms/sms",
-      smsLogin: _api_root + "sms/smsLogin"
+      smsLogin: _api_root + "sms/smsLogin",
+      getuserinfo: _api_root + "user/getUserInfo"
     },
     boss: {
       transcriptAndBoos: _api_root + "transcript_boss/transcriptAndBoos"
@@ -39,17 +40,21 @@ var _api_root = "{$_api_root}",
       teamLeaderDissolutionTeam: _api_root + "team_member/teamLeaderDissolutionTeam",
       teamStatus: _api_root + "team_member/ajaxPullTeamStatusAndUserStatus",
       removeTeamMember: _api_root + "team_member/removeTeamMember",
+      getPayList: _api_root + "auction_pay/getPayList"
     },
     role: {
       add_role: _api_root + "role/addrole",
       server: _api_root + "service/getlist",
       profession: _api_root + "occupation/getlist",
       role_lsit: _api_root + "role/getlist",
-      talent: _api_root + "talent/getchilds"
+      talent: _api_root + "talent/getchilds",
+      role_delete: _api_root + "role/delete"
     },
     payment: {
       pay: _api_root + "pay_log/add",
       auction_pay: _api_root + "auction_pay/pay",
+      recode_mony: _api_root + "user_money_log/getlist",
+      auctionList: _api_root + "auction_pay/auctionList",
     },
     equipment: {
       addequipment: _api_root + "auction_equipment/addequipment",
@@ -62,7 +67,8 @@ var _api_root = "{$_api_root}",
     account: {
       team_account: _api_root + "team_member/userTeamInfo",
       account_detail: _api_root + "distribution/getDistributionDetail",
-      startVote: _api_root + "distribution/startVote"
+      startVote: _api_root + "distribution/startVote",
+      auctionOrderList: _api_root + "auction_equipment/auctionOrderList",
     }
   }
 module.exports = api;

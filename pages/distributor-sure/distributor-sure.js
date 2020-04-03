@@ -13,8 +13,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options, "15");
-    console.log(JSON.parse(this.options.allocation), "16");
     var allocation = JSON.parse(this.options.allocation);
     this.setData({
       allocation_list: allocation
@@ -95,7 +93,8 @@ Page({
       url: api.room.distribution,
       method: "POST",
       data: {
-        params: this.data.allocation_list
+        params: this.data.allocation_list,
+        user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
         if (res.code == 0) {

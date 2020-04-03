@@ -4,27 +4,27 @@
   </view>
 
   <view class="bill-wraper">
-    <view class="bill_list" wx:for="{{10}}" wx:key="index">
+    <view class="bill_list" wx:for="{{equip_list}}" wx:key="index">
       <view class="flex_y">
-        <view class="icon flex-grow-0">
-          <image src="../../images/icon.png"></image>
+        <view class="icon flex-grow-0" wx:if="{{item.equipment_id!=0}}">
+          <image src="{{item.equipment_icon}}"></image>
         </view>
         <view class="info">
-          <view class="name">玛拉达斯，黑龙军团的符文之剑</view>
-          <view class="configuration">
-            <text>单手剑</text>
-            <text>lv75</text>
+          <view class="name">{{item.equipment_name}}</view>
+          <view class="configuration" wx:if="{{item.equipment_id!=0}}">
+            <text>{{item.equipment_type}}</text>
+            <text>lv{{item.equipment_grade}}</text>
           </view>
         </view>
+        
       </view>
       <view class="pay">
-        共1件装备 应付金额：
-        <text>27.90元</text>
+        支付金额：
+        <text>{{item.price}}{{item.currency_type==2?'元':'金币'}}</text>
       </view>
-      <view class="pay_for flex_y flex_end">
-        <view class="pay_time flex_y">
-          <image src="../../images/timer.png"></image> 支付剩余 9分50 </view>
-        <view class="btn">去支付</view>
+      <view class="pay_for flex_sb">
+        <view>{{item.pay_time}}</view>
+        <view>{{item.pay_type==1?'交易成功':'交易失败'}}</view>
       </view>
     </view>
   </view>

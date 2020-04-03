@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='自定义样式' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <navBar title='分配' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="allot_list">
@@ -10,9 +10,9 @@
             <image class="img" src="{{item.userInfo.avatar}}"></image>
             <view>
               <view>名称：{{item.userInfo.user_role_name}}</view>
-              <view>
-                <text>收入：{{item.money}}￥ </text>
-                <text wx:if="{{item.deduction}}">扣除：{{item.deduction}}</text>
+              <view style="font-size:24rpx;font-weight: bold;">
+                <text>收入：{{item.money}}￥ {{item.goldGoin}}金币</text>
+                <text wx:if="{{item.deduction}}" style="padding-left:10rpx;">扣除：{{item.deduction}}</text>
               </view>
             </view>
           </view>
@@ -27,11 +27,11 @@
 </view>
 <van-popup show="{{ show }}" bind:close="showPopup" round>
   <view class="popup_content">
-    <view class="hint">充值</view>
+    <view class="hint">扣除</view>
     <view class="flex_y" style="padding-bottom: 20rpx;">
       <view style="padding-right:20rpx;">金额</view>
       <input placeholder="请输入金额" bindinput="deduct" value="{{money}}" type="number" />
     </view>
-    <view class="pay" bindtap="money_pay">充值</view>
+    <view class="pay" bindtap="money_pay">确定扣除</view>
   </view>
 </van-popup>

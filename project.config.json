@@ -78,7 +78,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "金币分配",
 					"pathName": "pages/distributor/distributor",
 					"query": "",
@@ -123,6 +123,21 @@
 					"id": -1,
 					"name": "问题",
 					"pathName": "pages/feedback/feedback",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/creative/creative",
+					"pathName": "pages/creative/creative",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/distributor/distributor",
+					"pathName": "pages/distributor/distributor",
+					"query": "",
 					"scene": null
 				}
 			]

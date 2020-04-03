@@ -2,6 +2,6 @@
   <view class="content">
     <view class="creative" bindtap="create">创建活动</view>
     <view class="join" wx:if="{{code_id==0||!code_id}}" bindtap="join_activity">加入活动</view>
-    <view class="join" wx:if="{{code_id==2}}" bindtap="skip" data-url="/pages/room-code/room-code?team_id={{checkUserRoomExit.id}}">进入房间</view>
+    <view class="join" wx:if="{{code_id==2}}" bindtap="skip" data-url="/pages/room-code/room-code?team_id={{checkUserRoomExit.id}}">进入活动</view>
   </view>
 </view>

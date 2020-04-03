@@ -6,14 +6,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    show: false
+    show: false,
+    p: 1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    this.setData({
+      user_info: wx.getStorageSync("user_info")
+    })
   },
 
   /**
@@ -26,13 +29,22 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    this.recod_money();
+  },
   money(e) {
     this.setData({
       money: e.detail.value
     })
   },
+  getmoney() {
+    wx.showToast({
+      title: '敬请期待',
+      icon: 'none',
+    })
+  },
   money_pay() {
+    var that = this;
     wx.showLoading({
         title: '正在加载',
       }),
@@ -46,7 +58,6 @@ Page({
           price: this.data.money
         },
         success: res => {
-          console.log(res.data.timeStamp, "40");
           wx.hideLoading();
           var pay_data = res.data;
           0 == res.code && wx.requestPayment({
@@ -56,40 +67,60 @@ Page({
             signType: pay_data.signType,
             paySign: pay_data.paySign,
             success(arr) {
-              console.log(arr, "54");
+              that.setData({
+                show: false
+              })
+              that.get_userinfo();
+              that.recod_money();
             },
-            fail(arr) {
-              console.log(arr, "56");
-              console.log(pay_data, "57")
-            },
-            complete: function(e) {
-              console.log(e, "61");
-            }
+            fail(arr) {},
+            complete: function(e) {}
           })
           console.log(57);
         }
       })
   },
+  recod_money() {
+    wx.showLoading({
+        title: '正在加载中',
+      }),
+      http.request({
+        url: api.payment.recode_mony,
+        data: {
+          user_id: wx.getStorageSync("user_info").id
+        },
+        success: res => {
+          wx.hideLoading();
+          this.setData({
+            recode: res.data.data,
+            p: this.data.p + 1
+          })
+        }
+      })
+  },
+  get_userinfo() {
+    http.request({
+      url: api.user.getuserinfo,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        if (res.code == 0) {
+          wx.setStorageSync("user_info", res.data), this.setData({
+            user_info: wx.getStorageSync("user_info")
+          })
+        } else {
+          wx.showToast({
+            title: res.msg,
+            icon: "none"
+          })
+        }
+      }
+    })
+  },
   showPopup() {
     this.setData({
       show: !this.data.show
-    });
-  },
-  handlerGobackClick(delta) {
-    const pages = getCurrentPages();
-    if (pages.length >= 2) {
-      wx.navigateBack({
-        delta: delta
-      });
-    } else {
-      wx.navigateTo({
-        url: '/pages/index/index'
-      });
-    }
-  },
-  handlerGohomeClick() {
-    wx.navigateTo({
-      url: '/pages/index/index'
     });
   },
   /**
@@ -117,7 +148,32 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    console.log("11");
+    wx.showLoading({
+        title: '正在加载中',
+      }),
+      http.request({
+        url: api.payment.recode_mony,
+        data: {
+          user_id: wx.getStorageSync("user_info").id,
+          p: this.data.p
+        },
+        success: res => {
+          wx.hideLoading();
+          if (res.data.data.length > 0) {
+            var new_list = [...this.data.recode, ...res.data.data];
+            this.setData({
+              p: this.data.p + 1,
+              recode: new_list
+            })
+          } else {
+            wx.showToast({
+              title: "没有更多了",
+              icon: "none"
+            })
+          }
+        }
+      })
   },
 
   /**

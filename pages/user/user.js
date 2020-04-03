@@ -1,4 +1,5 @@
-// pages/user/user.js
+var api = require("../../api.js");
+const http = getApp();
 Page({
 
   /**
@@ -11,7 +12,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function(options) {
+
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -29,7 +32,22 @@ Page({
       user_info: log_state ? wx.getStorageSync("user_info") : '',
       log_state: log_state
     }
+    if (log_state) {
+      this.get_userinfo();
+    }
     this.setData(a)
+  },
+  get_userinfo() {
+    http.request({
+      url: api.user.getuserinfo,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        if (res.code == 0) {}
+        wx.setStorageSync("user_info", res.data)
+      }
+    })
   },
   skip(e) {
     if (!this.data.log_state) {

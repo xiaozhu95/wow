@@ -1,16 +1,19 @@
-.lxy-nav-bar {
-  background-color: transparent !important;
+page {
+  background-image: none;
+  background: #eee;
 }
 
 .main {
   padding: 0 20rpx;
+  padding-top: 270rpx;
+  padding-bottom: 20rpx;
+  box-sizing: border-box;
 }
 
 .header {
-  /* height: 300rpx; */
+  position: fixed;
+  width: 100%;
   background: #fff;
-  margin-bottom: 20rpx;
-  border-radius: 25rpx;
 }
 
 .score_title {
@@ -85,4 +88,5 @@
   border-radius: 15rpx;
   color: #fff;
   background: #64b265;
+  margin-top: 44rpx;
 }

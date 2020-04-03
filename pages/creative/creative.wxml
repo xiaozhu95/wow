@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='创建房间' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='创建活动' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
   </view>
 
   <van-popup show="{{transcript_popup}}" position="bottom" custom-style="height: 264px;">
@@ -31,7 +31,7 @@
       <!-- 补贴方式 -->
       <view class="list flex">
         <view class="title flex-grow-0">补贴方式</view>
-        <view class="ul flex_wrap">
+        <view class="ul">
           <view>
             <radio-group class="radio-group" bindchange="subsidiesChange" data-id="0">
               <radio class="floorRadio" wx:for="{{subsidies_type}}" wx:key="name" value="{{item.type}}" checked="{{item.checked}}">
@@ -39,7 +39,7 @@
               </radio>
             </radio-group>
           </view>
-          <view>
+          <view style="margin-top:10rpx;">
             <radio-group class="radio-group" bindchange="subsidiesChange" data-id="1">
               <radio class="floorRadio" wx:for="{{allot_type}}" wx:key="name" value="{{item.type}}" checked="{{item.checked}}">
                 <text>{{item.value}}</text>
@@ -52,7 +52,7 @@
       <view class="list flex_y">
         <view class="title">支出</view>
         <input type="text" class="inputSty" placeholder="请输入支出(固定)" placeholder-style="color:#000" bindinput="set_expenditure"></input>
-        {{subsidies_index==1?'元':'币'}}
+        {{subsidies_index==2?'元':'币'}}
       </view>
 
       <view class="subsidies">
@@ -62,7 +62,7 @@
             <view class="sub_input flex_y" wx:for="{{item.list}}" wx:key="index" wx:for-index="idx">
               <text class="it_name">{{item.name}}</text>
               <input type="number" class="subsidiesInput" bindinput="subsidiesInput" value="{{item.value}}" data-index="{{index}}" data-idx="{{idx}}"></input>
-              <text>{{subsidies_index==1&&allot_index==2?'元':subsidies_index==2&&allot_index==2?"币":"%"}}</text>
+              <text>{{subsidies_index==2&&allot_index==2?'元':subsidies_index==1&&allot_index==2?"币":"%"}}</text>
             </view>
           </view>
 
@@ -113,8 +113,9 @@
             </radio>
           </radio-group>
 
-          <view class="popup" wx:if="{{floor_popup}}">
-            <view class="popup_bj" bindtap="close_floor_btn"></view>
+
+
+          <van-popup show="{{ floor_popup }}" position="bottom">
             <view class="popup_box">
               <view class="close" bindtap="close_floor_btn">
                 <image src="../../images/close.png"></image>
@@ -180,14 +181,19 @@
 
             </view>
 
-          </view>
+
+          </van-popup>
+
+
+
+
         </view>
       </view>
       <!-- YY房间号 -->
-      <view class="list flex_y">
+      <view class="list flex_y" wx:if="{{!floor_popup}}">
         <view class="title">团长备注</view>
         <!-- <input type="text" class="inputSty" placeholder="备注" placeholder-style="color:#000" bindinput="set_yy"></input> -->
-        <textarea bindblur="setNote" auto-height placeholder="备注" placeholder-style="color:#000" class="inputSty" />
+        <textarea bindblur="setNote" auto-height placeholder="备注" placeholder-style="color:#000" class="inputSty" wx:if="{{!transcript_popup}}"/>
       </view>
 
       <!-- 填写装备起拍价格 -->

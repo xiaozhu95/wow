@@ -4,31 +4,47 @@
 <view class="content">
   <view class="cash_content" style="margin-bottom:20rpx;">
     <view class="flex_y">
-      <view>当前金额</view>
-      <view class="cash_money">￥10000</view>
+      <view style="color:#b4b4b4">金额</view>
+      <view class="cash_money">￥{{teaminfo.amount}}</view>
     </view>
-    <!-- <view class="start" bindtap="skip" data-url="/pages/distributor-detail/distributor-detail">开始分配：50元</view> -->
     <view class="cash_detail">
-      <view class="flex_sb" style="padding-bottom:20rpx;">
-        <view>预计分配</view>
-        <view>查看更多</view>
-      </view>
-      <view class="cash_list">
+      <view class="record_box">
+        <scroll-view class="scroll_record" scroll-y="{{true}}">
+          <view class="flex_y record_li" wx:for="{{currencyMoney}}" wx:key="index" wx:if="{{currencyMoney.length>0}}">
+            <view class="name">{{item.equipment_name}}</view>
+            <view class="timer">{{item.create_time}}</view>
+            <view class="price">{{item.price}}{{item.currency_type==2?'元':'币'}}</view>
+          </view>
+          <view class="flex_y record_li" wx:if="{{currencyMoney.length==0}}">
+            <view>
+              暂时没有记录
+            </view>
+          </view>
+        </scroll-view>
       </view>
     </view>
   </view>
   <view class="cash_content">
     <view class="flex_y">
-      <view>当前金额</view>
-      <view class="cash_money">10000</view>
+      <view style="color:#b4b4b4">金币</view>
+      <view class="cash_money">{{teaminfo.gold_coin}}金币</view>
     </view>
     <view class="cash_detail">
-      <view class="flex-reverse" style="padding-bottom:20rpx;">
-        <view>查看更多</view>
-      </view>
-      <view class="cash_list">
+      <view class="record_box">
+        <scroll-view class="scroll_record" scroll-y="{{true}}">
+          <view class="flex_y record_li" wx:for="{{currencyCoin}}" wx:key="index" wx:if="{{currencyCoin.length>0}}">
+            <view class="name">{{item.equipment_name}}</view>
+            <view class="timer">{{item.create_time}}</view>
+            <view class="price">{{item.price}}{{item.currency_type==2?'元':'币'}}</view>
+          </view>
+          <view class="flex_y record_li" wx:if="{{currencyCoin.length==0}}">
+            <view>
+              暂时没有记录
+            </view>
+          </view>
+        </scroll-view>
       </view>
     </view>
   </view>
-  <view class="start" bindtap="skip" data-url="/pages/distributor-detail/distributor-detail">开始分配：50元</view>
+  <view class="start" bindtap="skip" data-url="/pages/distributor-detail/distributor-detail" wx:if="{{identity==1}}">开始分配</view>
 </view>

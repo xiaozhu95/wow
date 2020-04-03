@@ -18,23 +18,22 @@ Page({
     this.setData({
       user_id: user_info.id,
     })
+
+    this.auctionList();
   },
-  //我的交易
-  transaction() {
+
+  auctionList() {
     app.request({
-      url: api.equipment.transaction,
-      method: "post",
+      url: api.payment.auctionList,
+      method: "POST",
       data: {
-        team_id: '',
-        user_id: this.data.user_id
+        user_id: this.data.user_id,
       },
       success: res => {
-        // console.log(res);
-        // if (res.code == 0) {
-        //   this.setData({
-        //     trading_list: res.data
-        //   })
-        // }
+        console.log(res);
+        this.setData({
+          equip_list: res.data.data
+        })
       }
     })
   },

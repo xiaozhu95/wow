@@ -9,7 +9,7 @@
 
 .allot_item {
   padding: 0 20rpx;
-  background: #fff;
+  background: #fff; 
 }
 
 .allot_box:first-child {
@@ -31,12 +31,14 @@
 }
 
 .grant {
-  width: 200rpx;
   height: 80rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 25rpx;
   text-align: center;
   line-height: 80rpx;
   background: #fff;
-  margin: 80rpx auto 0 auto;
+  margin-top: 80rpx;
 }
 
 .popup_content {
@@ -58,4 +60,5 @@
   border-radius: 15rpx;
   color: #fff;
   background: #64b265;
+  margin-top: 20rpx;
 }

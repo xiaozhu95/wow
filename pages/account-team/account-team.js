@@ -29,12 +29,27 @@ Page({
   onShow: function() {
     this.team_account();
   },
+  countDown() {
+
+    this.setData({
+      lodingtiem: setTimeout(this.countDown, 1000)
+    })
+  },
   skip(e) {
+
     var index = e.currentTarget.dataset.index
     var message = this.data.account_list[index]
-    wx.navigateTo({
-      url: "/pages/account-team-detail/account-team-detail?room_message=" + JSON.stringify(message)
-    })
+
+    if (message.isdel != 2 && message.distributionInfo==0){
+      wx.navigateTo({
+        url: "/pages/room-code/room-code?team_id="+message.team_id
+      })
+    } else if (message.isdel != 2 && message.distributionInfo == 1){
+      wx.navigateTo({
+        url: "/pages/account-team-detail/account-team-detail?room_message=" + JSON.stringify(message)
+      })
+    } 
+   
   },
   team_account() {
     http.request({
@@ -44,7 +59,7 @@ Page({
         user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
-        console.log(res, "40");
+        console.log(res, "53");
         if (res.code == 0) {
           this.setData({
             account_list: res.data

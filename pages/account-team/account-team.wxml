@@ -1,7 +1,10 @@
 <view class="content">
   <view class="list" wx:if="{{account_list.length > 0}}">
     <view class="item" wx:for="{{account_list}}" wx:key="index" bindtap="skip" data-url="/pages/account-team-detail/account-team-detail?team_id={{item.team_id}}" data-index="{{index}}">
-      <view class="room" style="border-bottm:1rpx solid #a5a5a5;">房间码：{{item.room_num}}</view>
+      <view class="room flex_sb" style="border-bottm:1rpx solid #a5a5a5;">
+        <text>房间码：{{item.room_num}}</text>
+        <text>{{item.distributionInfo==0&&item.isdel!=2?'进行中':item.distributionInfo==1&&item.isdel!=2?'已分账':'解散'}}</text>
+      </view>
       <view class="team_content flex_y flex_sb">
         <view class="" style="text-align: center;">
           <image src="{{item.avatar}}"></image>

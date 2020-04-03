@@ -76,7 +76,6 @@ Page({
         tribetemArr: this.data.tribetemArr,
         selectItemArr: this.data.selectItemArr
       })
-
     }
     if (this.data.currentItem == 2) {
       wx.showLoading({
@@ -151,6 +150,18 @@ Page({
     })
   },
   rank(e) {
+    let val = parseFloat(e.detail.value);
+    if (val > 10000){
+      wx.showToast({
+        title: '装备评分不能大于10000',
+        icon:'none'
+      })
+      this.setData({
+        new_rank: ""
+      })
+      return;
+    }
+
     this.setData({
       new_rank: e.detail.value
     })
@@ -210,6 +221,17 @@ Page({
                 delta: 1
               })
             }
+          })
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: res.msg
+          })
+        }
+        if (res.code == 1) {
+          wx.showToast({
+            title: res.msg,
+            icon: "none"
           })
         }
       }

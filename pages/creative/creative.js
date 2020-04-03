@@ -9,20 +9,19 @@ Page({
     },
     transcript_popup: false,
     subsidies_type: [{
-        type: 1,
+        type: 2,
         value: '人民币',
         checked: 'true'
       },
       {
-        type: 2,
+        type: 1,
         value: '金币'
       }
     ],
-    subsidies_index: 1,
+    subsidies_index: 2,
     allot_type: [{
         type: 1,
         value: '百分比',
-
       },
       {
         type: 2,
@@ -145,17 +144,17 @@ Page({
     auction_typeIndex: 0,
     floor_popup: false,
     floor_way: [{
-        type: 1,
+        type: 2,
         value: '人民币',
         checked: 'true'
       },
       {
-        type: 2,
+        type: 1,
         value: '金币'
       }
     ],
     floor_info: { //起拍地板信息
-      currency_type: 1, //币种，1-人民币，2-金币
+      currency_type: 2, //币种，2-人民币，1-金币
       price: "", //价格
       add_price: "", //每次加价
       purple: 2, //紫 1-开启，2-不开启
@@ -170,7 +169,7 @@ Page({
     yy_room_number: "", //YY房间号
     expenditure: "",  //支出
     note:"", //团长备注
-    floor_status:1,
+    floor_status:2,
   },
   onLoad: function(options) {
     var role_info = wx.getStorageSync("role-info");
@@ -238,6 +237,7 @@ Page({
       }, //用户信息 
     }
 
+    console.log(createRoomStr);
 
     app.request({
       url: api.room.createRoom,
@@ -257,9 +257,7 @@ Page({
         }
       }
     })
-    // wx.redirectTo({
-    //   url: '/pages/room-code/room-code'
-    // });
+
   },
   setNote(e){
     this.setData({
@@ -297,7 +295,28 @@ Page({
     let val = e.detail.value;
     let index = e.currentTarget.dataset.index;
     let idx = e.currentTarget.dataset.idx;
-    this.data.subsidy_data[index].list[idx].value = val
+    let subsidy_data = this.data.subsidy_data;
+
+    subsidy_data[index].list[idx].value = val
+    
+    if (this.data.allot_index==1){
+      let isval = 0;
+      subsidy_data.forEach(e=>{
+        e.list.forEach(elist=>{
+          if (elist.value){
+            isval = isval + parseFloat(elist.value);
+          }
+        })
+      })
+      if (isval >= 100) {
+        wx.showToast({
+          title: '你的补贴百分比已超过百分之百',
+          icon: 'none'
+        })
+        subsidy_data[index].list[idx].value = ""
+      }
+    }
+
     this.setData({
       subsidy_data: this.data.subsidy_data
     })
@@ -475,9 +494,28 @@ Page({
 
   //设置地板
   set_floor_btn() {
-    this.setData({
-      floor_popup: false
-    })
+    if (this.data.floor_info.price.length==0){
+      wx.showToast({
+        title: '售买价不能为空',
+        icon: 'none',
+      })
+      return;
+    }
+
+    if (this.data.floor_info.purple == 1 || this.data.floor_info.blue == 1 || this.data.floor_info.green == 1){
+      this.setData({
+        floor_popup: false
+      })
+    }else{
+      wx.showToast({
+        title: '地板收购装备颜色勾选不能为空',
+        icon: 'none',
+      })
+    }
+
+    
+
+    
   },
   close_floor_btn() {
     let arr = this.data.floor.map(e => {
@@ -589,12 +627,18 @@ Page({
     if (e.detail.value == 1) {
       this.setData({
         floor_popup: true,
+        floor_status: 1,
+        note: e.detail.value,
+        floorNum: e.detail.value,
+      })
+    }else{
+      this.setData({
+        floorNum: e.detail.value,
+        floor_status: 2,
+        note: e.detail.value
       })
     }
-    this.setData({
-      floorNum: e.detail.value,
-      note: e.detail.value
-    })
+    
   },
   //选择地板起拍币种
   floor_way_Change: function(e) {

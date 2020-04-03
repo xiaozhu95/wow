@@ -31,24 +31,24 @@
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/offered/offered">
+      <!-- <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/offered/offered">
         <view>我参加过的团</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
-      </view>
+      </view> -->
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/bill/bill">
         <view>已拍的</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/ios-pay/ios-pay">
+      <!-- <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/ios-pay/ios-pay">
         <view>ios充值问题</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
-      </view>
+      </view> -->
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/feedback/feedback">
         <view>意见反馈</view>
         <view>

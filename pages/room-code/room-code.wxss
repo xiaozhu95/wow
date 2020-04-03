@@ -220,12 +220,12 @@
 }
 
 .equip_li .info {
-  width: 500rpx;
+  width: 470rpx;
   padding-left: 20rpx;
 }
 
 .equip_li .fun {
-  width: 150rpx;
+  width: 180rpx;
 }
 
 .equip_li .current_price {
@@ -544,6 +544,21 @@
   font-size: 24rpx;
   margin-left: 30rpx;
   text-align: center;
+  height: 60rpx;
+
+}
+
+
+.time_wap{
+  width: 200rpx;
+  position: relative;
+}
+.time_wap .drop{
+  width: 22rpx;
+  height: 22rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
 }
 
 /* 添加装备 */

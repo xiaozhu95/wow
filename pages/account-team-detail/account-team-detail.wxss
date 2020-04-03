@@ -80,3 +80,10 @@ page {
   /* height: 100rpx; */
   bottom: 0;
 }
+
+.hint {
+  font-size: 32rpx;
+  font-weight: bold;
+  height: 100rpx;
+  line-height: 100rpx;
+}

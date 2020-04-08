@@ -56,13 +56,15 @@
       </view>
 
       <view class="subsidies">
+        <view class="unit">
+          <text>单位/{{subsidies_index==2&&allot_index==2?'元':subsidies_index==1&&allot_index==2?"币":subsidies_index==2&&allot_index==1?'%-元':subsidies_index==1&&allot_index==1?"%-币":''}}</text>
+        </view>
         <view wx:for="{{subsidy_data}}" wx:key="index" class="sub_li flex_y">
           <view class="sub_name">{{item.name}}</view>
           <view class="sub_ul flex_wrap">
             <view class="sub_input flex_y" wx:for="{{item.list}}" wx:key="index" wx:for-index="idx">
               <text class="it_name">{{item.name}}</text>
               <input type="number" class="subsidiesInput" bindinput="subsidiesInput" value="{{item.value}}" data-index="{{index}}" data-idx="{{idx}}"></input>
-              <text>{{subsidies_index==2&&allot_index==2?'元':subsidies_index==1&&allot_index==2?"币":"%"}}</text>
             </view>
           </view>
 

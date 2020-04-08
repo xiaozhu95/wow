@@ -6,13 +6,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    isiphone:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    let that = this;
+    let isiphone=true;
+    wx.getSystemInfo({
+      success: function (res) {
+        if (res.platform == "devtools") {
+          isiphone = true
+        } else if (res.platform == "ios") {
+          isiphone = true
+        } else if (res.platform == "android") {
+          isiphone = false
+        }
+      }
+    })
+
+    that.setData({
+      isiphone: isiphone
+    })
 
   },
 
@@ -44,8 +61,12 @@ Page({
         user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
-        if (res.code == 0) {}
-        wx.setStorageSync("user_info", res.data)
+        if (res.code == 0) {
+          wx.setStorageSync("user_info", res.data);
+          this.setData({
+            user_info: res.data
+          })
+        }
       }
     })
   },

@@ -32,6 +32,7 @@ Page({
     trading_list: "", //我的交易列表
     pay_setInterval: "", //点击拍卖列表的拍卖按钮
     info_setInterval: "", //点击拍卖列表的拍卖按钮
+    teamInfo:''
   },
 
   /**
@@ -51,23 +52,40 @@ Page({
       team_id: this.options.team_id,
     })
     let that = this;
+    
     that.userTeamIdentity(that.options.team_id, user_info.id);
     that.equipment_list(this.data.top_bar_index);
     that.teamStatus();
+    this.set_timer();
 
-    this.data.info_setInterval = setInterval(e=>{
-      that.userTeamIdentity(that.options.team_id, user_info.id);
+  },
+  //定时任务
+  set_timer(){
+    let that = this;
+    let info_setInterval = setInterval(e => {
+      that.userTeamIdentity(that.data.team_id, that.data.user_id);
       that.equipment_list(that.data.top_bar_index);
       that.teamStatus();
       that.transaction();
       that.team_list(that.data.team_id, that.data.user_id);
-    },5000)
-
+      that.team_info(that.data.team_id);
+    }, 5000)
     this.setData({
-      info_setInterval: this.data.info_setInterval
+      info_setInterval: info_setInterval
     })
   },
-  //地板金币支付 审核
+  //清除任务
+  set_clear(){
+    clearInterval(this.data.info_setInterval);
+    this.setData({
+      info_setInterval: null
+    })
+  },
+
+
+
+
+  //地板金币 审核
   setReview(e){
     let index = e.currentTarget.dataset.index;
     let order_id = "";
@@ -84,14 +102,16 @@ Page({
           title: '提示',
           content: res.msg,
         })
+        this.set_clear();
         this.teamStatus();
         this.team_info(this.data.team_id,this.data.user_id);
         this.transaction();
+        this.set_timer();
       }
     }) 
   },
 
-  //立即付钱
+  //立即付钱、支付
   auction_pay(e) {
 
     if (this.data.identity == 3) {
@@ -153,16 +173,26 @@ Page({
               method: "POST",
               data: str,
               success: res => {
-                let txt ='';
-                if (room_info.floorInfo.currency_type == 2) {
-                  txt = '你已经成功成为地板';
-                } else {
-                  txt = '请等待团长审核，你提交的金币';
+                if(res.code==0){
+                  let txt = '';
+                  if (room_info.floorInfo.currency_type == 2) {
+                    txt = '你已经成功成为地板';
+                  } else {
+                    txt = '请等待团长审核，你提交的金币';
+                  }
+
+                  wx.showModal({
+                    title: '提示',
+                    content: txt
+                  })
+                }else{
+                  wx.showModal({
+                    title: '提示',
+                    content: res.msg
+                  })
                 }
-                wx.showModal({
-                  title: '提示',
-                  content: text
-                })
+
+               
               }
             })
           } else if (res.cancel) {
@@ -216,18 +246,20 @@ Page({
       method: "get",
       success: res => {
         if (res.code == 0) {
-          let id = res.data.transcript_id;
-          var transcript_value = wx.getStorageSync("transcript" + id);
-          if (transcript_value == "") {
-            this.transcriptAndBoos(id);
-          } else {
-            this.setData({
-              boss_list: transcript_value,
-              transcript_id: res.data.transcript_id
-            })
-          }
+          // let id = res.data.transcript_id;
+          // var transcript_value = wx.getStorageSync("transcript" + id);
+          // console.log(transcript_value);
+          // if (transcript_value == "") {
+          //   this.transcriptAndBoos(id);
+          // } else {
+          //   this.setData({
+          //     boss_list: transcript_value,
+          //     transcript_id: res.data.transcript_id
+          //   })
+          // }
           this.setData({
-            room_info: res.data
+            room_info: res.data,
+            transcript_id: res.data.transcript_id
           })
         }
       }
@@ -655,14 +687,14 @@ Page({
         this.equipment_list(this.data.top_bar_index);
 
       }else if(id=="1"){
-        console.log(this.data.trading_list);
+        // console.log(this.data.trading_list);
 
-        let trading_list = this.data.trading_list.data[index];
-        wx.showToast({
-          title: "当前" + trading_list.equipment_name + "装备付款已结束，你没有付款！",
-          icon: 'none',
-          duration: 5000
-        })
+        // let trading_list = this.data.trading_list.data[index];
+        // wx.showToast({
+        //   title: "当前" + trading_list.equipment_name + "装备付款已结束，你没有付款！",
+        //   icon: 'none',
+        //   duration: 5000
+        // })
         this.transaction();
       }
     }
@@ -782,6 +814,15 @@ Page({
   },
 
   add_equip_btn() {
+    var transcript_value = wx.getStorageSync("transcript" + this.data.transcript_id);
+    if (transcript_value == "") {
+      this.transcriptAndBoos(this.data.transcript_id);
+    } else {
+      this.setData({
+        boss_list: transcript_value
+      })
+    }
+
     this.setData({
       equip_popup: true,
     })
@@ -885,9 +926,8 @@ Page({
       },
       success: res => {
         if (res.code == 0) {
-
           if (res.data.teamMemberInfo.is_del==2){
-            clearInterval(that.data.info_setInterval);
+            this.set_clear();
             wx.showModal({
               title: '提示',
               content: '你已被团长踢出！',
@@ -896,13 +936,12 @@ Page({
                 wx.switchTab({
                   url: "/pages/index/index"
                 })
-                
               }
             })
           }
 
           if (res.data.teamInfo.isdel == 2) {
-            clearInterval(that.data.info_setInterval);
+            this.set_clear();
             wx.showModal({
               title: '提示',
               content: '团长已经解散这个团了！',
@@ -913,16 +952,16 @@ Page({
                 })
               }
             })
-          }
+          } 
 
           if (res.data.distributionInfo==1){
-            clearInterval(that.data.info_setInterval);
+            this.set_clear();
             wx.showModal({
               title: '提示',
               content: '团长已分账，请前往分账页面查看。',
               showCancel:false,
               success(res) {
-                wx.navigateTo({
+                wx.redirectTo({
                   url: "/pages/account-team/account-team"
                 })
               }
@@ -1017,20 +1056,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-    clearInterval(this.data.info_setInterval);
-    this.setData({
-      info_setInterval: ""
-    })
+    this.set_clear();
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    clearInterval(this.data.info_setInterval);
-    this.setData({
-      info_setInterval: ""
-    })
+    this.set_clear();
   },
 
   /**
@@ -1040,14 +1073,17 @@ Page({
   
     wx.showNavigationBarLoading()
 
-    setTimeout(() => {
+    let setTimeout= setTimeout(() => {
       wx.hideNavigationBarLoading()
       this.userTeamIdentity(this.data.team_id, this.data.user_id);
       this.set_room_info(this.data.team_id, this.data.user_id);
       this.equipment_list(this.data.top_bar_index);
       this.teamStatus();
       this.transaction();
+
       wx.stopPullDownRefresh()
+
+      clearTimeOut(setTimeout)
     }, 2000);
   },
 

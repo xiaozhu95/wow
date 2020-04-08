@@ -8,21 +8,21 @@ Page({
     legal_show: false,
     mobile: ''
   },
-  onLoad: function (e) {
+  onLoad: function(e) {
     wx.hideShareMenu();
     // t.pageOnLoad(this);
     // this.agreement();
   },
-  onReady: function () {
+  onReady: function() {
     // t.pageOnReady(this);
   },
-  onShow: function () {
+  onShow: function() {
     // t.pageOnShow(this);
   },
-  onHide: function () {
+  onHide: function() {
     // t.pageOnHide(this);
   },
-  onUnload: function () {
+  onUnload: function() {
     // t.pageOnUnload(this);
   },
   get_user() {
@@ -45,13 +45,13 @@ Page({
       }
     })
   },
-  getUserInfo: function (t) {
+  getUserInfo: function(t) {
     var that = this;
     "getUserInfo:ok" == t.detail.errMsg && (wx.showLoading({
       title: "正在登录",
       mask: !0
     }), wx.login({
-      success: function (o) {
+      success: function(o) {
         var n = o.code;
         getApp().request({
           url: e.passport.login,
@@ -63,7 +63,7 @@ Page({
             iv: t.detail.iv,
             signature: t.detail.signature
           },
-          success: function (e) {
+          success: function(e) {
             wx.hideLoading();
             if (1 == e.code) {
               wx.setStorageSync("access_token", e.data.token);
@@ -73,9 +73,15 @@ Page({
                 icon: "none"
               });
               that.setData({
-                show_madel: true,
                 user_info: e.data
               })
+              if (e.data.mobile) {
+                that.refuse();
+              } else {
+                that.setData({
+                  show_madel: true
+                })
+              }
               // that.get_user();
             } else wx.showModal({
               title: "提示",
@@ -83,23 +89,21 @@ Page({
               showCancel: !1
             });
           },
-          complete: function () {
-
-          }
+          complete: function() {}
         });
       },
-      fail: function (e) { }
+      fail: function(e) {}
     }));
   },
-  getPhoneNumber: function (t) {
+  getPhoneNumber: function(t) {
     var a = this;
     "getPhoneNumber:fail user deny" == t.detail.errMsg ? wx.showModal({
       title: "提示",
       showCancel: !1,
       content: "未授权",
-      success: function (n) { }
+      success: function(n) {}
     }) : wx.login({
-      success: function (i) {
+      success: function(i) {
         if (i.code) {
           var o = i.code;
           getApp().request({
@@ -111,7 +115,7 @@ Page({
               code: o,
               user_id: a.data.user_info.id
             },
-            success: function (n) {
+            success: function(n) {
               0 == n.code ? a.setData({
                 PhoneNumber: n.data.dataObj
               }) : wx.showToast({

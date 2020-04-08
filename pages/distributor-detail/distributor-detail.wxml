@@ -10,6 +10,16 @@
 
   <view class="subsidy_list">
     <view class="hint">补贴方式</view>
+    <view class="item flex_sb" wx:if="{{expenditure}}">
+      <view class="flex_y">
+        <view class="position">支出</view>
+        <view>
+          <text>{{expenditure}}</text>
+          <text wx:if="{{subsidy.currency_type == 1}}">金币</text>
+          <text wx:if="{{subsidy.currency_type == 2}}">元</text>
+        </view>
+      </view>
+    </view>
     <view class="item flex_sb" wx:for="{{subsidy_list}}" wx:key="index" wx:if="{{item.value}}">
       <view class="flex_y">
         <view class="position">{{item.name}}</view>

@@ -66,6 +66,12 @@ Page({
         }, {
           "name": "H3st",
           "value": ""
+        }, {
+          "name": "H4st",
+          "value": ""
+        }, {
+          "name": "H5st",
+          "value": ""
         }]
       }, {
         "name": "DPS",
@@ -77,6 +83,12 @@ Page({
           "value": ""
         }, {
           "name": "D3st",
+          "value": ""
+        }, {
+          "name": "D4st",
+          "value": ""
+        }, {
+          "name": "D5st",
           "value": ""
         }]
       }, {

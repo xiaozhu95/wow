@@ -80,6 +80,7 @@ Page({
       },
       success: res => {
         this.setData({
+          expenditure: res.data.expenditure,
           subsidy: res.data.subsidy,
           subsidy_list: res.data.subsidy.subsidy
         })

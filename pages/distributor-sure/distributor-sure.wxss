@@ -22,8 +22,8 @@
 }
 
 .allot_box .img {
-  width: 100rpx;
-  height: 100rpx;
+  width: 80rpx;
+  height: 80rpx;
   margin-right: 20rpx;
   text-align: center;
   line-height: 80rpx;
@@ -31,12 +31,12 @@
 }
 
 .grant {
-  height: 80rpx;
+  height: 90rpx;
   font-size: 32rpx;
   font-weight: bold;
-  border-radius: 25rpx;
+  border-radius: 10rpx;
   text-align: center;
-  line-height: 80rpx;
+  line-height: 90rpx;
   background: #fff;
   margin-top: 80rpx;
 }
@@ -60,5 +60,18 @@
   border-radius: 15rpx;
   color: #fff;
   background: #64b265;
-  margin-top: 20rpx;
+  margin-top: 50rpx;
+}
+.income{
+  margin-top: 10rpx;
+}
+.income text{
+  margin-right: 20rpx;
+}
+.deduct_name{
+  width: 80rpx;
+}
+.deduct{
+  flex: 1;
+  border-bottom: 1px solid #eee;
 }

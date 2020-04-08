@@ -63,22 +63,28 @@
 <view class="popup" wx:if="{{show_madel}}">
   <view class="popup_bj" bindtap="show_sel"></view>
   <view class="madel_box">
-    <view class="sever_title">
-      <view>请选择服务器</view>
-      <view class="ser_close" bindtap="show_sel">x</view>
-    </view>
-    <view class="server_message">
-      <view class="section">国服</view>
-      <view class="server_list">
-        <scroll-view scroll-y="{{true}}" style="max-height:600rpx;">
-          <view wx:for="{{server_list}}" wx:key="index" class="server-item flex_sb flex_y" bindtap="select_server" data-index="{{index}}">
-            <view>{{item.name}} {{item.type}}</view>
-            <view>
-              <image wx:if="{{item.checked}}" src="../../images/checked.png"></image>
-              <image wx:else src="../../images/unchecked.png"></image>
+    <view class="box">
+      <view class="sever_title">
+        <view>请选择服务器</view>
+        <view class="ser_close" bindtap="show_sel">x</view>
+      </view>
+      <view class="server_message">
+        <view class="section flex_y">
+          <view style="padding-right:10rpx;">搜索</view>
+          <input placeholder="请输入关键字" bindinput="search"></input>
+        </view>
+        <view class="server_list">
+          <scroll-view scroll-y="{{true}}" style="max-height:600rpx;">
+            <view wx:for="{{server_list}}" wx:key="index" class="server-item flex_sb flex_y" bindtap="select_server" data-index="{{index}}">
+              <view>{{item.name}} {{item.type}}</view>
+              <view>
+                <image wx:if="{{item.checked}}" src="../../images/checked.png"></image>
+                <image wx:else src="../../images/unchecked.png"></image>
+              </view>
             </view>
-          </view>
-        </scroll-view>
+          </scroll-view>
+        </view>
+
       </view>
       <view class="server_sure" bindtap="server_save">确定</view>
     </view>

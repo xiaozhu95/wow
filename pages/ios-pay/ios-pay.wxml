@@ -4,15 +4,15 @@
   </view>
 
 
-  <view class="ios_pay">
-    <!-- <view class="text">
+  <!-- <view class="ios_pay">
+    <view class="text">
       虚拟支付是指购买非实物商品，摸不到的物品。比如：游戏道具、VIP会员、充值虚拟币、在线课程、在线音频视频等虚拟产品。目前iOS端暂不支持虚拟支付。
-    </view> -->
-  </view>
+    </view>
+  </view> -->
   <view class="ios_pay">
     <view class="title">解决方案</view>
     <view class="ios_qr">
-      <image src="../../images/ios_pay.png"  mode="scaleToFill"></image>
+      <image src="{{url}}"  mode="scaleToFill" bindtap="previewImg"></image>
     </view>
     <view class="ios_prompt">提示：扫码解决问题</view>
   </view>

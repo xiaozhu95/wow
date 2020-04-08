@@ -48,7 +48,7 @@
     <view wx:if="{{allot_info.status == 3}}" class="sure_btn btn2">分账失败，请等团长从新分账</view>
   </view>
   <view wx:else>
-    <view wx:if="{{allot[0].vote_status}}" class="sure_btn hint">您已投过票，正在统计中{{allot_info.status == 2}}</view>
+    <view wx:if="{{allot[0].vote_status}}" class="sure_btn hint">您已投过票，正在统计中</view>
     <view class="sure_btn flex_sb" wx:else>
       <view class="btn1 flex-grow-1" bindtap="save_select" data-status="2">不同意</view>
       <view class="btn2 flex-grow-1" bindtap="save_select" data-status="1">同意</view>

@@ -43,12 +43,12 @@
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
       </view>
-      <!-- <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/ios-pay/ios-pay">
+      <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/ios-pay/ios-pay" wx:if="{{isiphone}}">
         <view>ios充值问题</view>
         <view>
           <image class="r_icon" src="../../images/right.png"></image>
         </view>
-      </view> -->
+      </view>
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/feedback/feedback">
         <view>意见反馈</view>
         <view>

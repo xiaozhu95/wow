@@ -57,7 +57,7 @@
       <view class="cover">
         <image src="../../images/logo.png"></image>
       </view>
-      <view class="text">最大购买</view>
+      <view class="text">最大购买</view> 
     </view>
     <view class="price_li buy_record">
       <view class="cover">
@@ -261,7 +261,6 @@
                 <!-- <view wx:if="{{item.end_after_pay==0&&item.is_team==trading_list.is_team}}">已失效</view> -->
                 <view wx:if="{{item.type==1}}">交易成功</view>
                 <view class="btn" wx:if="{{item.currency_type==1&&item.type==1&&item.is_team==0}}" style="background-color:#999;background-image:none;">通过审核</view>
-                <!-- <view class="btn" wx:if="{{item.currency_type==2}}" bindtap="auction_pay" data-index="{{index}}">去支付</view> -->
               </view>
             </view>
           </block>
@@ -299,7 +298,7 @@
       <view class="close" bindtap="close_group_popup">
         <image src="../../images/close.png"></image>
       </view>
-      <view class="flex_x popup_title">房间信息</view>
+      <view class="flex_x popup_title">开团规则</view>
       <scroll-view class="group_box">
 
         <!-- <view class="li flex">

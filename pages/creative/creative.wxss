@@ -334,7 +334,15 @@ radio .wx-radio-input {
 /* 补贴方式 */
 .subsidies {
   text-align: center;
+  position: relative
 }
+.unit{
+  position: absolute;
+  right: 5rpx;
+  top: 5rpx;
+  font-size: 24rpx;
+}
+
 .subsidies_li {
   width: 315rpx;
   font-size: 24rpx;

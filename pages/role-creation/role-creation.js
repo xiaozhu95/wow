@@ -1,7 +1,6 @@
 var api = require("../../api.js");
 const http = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -53,6 +52,43 @@ Page({
   onShow: function() {
     this.server_list();
     this.tribe();
+  },
+  search(e) {
+    var word = "";
+    // if (search_list.length > 0) {
+
+    // }
+    console.log(word, "61");
+    if (e.detail.value == "") {
+      this.server_list();
+    } else {
+      var word = e.detail.value;
+      var search_list = []
+      var server_list = this.data.server_list;
+      // for (let i in server_list) {
+      //   var code = server_list[i].name.search(word);
+      //   if (code != -1) {
+      //     search_list.push(server_list[i]);
+      //   }
+      // }
+      server_list.forEach(item => {
+        var code = item.name.search(word);
+        if (code != -1) {
+          search_list.push(item);
+        }
+      })
+      if (search_list.length > 0) {
+        this.setData({
+          server_list: search_list
+        })
+      } else {
+        wx.showToast({
+          title: '您搜索的结果不存在请重新输入',
+          icon: 'none',
+          duration: 2000,
+        })
+      }
+    }
   },
   scrollNext(e) {
     var now_mesage = e.currentTarget.dataset.item;
@@ -151,10 +187,10 @@ Page({
   },
   rank(e) {
     let val = parseFloat(e.detail.value);
-    if (val > 10000){
+    if (val > 10000) {
       wx.showToast({
         title: '装备评分不能大于10000',
-        icon:'none'
+        icon: 'none'
       })
       this.setData({
         new_rank: ""
@@ -222,7 +258,7 @@ Page({
               })
             }
           })
-        }else{
+        } else {
           wx.showModal({
             title: '提示',
             content: res.msg

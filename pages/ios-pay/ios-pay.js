@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    url:'https://malltest.yigshop.com/static/wowpay/qr.png'
   },
 
   /**
@@ -29,13 +29,13 @@ Page({
     }
   },
   //点击图片进行预览，长按保存分享图片
-  // previewImg: function (e) {
-  //   var img = this.data.imagePath;
-  //   wx.previewImage({
-  //     current: "../../images/ios_pay.png", // 当前显示图片的http链接
-  //     urls: ['../../images/ios_pay.png'] // 需要预览的图片http链接列表
-  //   })
-  // },
+  previewImg: function (e) {
+    var img = this.data.url;
+    wx.previewImage({
+      current: img, // 当前显示图片的http链接
+      urls: [img] // 需要预览的图片http链接列表
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

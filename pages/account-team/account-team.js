@@ -39,7 +39,6 @@ Page({
 
     var index = e.currentTarget.dataset.index
     var message = this.data.account_list[index]
-
     if (message.isdel != 2 && message.distributionInfo==0){
       wx.navigateTo({
         url: "/pages/room-code/room-code?team_id="+message.team_id

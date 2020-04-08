@@ -41,6 +41,13 @@ input {
   border-radius: 10rpx;
 }
 
+.box {
+  position: relative;
+  width: 100%;
+  min-height: 600rpx;
+  padding-bottom: 80rpx;
+}
+
 .talent, .sel_service, .item_account {
   border-top: 1rpx solid #e7e7e7;
 }
@@ -98,7 +105,11 @@ input {
 }
 
 .server_sure {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   border-top: 1rpx solid #e7e7e7;
+  background: #fff;
   text-align: center;
   padding: 20rpx 0;
 }

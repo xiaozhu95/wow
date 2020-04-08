@@ -65,6 +65,14 @@ Page({
     new_mesage.deduction = deduction;
     var channel = (deduction / (team_list.length - 1)).toFixed(2);
     if (new_mesage.currency_type == 1) {
+      new_mesage.goldGoin = (new_mesage.goldGoin - deduction).toFixed(2);
+      team_list.forEach(item => {
+        if (item.userId != new_mesage.userId) {
+          item.goldGoin = (parseFloat(item.goldGoin) + parseFloat(channel)).toFixed(2);
+        }
+      })
+    }
+    if (new_mesage.currency_type == 2) {
       new_mesage.money = (new_mesage.money - deduction).toFixed(2);
       team_list.forEach(item => {
         if (item.userId != new_mesage.userId) {
@@ -72,16 +80,7 @@ Page({
         }
       })
     }
-    if (new_mesage.currency_type == 2) {
-      new_mesage.goldGoin = (new_mesage.goldGoin - deduction).toFixed(2);
-      team_list.forEach(item => {
-        if (item.userId != new_mesage.userId) {
-          item.money = (parseFloat(item.goldGoin) + parseFloat(channel)).toFixed(2);
-        }
-      })
-    }
     team_list[index] = new_mesage;
-    console.log(team_list, "81");
     this.setData({
       allocation_list: team_list,
       show: !this.data.show

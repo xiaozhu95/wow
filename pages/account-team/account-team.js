@@ -36,19 +36,20 @@ Page({
     })
   },
   skip(e) {
-
-    var index = e.currentTarget.dataset.index
-    var message = this.data.account_list[index]
-    if (message.isdel != 2 && message.distributionInfo==0){
+    var index = e.currentTarget.dataset.index;
+    var message = this.data.account_list[index];
+    wx.navigateTo({
+      url: "/pages/account-team-detail/account-team-detail?room_message=" + JSON.stringify(message)
+    })
+    if (message.isdel != 2 && message.distributionInfo == 0) {
       wx.navigateTo({
-        url: "/pages/room-code/room-code?team_id="+message.team_id
+        url: "/pages/room-code/room-code?team_id=" + message.team_id
       })
-    } else if (message.isdel != 2 && message.distributionInfo == 1){
+    } else if (message.isdel != 2 && message.distributionInfo == 1) {
       wx.navigateTo({
         url: "/pages/account-team-detail/account-team-detail?room_message=" + JSON.stringify(message)
       })
-    } 
-   
+    }
   },
   team_account() {
     http.request({

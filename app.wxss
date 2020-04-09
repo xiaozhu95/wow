@@ -2,10 +2,7 @@
 
 page {
   position: relative;
-  height: 100vh;
-  width: 750rpx;
-  background-image: url("https://yig-game.oss-cn-hangzhou.aliyuncs.com/static/uploads/images/2020/03/10/15838109995e6709b7a7c2d.jpg");
-  background-size: cover;
+  background-color: #fff0cd;
   box-sizing: border-box;
   font-size: 28rpx;
 }
@@ -166,7 +163,7 @@ button {
 .close image {
   width: 30rpx;
   height: 30rpx;
-  margin:10rpx;
+  margin: 10rpx;
 }
 
 @keyframes showbj {

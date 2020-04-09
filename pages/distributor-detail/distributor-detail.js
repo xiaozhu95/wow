@@ -89,11 +89,11 @@ Page({
   },
   show_madel(e) {
     var profession = e.currentTarget.dataset.index;
-    
-    this.data.team_list.forEach(e=>{
+
+    this.data.team_list.forEach(e => {
       e.checked = false
     })
-    
+
 
     this.setData({
       show_member: !this.data.show_member,
@@ -126,7 +126,6 @@ Page({
     })
   },
   sure_people() {
-    
     var new_index = this.data.prof_index;
     var people_id = [];
     var select_people = this.data.team_list.filter(res => {
@@ -144,7 +143,8 @@ Page({
     let now_price = 0;
     subsidy_list.forEach(e => {
       if (e.value) {
-        let num = 0, num_price = 0
+        let num = 0,
+          num_price = 0
         if (e.user_id) {
           num = e.user_id.length;
           num_price = num * parseFloat(e.value);
@@ -153,7 +153,7 @@ Page({
       }
     })
 
-    if (this.data.subsidy.status==1){
+    if (this.data.subsidy.status == 1) {
       if (now_price > 100) {
         wx.showToast({
           title: '当前选择的人数累计百分比' + now_price + '%，已超过100%',
@@ -162,7 +162,7 @@ Page({
         })
         return;
       }
-    }else{
+    } else {
       if (this.data.subsidy.currency_type == 2) {
         if (now_price > parseFloat(this.data.teaminfo.amount)) {
           wx.showToast({
@@ -183,7 +183,7 @@ Page({
         }
       }
     }
-    
+
 
 
     this.setData({
@@ -195,6 +195,7 @@ Page({
     var select_punishment = this.data.team_list.filter(res => {
       return res.punishment == true
     });
+    console.log(select_punishment, "198");
     this.setData({
       punishment_list: select_punishment,
       show_punishment: !this.data.show_punishment
@@ -232,7 +233,7 @@ Page({
         changed['team_list[' + i + '].punishment'] = false
       }
     }
-    this.setData(changed)
+    this.setData(changed);
   },
   allowance() {
     var new_subsidy = this.data.subsidy_list.filter(item => {

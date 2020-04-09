@@ -17,7 +17,7 @@ Page({
       this.setData({
         id: this.options.id
       })
-      let tit = "";
+      let tit = "角色列表";
       if (this.options.id == 1) {
         tit = "加入活动"
       } else if (this.options.id==2){

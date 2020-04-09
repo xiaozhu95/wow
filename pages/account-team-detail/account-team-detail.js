@@ -30,7 +30,58 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.get_team();
+    // this.get_team();
+    this.team_king();
+    this.team_status();
+  },
+  team_king() {
+    http.request({
+      url: api.team.userTeamIdentity,
+      method: "POST",
+      data: {
+        user_id: wx.getStorageSync("user_info").id,
+        team_id: this.data.room_message.team_id
+      },
+      success: res => {
+        console.log(res.data.identity, "44");
+        this.setData({
+          identity: res.data.identity
+        })
+      }
+    })
+  },
+  team_status() {
+    http.request({
+      url: api.account.team_status,
+      data: {
+        team_id: this.data.room_message.team_id
+      },
+      success: res => {
+        console.log(res, "42");
+        if (res.data.status == 3 || res.data.status == 2) {
+          this.setData({
+            new_status: res.data.status
+          })
+          this.team_message(res.data.id);
+        } else {
+          this.get_team();
+        }
+      }
+    })
+  },
+  team_message(e) {
+    http.request({
+      url: api.account.team_message,
+      data: {
+        id: e
+      },
+      success: res => {
+        this.setData({
+          allot: res.data.content,
+          voteDate: res.voteDate
+        })
+      }
+    })
   },
   get_team() {
     http.request({
@@ -45,6 +96,7 @@ Page({
         this.setData({
           allot: res.data,
           allot_info: res,
+          voteDate: res.voteDate,
           new_userid: wx.getStorageSync("user_info").id
         });
         if (res.status == 2 || res.status == 3) {
@@ -73,13 +125,19 @@ Page({
       }
     })
   },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
     clearTimeout(this.data.lodingtiem);
   },
-
+  anew() {
+    let new_message = this.data.room_message;
+    wx.navigateTo({
+      url: '/pages/distributor/distributor?team_id=' + new_message.team_id + "&room_id=" + new_message.room_id,
+    })
+  },
   /**
    * 生命周期函数--监听页面卸载
    */

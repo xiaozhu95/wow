@@ -151,6 +151,23 @@ Page({
       legalchecked: event.detail
     });
   },
+  handlerGobackClick(delta) {
+    const pages = getCurrentPages();
+    if (pages.length >= 2) {
+      wx.navigateBack({
+        delta: delta
+      });
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index'
+      });
+    }
+  },
+  handlerGohomeClick() {
+    wx.navigateTo({
+      url: '/pages/index/index'
+    });
+  },
   //文章详情接口
   // agreement() {
   //   t.request({

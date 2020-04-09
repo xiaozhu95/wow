@@ -1,6 +1,9 @@
 <view class="main" style="padding-bottom:100rpx;">
   <view class="room_introductory">
-    <view>房间码：{{room_message.room_num}}</view>
+    <view class="flex_sb">
+      <view>房间码：{{room_message.room_num}}</view>
+      <view>{{room_message.create_time}}</view>
+    </view>
     <view class="flex_sb flex_y room_content">
       <image src="{{room_message.avatar}}"></image>
       <view class="flex-grow-1">
@@ -12,8 +15,8 @@
           <view>副本：{{room_message.transcript_name}}</view>
           <view>
             <text style="padding-right:20rpx;">{{allot.length}}人团</text>
-            <text>{{allot_info.voteDate.disagreeNum}}人反对/</text>
-            <text>{{allot_info.voteDate.agreeNum}}人同意</text>
+            <text>{{voteDate.disagreeNum}}人反对/</text>
+            <text>{{voteDate.agreeNum}}人同意</text>
           </view>
         </view>
       </view>
@@ -43,9 +46,12 @@
   </view>
 </view>
 <view class="base">
-  <view class="" wx:if="{{allot_info.status == 2 || allot_info.status == 3}}">
-    <view wx:if="{{allot_info.status == 2}}" class="sure_btn btn1">分账成功</view>
-    <view wx:if="{{allot_info.status == 3}}" class="sure_btn btn2">分账失败，请等团长从新分账</view>
+  <view class="" wx:if="{{allot_info.status == 2 || allot_info.status == 3 || new_status == 3}}">
+    <view wx:if="{{allot_info.status == 2 || new_status == 2}}" class="sure_btn btn1">分账成功</view>
+    <view wx:if="{{allot_info.status == 3 || new_status == 3}}" class="sure_btn btn2">
+      <view wx:if="{{identity == 1}}" bindtap="anew">分账失败，点击重新分账</view>
+      <view wx:else>分账失败，请等团长从新分账</view>
+    </view>
   </view>
   <view wx:else>
     <view wx:if="{{allot[0].vote_status}}" class="sure_btn hint">您已投过票，正在统计中</view>

@@ -134,9 +134,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/distributor/distributor",
-					"pathName": "pages/distributor/distributor",
+					"id": 11,
+					"name": "pages/user/user",
+					"pathName": "pages/user/user",
 					"query": "",
 					"scene": null
 				}

@@ -15,7 +15,10 @@
             <view>{{item.user_role_name}}的团</view>
             <view>阵营-服务器：{{item.camp_name}}-{{item.service_name}}</view>
           </view>
-          <view style="padding-top:20rpx;">副本：{{item.transcript_name}}</view>
+          <view style="padding-top:20rpx;" class="flex_sb">
+            <view>副本：{{item.transcript_name}}</view>
+            <view>{{item.create_time}}</view>
+          </view>
         </view>
       </view>
     </view>

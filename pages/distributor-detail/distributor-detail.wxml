@@ -44,7 +44,14 @@
   <view class="punishment">
     <view class="item flex_sb" bindtap="show_punishment" style="border:none;">
       <view>不分钱</view>
-      <view>选择成员</view>
+      <view>
+        <view wx:if="{{punishment_list && punishment_list.length > 0}}" class="flex_y">
+          <view wx:for="{{punishment_list}}" wx:for-item="user_message" wx:key="index">
+            <image class="user_img" src="{{user_message.avatar}}"></image>
+          </view>
+        </view>
+        <view wx:else>选择成员</view>
+      </view>
     </view>
   </view>
   <view class="amend" bindtap="allowance" data-url="/pages/distributor-sure/distributor-sure">预览</view>

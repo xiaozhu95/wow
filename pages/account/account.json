@@ -1,5 +1,6 @@
 {
   "usingComponents": {},
   "navigationBarTitleText": "账户",
-  "navigationStyle": "default"
+  "navigationStyle": "default",
+  "navigationBarTextStyle": "black"
 }

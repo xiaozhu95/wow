@@ -1,7 +1,25 @@
 <view class="main">
+  <view class="banner">
+    <view class="banner_img">
+      <image src="../../images/banner.jpg"></image>
+    </view>
+  </view>
   <view class="content">
-    <view class="creative" bindtap="create">创建活动</view>
-    <view class="join" wx:if="{{code_id==0||!code_id}}" bindtap="join_activity">加入活动</view>
-    <view class="join" wx:if="{{code_id==2}}" bindtap="skip" data-url="/pages/room-code/room-code?team_id={{checkUserRoomExit.id}}">进入活动</view>
+    <view class="creative flex_vert" bindtap="create">
+      <image src="../../images/icon1.png" class="icon"></image>
+      <text>创建活动</text>
+    </view>
+    <view class="join flex_vert" wx:if="{{code_id==0||!code_id}}" bindtap="join_activity">
+      <image src="../../images/icon2.png" class="icon"></image>
+      <text>加入活动</text>
+    </view>
+    <view class="join flex_vert" wx:if="{{code_id==2}}" bindtap="skip" data-url="/pages/room-code/room-code?team_id={{checkUserRoomExit.id}}">
+      <image src="../../images/icon2.png" class="icon"></image>
+      <text>进入活动</text>  
+    </view>
+    <view class="join flex_vert" bindtap="skip" data-url="/pages/role/role">
+      <image src="../../images/icon3.png" class="icon"></image>
+      <text>角色管理</text>
+    </view>
   </view>
 </view>

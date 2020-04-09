@@ -1,13 +1,9 @@
-<view class="login" style="padding-top:80rpx;">
+<view class='nav'>
+  <navBar title='金额明细' background='rgba(0, 0, 0, 0)' color='#000' back="{{true}}" iconTheme='black' bindback="handlerGobackClick"></navBar>
+</view>
+<view class="login">
+  <image src="/images/log_back.jpg" />
   <view class="after-navber">
-    <view style="padding: 0 40rpx">
-      <view style="padding:60rpx 0 48rpx;text-align: center">
-        <image src="/images/lo.png" style="width: 200rpx;height: 200rpx;  border-radius:50%;" />
-      </view>
-      <button bindgetuserinfo="getUserInfo" class="login-btn" openType="getUserInfo" disabled="{{!legalchecked}}" style="background:{{legalchecked?'#64b265':'#AAAAAA'}};color:#fff">
-        <van-icon name="/images/icon_vx@3x.png" size="45rpx" color="#fff" /> 微信用户一键登录
-      </button>
-    </view>
     <!-- 
     <van-popup show="{{ legal_show }}" bind:close="legalClose" position="bottom" round custom-style="height: 1100rpx" closeable="true">
       <view class="legal_fill">
@@ -35,11 +31,16 @@
       </view>
     </view>
     <view class="legal">
-      <van-checkbox value="{{ legalchecked }}" shape="round" bind:change="legalChange" checked-color="#FFC76E" icon-size="30rpx">
-        已阅读并同意
-      </van-checkbox>
-      <view class="legal_text" bindtap="go_legal_show">
-        《法律声明及隐私政策》
+      <button bindgetuserinfo="getUserInfo" class="login-btn" openType="getUserInfo" disabled="{{!legalchecked}}" style="background:{{legalchecked?'#64b265':'#AAAAAA'}};color:#fff">
+        <van-icon name="../../images/icon_vx@3x.png" size="45rpx" color="#fff" /> 微信用户一键登录
+      </button>
+      <view class="flex_vert" style="padding-top:50rpx;">
+        <van-checkbox value="{{ legalchecked }}" shape="round" bind:change="legalChange" checked-color="#FFC76E" icon-size="30rpx">
+          已阅读并同意
+        </van-checkbox>
+        <view class="legal_text" bindtap="go_legal_show">
+          《法律声明及隐私政策》
+        </view>
       </view>
     </view>
   </view>

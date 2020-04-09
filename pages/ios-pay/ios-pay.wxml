@@ -1,6 +1,6 @@
 <view>
   <view class='nav'>
-    <navBar title='ios 充值问题' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='ios 充值问题' background='rgba(0, 0, 0, 0)'  back="{{true}}"  bindback="handlerGobackClick"></navBar>
   </view>
 
 

@@ -69,6 +69,8 @@ var _api_root = "{$_api_root}",
       account_detail: _api_root + "distribution/getDistributionDetail",
       startVote: _api_root + "distribution/startVote",
       auctionOrderList: _api_root + "auction_equipment/auctionOrderList",
+      team_status: _api_root + "Distribution/getDistributionStatus",
+      team_message: _api_root + "Distribution/getDistributionInfo"
     }
   }
 module.exports = api;

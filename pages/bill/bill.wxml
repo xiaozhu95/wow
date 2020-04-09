@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='房间' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='已购买的装备' background='rgba(0, 0, 0, 0)'  back="{{true}}" bindback="handlerGobackClick"></navBar>
   </view>
 
   <view class="bill-wraper">
@@ -26,6 +26,9 @@
         <view>{{item.pay_time}}</view>
         <view>{{item.pay_type==1?'交易成功':'交易失败'}}</view>
       </view>
+    </view>
+    <view wx:if="{{equip_list.length==0}}" class="flex_vert">
+      还没有买过装备
     </view>
   </view>
 </view>

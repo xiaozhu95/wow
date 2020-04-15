@@ -1,0 +1,11 @@
+<view class="main">
+  <view class="list">
+    <view class="item flex_sb flex_y" wx:for="{{recode}}" wx:key="index">
+      <view>
+        <view>{{item.msg}}</view>
+        <view style="padding-top:10rpx;">{{item.create_time}}</view>
+      </view>
+      <view style="color:#C92036;">{{item.amount}}</view>
+    </view>
+  </view>
+</view>

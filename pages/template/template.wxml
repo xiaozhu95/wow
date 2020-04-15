@@ -1,0 +1,12 @@
+<view class="mian">
+  <view class="creation flex_vert" bindtap="skip" data-id="-1">
+    <image src="../../images/jia.png" class="jia"></image>
+    新建模板
+  </view>
+  <view class="list">
+    <view class="item" wx:for="{{list}}" wx:key="index" bindtap="skip" data-id="{{item.id}}">
+      <view>模板{{index+1}}</view>
+      <view style="padding-top:20rpx;">创建时间：{{item.create_time}}</view>
+    </view>
+  </view>
+</view>

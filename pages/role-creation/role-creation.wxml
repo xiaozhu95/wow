@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='角色添加' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <navBar title='角色添加' background='rgba(0, 0, 0, 0)' back="{{true}}" iconTheme='black' bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="msg_list">

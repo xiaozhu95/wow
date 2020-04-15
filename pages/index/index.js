@@ -6,33 +6,68 @@ const app = getApp()
 Page({
   data: {
     log_state: '',
-    checkUserRoomExit:""
+    checkUserRoomExit: ""
 
   },
-  onLoad: function () {
-
-  },
+  onLoad: function() {},
 
   onShow() {
+    let info = wx.getStorageSync("user_info");
     var log_state = wx.getStorageSync("user_info") == "" ? false : true;
-    if (log_state){
+    if (log_state) {
       this.checkUserRoomExit(wx.getStorageSync("user_info").id);
+      this.template_list();
     }
     this.setData({
-      log_state: log_state
+      log_state: log_state,
+      info: info
     })
   },
-  create(){
+  template_list() {
+    app.request({
+      url: api.room.template_list,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        this.setData({
+          list: res.data
+        })
+      }
+    })
+  },
+  create() {
     if (this.data.log_state) {
-      if (this.data.code_id==2){
+
+      if (this.data.info.mobile.length == 0) {
+        wx.navigateTo({
+          url: '/pages/login/login'
+        })
+        return;
+      }
+      if (this.data.code_id == 2) {
         wx.showToast({
           title: '你已经在房间中，不能创建活动',
           icon: 'none',
         })
-      }else{
-        wx.navigateTo({
-          url: '/pages/role/role?id=2'
+      } else {
+        app.request({
+          url: api.room.getFaithCount + "?user_id=" + wx.getStorageSync("user_info").id,
+          success: res => {
+            if(res.code==0){
+              wx.navigateTo({
+                url: '/pages/role/role?id=2'
+              })
+            }else{
+              wx.showToast({
+                title: res.msg,
+                icon: 'none',
+              })
+            }
+          }
         })
+
+        
       }
     } else {
       wx.navigateTo({
@@ -41,28 +76,36 @@ Page({
     }
   },
   //判断这个用户是否已经进入过房间
-  checkUserRoomExit(user_id){
+  checkUserRoomExit(user_id) {
     app.request({
       url: api.room.checkUserRoomExit,
       method: "POST",
-      data: { user_id: user_id},
+      data: {
+        user_id: user_id
+      },
       success: res => {
-        if (res.code==0){
+        if (res.code == 0) {
           this.setData({
             code_id: res.code
           })
-        } else if(res.code == 2){
+        } else if (res.code == 2) {
           this.setData({
             code_id: res.code,
             checkUserRoomExit: res.data
           })
         }
-       
+
       }
     })
   },
-  join_activity(){
+  join_activity() {
     if (this.data.log_state) {
+      if (this.data.info.mobile.length == 0) {
+        wx.navigateTo({
+          url: '/pages/login/login'
+        })
+        return;
+      }
       wx.navigateTo({
         url: '/pages/role/role?id=1'
       })
@@ -74,10 +117,6 @@ Page({
   },
   skip(e) {
     var url = e.currentTarget.dataset.url;
-    // wx.navigateTo({
-    //   url: url
-    // })
-  
     if (this.data.log_state) {
       wx.navigateTo({
         url: url

@@ -1,7 +1,7 @@
 <view class="main">
   <view class="banner">
     <view class="banner_img">
-      <image src="../../images/banner.jpg"></image>
+      <image src="https://wowgame.yigworld.com/static/img/banner.jpg"></image>
     </view>
   </view>
   <view class="content">
@@ -15,9 +15,9 @@
     </view>
     <view class="join flex_vert" wx:if="{{code_id==2}}" bindtap="skip" data-url="/pages/room-code/room-code?team_id={{checkUserRoomExit.id}}">
       <image src="../../images/icon2.png" class="icon"></image>
-      <text>进入活动</text>  
+      <text>返回活动</text>  
     </view>
-    <view class="join flex_vert" bindtap="skip" data-url="/pages/role/role">
+    <view class="join flex_vert" bindtap="skip" data-url="/pages/role/role?id=0">
       <image src="../../images/icon3.png" class="icon"></image>
       <text>角色管理</text>
     </view>

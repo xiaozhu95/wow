@@ -39,7 +39,7 @@
         </view>
       </view> -->
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/bill/bill">
-        <view>已拍的</view>
+        <view>已拍得</view>
         <view>
           <image class="r_icon" src="../../images/right1.png"></image>
         </view>

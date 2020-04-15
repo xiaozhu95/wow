@@ -38,7 +38,7 @@ Page({
 
     } else {
       this.data.inputPassword = this.data.inputPassword + e.currentTarget.dataset.key;
-      console.log(this.data.inputPassword, "36");
+      // console.log(this.data.inputPassword, "36");
       this.setData({
         inputPassword: this.data.inputPassword
       });
@@ -70,44 +70,15 @@ Page({
     }
   },
   join_room() {
-    console.log(this.data.inputPassword.length < 6, "73");
+    // console.log(this.data.inputPassword.length < 6, "73");
     if (this.data.inputPassword.length < 6) {
       return wx.showToast({
         title: '请输入完整房间码',
         icon: 'none'
       })
     }
-    var role_mesage = wx.getStorageSync("role-info");
-    var user_info = wx.getStorageSync("user_info")
-    var user = {};
-    user.user_id = user_info.id;
-    user.user_role_name = role_mesage.role_name;
-    user.role_id = role_mesage.id;
-    user.avatar = user_info.avatar;
-    http.request({
-      url: api.user.room,
-      method: "POST",
-      data: {
-        room_number: this.data.inputPassword,
-        role_id: role_mesage.id,
-        service_id: role_mesage.service_id,
-        camp_id: role_mesage.camp_id,
-        user_info: user
-      },
-      success: res => {
-        console.log(res);
-        if (res.code == 1) {
-          return wx.showToast({
-            title: res.msg,
-            icon: 'none'
-          })
-        }
-        if (res.code == 0) {
-          wx.redirectTo({
-            url: '/pages/room-code/room-code?team_id=' + res.data
-          })
-        }
-      }
+    wx.navigateTo({
+      url: '/pages/regulation/regulation?room_id=' + this.data.inputPassword,
     })
   },
 })

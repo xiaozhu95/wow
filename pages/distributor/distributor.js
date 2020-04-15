@@ -67,18 +67,35 @@ Page({
 
   },
   skip(e) {
-    var url = e.currentTarget.dataset.url;
-    if (parseFloat(this.data.teaminfo.amount) > 0 || parseFloat(this.data.teaminfo.gold_coin) > 0){
-      wx.navigateTo({
-        url: url + "?team_id=" + this.options.team_id + "&room_id=" + this.options.room_id,
-      })
-    }else{
-      wx.showToast({
-        title: '分配总金额和金币不能都等于0',
-        icon: "none"
-      })
-      return;
-    }
+    app.request({
+      url: api.account.distribution + "?team_id=" + this.options.team_id,
+      method: "get",
+      success: res => {
+        console.log(res);
+        if(res.code==0){
+          var url = e.currentTarget.dataset.url;
+          if (parseFloat(this.data.teaminfo.amount) > 0 || parseFloat(this.data.teaminfo.gold_coin) > 0) {
+            wx.navigateTo({
+              url: url + "?team_id=" + this.options.team_id + "&room_id=" + this.options.room_id,
+            })
+          } else {
+            wx.showToast({
+              title: '分配总金额和金币不能都等于0',
+              icon: "none"
+            })
+            return;
+          }
+        }else{
+          wx.showToast({
+            title: res.msg,
+            icon: "none"
+          })
+        }
+      }
+    }) 
+
+
+    
 
   
   },

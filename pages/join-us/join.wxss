@@ -1,3 +1,7 @@
+page {
+  background: #32383f;
+}
+
 .main {
   padding-top: 280rpx;
 }
@@ -54,8 +58,8 @@
   width: 660rpx;
   border: 1px solid #ddd;
   margin: 0 auto;
-  background-color: #fff;
-  border-radius: 3px;
+  background-color: #fff0cd;
+  border-radius: 50px;
 }
 
 .password-input view {
@@ -63,9 +67,11 @@
   height: 80rpx;
   display: flex;
   align-items: center;
+  color: #30393c;
+  font-weight: bold;
   justify-content: center;
   box-sizing: border-box;
-  border-right: 1px solid #ccc;
+  border-right: 2px solid #30393c;
 }
 
 .password-input view:nth-child(6) {
@@ -92,8 +98,8 @@
 .keyboard {
   width: 100%;
   display: flex;
-  background-color: #fff;
-  border-top: 1px solid #eee;
+  background-color: #fff0cd;
+  /* border-top: 1px solid #30393c; */
   margin-top: 50rpx;
 }
 
@@ -101,6 +107,14 @@
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+}
+
+.hint {
+  text-align: center;
+  color: #fff0cd;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding-bottom: 20rpx;
 }
 
 .keyboard .number view {
@@ -111,8 +125,12 @@
   font-size: 46rpx;
   font-weight: bold;
   box-sizing: border-box;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-right: 1px solid #30393c;
+  border-top: 1px solid #30393c;
+}
+
+.keyboard .number view:nth-child(3n) {
+  border-right: none;
 }
 
 .keyboard .ctr-btn {

@@ -50,6 +50,8 @@ Page({
         team_id: this.options.team_id
       },
       success: res => {
+  
+
         var troops = res.data;
         for (let i in troops) {
           troops[i].checked = false;
@@ -79,10 +81,15 @@ Page({
         team_id: this.options.team_id
       },
       success: res => {
+
+        let subsidies_index = res.data.subsidy.currency_type;
+        let allot_index = res.data.subsidy.status;
+        let danwei = subsidies_index == 2 && allot_index == 2 ? '元' : subsidies_index == 1 && allot_index == 2 ? "币" : subsidies_index == 2 && allot_index == 1 ? '%-元' : subsidies_index == 1 && allot_index == 1 ? "%-币" : '';
         this.setData({
           expenditure: res.data.expenditure,
           subsidy: res.data.subsidy,
-          subsidy_list: res.data.subsidy.subsidy
+          subsidy_list: res.data.subsidy.subsidy,
+          danwei: danwei
         })
       }
     })

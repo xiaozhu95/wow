@@ -1,12 +1,9 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='{{title}}' background='rgba(0, 0, 0, 0)' back="{{true}}" bindback="handlerGobackClick"></navBar>
+    <navBar title='{{title}}' background='#fff0cd' back="{{true}}" bindback="handlerGobackClick"></navBar>
   </view>
   <view class="content">
-    <view class="creation flex_vert" bindtap="skip" data-url="/pages/role-creation/role-creation">
-      <image src="../../images/jia.png" class="jia"></image>
-      创建新的角色
-    </view>
+
     <view class="role_list">
       <view wx:for="{{role_lsit}}" wx:key="index" wx:for-item="index_item" class="role_ul" wx:for-index="wx_index">
         <view class="title">{{index_item.name}}</view>
@@ -27,17 +24,17 @@
             <text>lv：{{item.grade}} </text>
             <text class="talent">天赋：{{item.talent}} </text>
           </view>
-
           <image src="../../images/hook.png" class="hook" wx:if="{{indexdata.index==index&&indexdata.wx_index==wx_index&&id!=0}}"></image>
         </view>
-
-
       </view>
-
       <view class="flex_vert" style="color:#d7cbaf" wx:if="{{role_lsit.length==0}}">
         您尚未创建角色
       </view>
+    </view>
 
+    <view class="creation flex_vert" bindtap="skip" data-url="/pages/role-creation/role-creation" style="margin-top:100rpx;">
+      <image src="../../images/jia.png" class="jia"></image>
+      创建新的角色
     </view>
   </view>
 </view>

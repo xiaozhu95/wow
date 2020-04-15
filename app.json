@@ -20,7 +20,10 @@
     "pages/ios-pay/ios-pay",
     "pages/login/login",
     "pages/account-team/account-team",
-    "pages/account-team-detail/account-team-detail"
+    "pages/account-team-detail/account-team-detail",
+    "pages/template/template",
+    "pages/regulation/regulation",
+    "pages/account-detail/account-detail"
   ],
   "tabBar": {
     "list": [

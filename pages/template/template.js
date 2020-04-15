@@ -1,0 +1,86 @@
+var http = getApp(),
+  api = require("../../api.js");
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    this.template_list();
+  },
+  template_list() {
+    http.request({
+      url: api.room.template_list,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        console.log(res, "36");
+        this.setData({
+          list: res.data
+        })
+      }
+    })
+  },
+  skip(e) {
+    var index = e.currentTarget.dataset.id;
+    console.log(e);
+    wx.navigateTo({
+      url: "/pages/creative/creative?template_id=" + index
+    })
+  },
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+
+  }
+})

@@ -47,7 +47,7 @@ Page({
             "name": "FT",
             "value": ""
           }, {
-            "name": "火炕",
+            "name": "抗性",
             "value": ""
           },
           {
@@ -61,16 +61,16 @@ Page({
           "name": "H1st",
           "value": ""
         }, {
-          "name": "H2st",
+          "name": "H2nd",
           "value": ""
         }, {
-          "name": "H3st",
+          "name": "H3rd",
           "value": ""
         }, {
-          "name": "H4st",
+          "name": "H4th",
           "value": ""
         }, {
-          "name": "H5st",
+          "name": "H5th",
           "value": ""
         }]
       }, {
@@ -79,22 +79,16 @@ Page({
           "name": "D1st",
           "value": ""
         }, {
-          "name": "D2st",
+          "name": "D2nd",
           "value": ""
         }, {
-          "name": "D3st",
+          "name": "D3rd",
           "value": ""
         }, {
-          "name": "D4st",
+          "name": "D4th",
           "value": ""
         }, {
-          "name": "D5st",
-          "value": ""
-        }]
-      }, {
-        "name": "奶",
-        "list": [{
-          "name": "奶",
+          "name": "D5th",
           "value": ""
         }]
       }, {
@@ -176,20 +170,23 @@ Page({
       pay_end_time: "5", //支付时间
     },
     user_info: "", //用户信息,
-    role_info:"",  //角色信息
+    role_info: "", //角色信息
     roomNumber: "", //房间号
     yy_room_number: "", //YY房间号
-    expenditure: "",  //支出
-    note:"", //团长备注
-    floor_status:2,
+    expenditure: "", //支出
+    note: "", //团长备注
+    floor_status: 2,
   },
   onLoad: function(options) {
+    if (this.options.template_id && this.options.template_id != -1) {
+      this.template(this.options.template_id);
+    }
     var role_info = wx.getStorageSync("role-info");
-    if (role_info){
+    if (role_info) {
       this.setData({
         role_info: role_info
       })
-    }else{
+    } else {
       wx.redirectTo({
         url: '/pages/role/role'
       })
@@ -202,12 +199,21 @@ Page({
     })
     this.createRoomNumber();
     this.transcriptAndBoos(0);
+
+
+    let subsidies_index = this.data.subsidies_index;
+    let allot_index = this.data.allot_index;
+    let danwei = subsidies_index == 2 && allot_index == 2 ? '元' : subsidies_index == 1 && allot_index == 2 ? "币" : subsidies_index == 2 && allot_index == 1 ? '%-元' : subsidies_index == 1 && allot_index == 1 ? "%-币" : '';
+
+    this.setData({
+      danwei: danwei
+    })
   },
 
   //确定房间创建
   confirm_Start() {
+    var that = this;
     let current_data = this.data;
-
     let subsidy = {
       currency_type: this.data.subsidies_index,
       status: this.data.allot_index,
@@ -248,20 +254,55 @@ Page({
         avatar: this.data.user_info.avatar,
       }, //用户信息 
     }
-
-    console.log(createRoomStr);
-
+    var subsidy_template = {}
+    subsidy_template.subsidy = createRoomStr.subsidy.subsidy;
+    subsidy_template.high_dps = createRoomStr.high_dps;
+    subsidy_template.high_hps = createRoomStr.high_hps;
+    console.log(subsidy_template, "261");
+    // this.savetemplate(subsidy_template);
+    // return;
     app.request({
       url: api.room.createRoom,
       method: "POST",
       data: createRoomStr,
       success: res => {
         console.log(res);
-        if(res.code==0){
-          wx.redirectTo({
-            url: '/pages/room-code/room-code?team_id=' + res.data.team_id
-          })
-        }else{
+        if (res.code == 0) {
+          if (this.options.template_id && this.options.template_id != -1) {
+            wx.showModal({
+              title: '提示',
+              content: '是否更新当前模板？',
+              showCancel: true,
+              success: function(arr) {
+                if (arr.confirm) {
+                  that.updatatemplate(subsidy_template);
+                }
+                wx.redirectTo({
+                  url: '/pages/room-code/room-code?team_id=' + res.data.team_id
+                })
+              },
+            })
+
+          } else {
+            if (this.options.template_id && this.options.template_id == -1) {
+              that.savetemplate(subsidy_template, res.data.team_id);
+            } else {
+              wx.showModal({
+                title: '提示',
+                content: '是否保存为模板？',
+                showCancel: true,
+                success: function(arr) {
+                  if (arr.confirm) {
+                    that.savetemplate(subsidy_template, "");
+                  }
+                  wx.redirectTo({
+                    url: '/pages/room-code/room-code?team_id=' + res.data.team_id
+                  })
+                }
+              })
+            }
+          }
+        } else {
           wx.showToast({
             title: res.msg,
             icon: 'none',
@@ -271,7 +312,35 @@ Page({
     })
 
   },
-  setNote(e){
+  savetemplate(e, d) {
+    app.request({
+      url: api.room.template,
+      method: "POST",
+      data: {
+        subsidy_template: e,
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        if (this.options.template_id && this.options.template_id == -1) {
+          wx.redirectTo({
+            url: '/pages/room-code/room-code?team_id=' + d
+          })
+        }
+      }
+    })
+  },
+  updatatemplate(e) {
+    app.request({
+      url: api.room.template_updata,
+      method: "POST",
+      data: {
+        subsidy_template: e,
+        id: this.options.template_id
+      },
+      success: res => {}
+    })
+  },
+  setNote(e) {
     this.setData({
       note: e.detail.value
     })
@@ -283,11 +352,11 @@ Page({
     })
   },
   //设置支出
-  set_expenditure(e) {
-    this.setData({
-      expenditure: e.detail.value
-    })
-  },
+  // set_expenditure(e) {
+  //   this.setData({
+  //     expenditure: e.detail.value
+  //   })
+  // },
 
   //补贴方式
   subsidiesChange(e) {
@@ -301,6 +370,13 @@ Page({
         allot_index: e.detail.value
       })
     }
+    let subsidies_index = this.data.subsidies_index;
+    let allot_index = this.data.allot_index;
+    let danwei = subsidies_index == 2 && allot_index == 2 ? '元' : subsidies_index == 1 && allot_index == 2 ? "币" : subsidies_index == 2 && allot_index == 1 ? '%-元' : subsidies_index == 1 && allot_index == 1 ? "%-币" : '';
+
+    this.setData({
+      danwei: danwei
+    })
   },
   //设置补贴
   subsidiesInput(e) {
@@ -310,27 +386,37 @@ Page({
     let subsidy_data = this.data.subsidy_data;
 
     subsidy_data[index].list[idx].value = val
-    
-    if (this.data.allot_index==1){
-      let isval = 0;
-      subsidy_data.forEach(e=>{
-        e.list.forEach(elist=>{
-          if (elist.value){
-            isval = isval + parseFloat(elist.value);
-          }
-        })
+    let isval = 0;
+    subsidy_data.forEach(e => {
+      e.list.forEach(elist => {
+        if (elist.value) {
+          isval = isval + parseFloat(elist.value);
+        }
       })
+    })
+    if (this.data.allot_index == 1) {
+      
+      
       if (isval >= 100) {
         wx.showToast({
           title: '你的补贴百分比已超过百分之百',
           icon: 'none'
         })
-        subsidy_data[index].list[idx].value = ""
+        subsidy_data[index].list[idx].value = "";
+        isval = 0;
+        subsidy_data.forEach(e => {
+          e.list.forEach(elist => {
+            if (elist.value) {
+              isval = isval + parseFloat(elist.value);
+            }
+          })
+        })
       }
     }
 
     this.setData({
-      subsidy_data: this.data.subsidy_data
+      subsidy_data: this.data.subsidy_data,
+      expenditure: isval
     })
   },
 
@@ -506,7 +592,7 @@ Page({
 
   //设置地板
   set_floor_btn() {
-    if (this.data.floor_info.price.length==0){
+    if (this.data.floor_info.price.length == 0) {
       wx.showToast({
         title: '售买价不能为空',
         icon: 'none',
@@ -514,20 +600,18 @@ Page({
       return;
     }
 
-    if (this.data.floor_info.purple == 1 || this.data.floor_info.blue == 1 || this.data.floor_info.green == 1){
+    if (this.data.floor_info.purple == 1 || this.data.floor_info.blue == 1 || this.data.floor_info.green == 1) {
       this.setData({
         floor_popup: false
       })
-    }else{
+    } else {
       wx.showToast({
         title: '地板收购装备颜色勾选不能为空',
         icon: 'none',
       })
     }
 
-    
 
-    
   },
   close_floor_btn() {
     let arr = this.data.floor.map(e => {
@@ -643,14 +727,14 @@ Page({
         note: e.detail.value,
         floorNum: e.detail.value,
       })
-    }else{
+    } else {
       this.setData({
         floorNum: e.detail.value,
         floor_status: 2,
         note: e.detail.value
       })
     }
-    
+
   },
   //选择地板起拍币种
   floor_way_Change: function(e) {
@@ -755,5 +839,23 @@ Page({
     wx.navigateTo({
       url: '/pages/index/index'
     });
+  }, // 模板详情
+  template(e) {
+    app.request({
+      url: api.room.template_detail,
+      data: {
+        id: e
+      },
+      success: res => {
+        this.setData({
+          subsidy_data: res.data.subsidy_template.subsidy,
+          high_dps: res.data.subsidy_template.high_dps,
+          high_hps: res.data.subsidy_template.high_hps,
+          old_subsidy_data: res.data.subsidy_template.subsidy,
+          old_high_dps: res.data.subsidy_template.high_dps,
+          old_high_hps: res.data.subsidy_template.high_hps
+        })
+      }
+    })
   }
 });

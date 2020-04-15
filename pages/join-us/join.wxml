@@ -1,10 +1,11 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='输入房间号' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+    <navBar title='输入房间号' background='#fff0cd' back="{{true}}"  bindback="handlerGobackClick"></navBar>
   </view>
 </view>
 <view>
   <view class="main">
+    <view class="hint">请输入房间号</view>
     <view class='password-input'>
       <view>{{inputPassword[0]}}</view>
       <view>{{inputPassword[1]}}</view>

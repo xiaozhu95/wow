@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='分配' background='rgba(0, 0, 0, 0)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
+  <navBar title='扣罚确认' background='#FFF0CD'  back="{{true}}"  bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="allot_list">

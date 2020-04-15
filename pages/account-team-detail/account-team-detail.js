@@ -57,7 +57,18 @@ Page({
         team_id: this.data.room_message.team_id
       },
       success: res => {
-        console.log(res, "42");
+        if (res.data == null) {
+          return wx.showModal({
+            title: '提示',
+            content: '该团暂没有产生账单',
+            showCancel: false,
+            success: function(res) {
+              wx.navigateBack({
+                delta: 1
+              })
+            },
+          });
+        }
         if (res.data.status == 3 || res.data.status == 2) {
           this.setData({
             new_status: res.data.status
@@ -76,6 +87,12 @@ Page({
         id: e
       },
       success: res => {
+        console.log(res, "79");
+        var team_list = res.data.content;
+        var new_list = team_list.filter(item => {
+          return item.userId == wx.getStorageSync("info").id
+        })
+        console.log(new_list, "95");
         this.setData({
           allot: res.data.content,
           voteDate: res.voteDate
@@ -113,7 +130,6 @@ Page({
     var status = e.currentTarget.dataset.status;
     var allot_list = this.data.allot
     allot_list[0].vote_status = status;
-    console.log(allot_list, "51");
     http.request({
       url: api.account.startVote,
       method: "POST",
@@ -121,7 +137,17 @@ Page({
         params: allot_list
       },
       success: res => {
-        console.log(res, "58");
+        if (res.code == 1) {
+          wx.showToast({
+            title: res.msg,
+            icon: "none"
+          })
+        } else {
+          wx.showToast({
+            title: res.msg,
+            icon: "none"
+          })
+        }
       }
     })
   },

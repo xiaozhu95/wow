@@ -27,7 +27,13 @@ var _api_root = "{$_api_root}",
       room_detail: _api_root + "room/getlist",
       member: _api_root + "team_member/getTeamMemberInfo",
       allowance: _api_root + "room/calculationUserSubsidy",
-      distribution: _api_root + "room/confirmDistribution"
+      distribution: _api_root + "room/confirmDistribution",
+      template: _api_root + "user_subsidy_template/add",
+      template_list: _api_root + "user_subsidy_template/getSubsidyTemplateList",
+      template_detail: _api_root + "user_subsidy_template/getSubsidyTemplate",
+      template_updata: _api_root + "user_subsidy_template/update",
+      room_number: _api_root + "room/getInfoByNumber",
+      getFaithCount: _api_root + "team_leader_credit/getFaithCount",
     },
     team: {
       startTeam: _api_root + "team/startTeam",
@@ -70,7 +76,15 @@ var _api_root = "{$_api_root}",
       startVote: _api_root + "distribution/startVote",
       auctionOrderList: _api_root + "auction_equipment/auctionOrderList",
       team_status: _api_root + "Distribution/getDistributionStatus",
-      team_message: _api_root + "Distribution/getDistributionInfo"
+      team_message: _api_root + "Distribution/getDistributionInfo",
+      distribution: _api_root + "distribution/getInTransactionEquipment",
+      encrypt: _api_root + "sms/encrypt",
+      encrypt_child: _api_root + "sms/smsPay",
+      pay_log: _api_root + "pay_log/encrypt",
+      pay_log_child: _api_root + "pay_log/payToUser"
+    },
+    system: {
+      getSysSetting: _api_root + "System/getSysSetting?type=dengluxieyi",
     }
   }
 module.exports = api;

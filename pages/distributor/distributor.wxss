@@ -1,5 +1,5 @@
-.lxy-nav-bar {
-  background-color: transparent !important;
+page{
+  background-color: #30393C;
 }
 
 .content {

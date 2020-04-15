@@ -6,30 +6,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title:'角色列表'
+    title: '角色列表'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    if (this.options.id){
+    if (this.options.id) {
       this.setData({
         id: this.options.id
       })
       let tit = "角色列表";
       if (this.options.id == 1) {
         tit = "加入活动"
-      } else if (this.options.id==2){
+      } else if (this.options.id == 2) {
         tit = "创建活动"
       }
 
       this.setData({
-        title:tit
+        title: tit
       })
     }
-   
-  },  
+
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -43,7 +43,7 @@ Page({
    */
   onShow: function() {
     this.gain_role();
-
+    this.template_list();
     let data = wx.getStorageSync('role-info-index');
 
     let indexdata = {
@@ -53,14 +53,31 @@ Page({
     this.checkUserRoomExit();
     this.setData({
       indexdata: indexdata
-    }) 
+    })
+  },
+  // 模板列表
+  template_list() {
+    http.request({
+      url: api.room.template_list,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        console.log(res, "36");
+        this.setData({
+          list: res.data
+        })
+      }
+    })
   },
   //判断这个用户是否已经进入过房间
   checkUserRoomExit() {
     http.request({
       url: api.room.checkUserRoomExit,
       method: "POST",
-      data: { user_id: wx.getStorageSync("user_info").id },
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
       success: res => {
         if (res.code == 0) {
           this.setData({
@@ -78,7 +95,7 @@ Page({
   },
   role_delete(e) {
 
-    if (this.data.code_id==0){
+    if (this.data.code_id == 0) {
       var index = e.currentTarget.dataset.index;
       var wx_index = e.currentTarget.dataset.wx_index;
       var role_message = this.data.role_lsit[wx_index].list[index];
@@ -93,7 +110,7 @@ Page({
           if (res.code == 0) {
             wx.showToast({
               title: res.data,
-              icon:'none'
+              icon: 'none'
             })
             this.data.role_lsit[wx_index].list.splice(index, 1);
             this.setData({
@@ -106,14 +123,12 @@ Page({
           }
         }
       })
-    }else{
+    } else {
       wx.showToast({
         title: '你当前正在房间中，请结束之后再来删除',
-        icon:'none'
+        icon: 'none'
       })
     }
-
- 
   },
   gain_role() {
     http.request({
@@ -135,37 +150,39 @@ Page({
     })
   },
   go_back(e) {
-
-
     var index = e.currentTarget.dataset.index;
     var wx_index = e.currentTarget.dataset.wx_index;
-
-
     let indexdata = {
       index: index,
       wx_index: wx_index,
     }
     this.setData({
       indexdata: indexdata
-    }) 
+    })
     var role_message = this.data.role_lsit[wx_index].list[index];
     wx.setStorageSync("role-info", role_message);
     wx.setStorageSync("role-info-index", indexdata);
-    
-    if (this.data.id){
+
+    if (this.data.id) {
 
       if (this.data.id == 1) {
         wx.navigateTo({
           url: "/pages/join-us/join"
         })
-      } else if(this.data.id == 2){
-        wx.navigateTo({
-          url: "/pages/creative/creative"
-        })
+      } else if (this.data.id == 2) {
+        if (this.data.list.length > 0) {
+          wx.navigateTo({
+            url: '/pages/template/template'
+          })
+        } else {
+          wx.navigateTo({
+            url: "/pages/creative/creative"
+          })
+        }
       }
     }
-   
-    
+
+
   },
   handlerGobackClick(delta) {
     const pages = getCurrentPages();

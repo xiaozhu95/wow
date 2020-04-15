@@ -127,6 +127,13 @@
 					"scene": null
 				},
 				{
+					"id": 11,
+					"name": "pages/user/user",
+					"pathName": "pages/user/user",
+					"query": "",
+					"scene": null
+				},
+				{
 					"id": -1,
 					"name": "pages/creative/creative",
 					"pathName": "pages/creative/creative",
@@ -134,10 +141,23 @@
 					"scene": null
 				},
 				{
-					"id": 11,
-					"name": "pages/user/user",
-					"pathName": "pages/user/user",
+					"id": -1,
+					"name": "开团模板",
+					"pathName": "pages/template/template",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "房间规则",
+					"pathName": "pages/regulation/regulation",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "账户余额",
+					"pathName": "pages/account/account",
 					"scene": null
 				}
 			]

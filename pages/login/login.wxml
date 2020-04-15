@@ -1,8 +1,8 @@
 <view class='nav'>
-  <navBar title='金额明细' background='rgba(0, 0, 0, 0)' color='#000' back="{{true}}" iconTheme='black' bindback="handlerGobackClick"></navBar>
+  <navBar title='微信授权' background='rgba(0, 0, 0, 0.5)' color='#fff' back="{{true}}" iconTheme='white' bindback="handlerGobackClick"></navBar>
 </view>
 <view class="login">
-  <image src="/images/log_back.jpg" />
+  <image src="https://wowgame.yigworld.com/static/img/log_back.jpg" />
   <view class="after-navber">
     <!-- 
     <van-popup show="{{ legal_show }}" bind:close="legalClose" position="bottom" round custom-style="height: 1100rpx" closeable="true">
@@ -24,8 +24,11 @@
           《法律声明及隐私政策》
         </view>
         <scroll-view scroll-y="true" style="height: 1000rpx;">
-          <view class="article">
+          <!-- <view class="article">
             <rich-text nodes="{{mes_content}}" />
+          </view> -->
+          <view>
+            <image src="https://wowgame.yigworld.com/static/img/agreement/{{index+1}}.png" wx:for="{{17}}" wx:key="index" style="width:750rpx;height:1192rpx;"></image>
           </view>
         </scroll-view>
       </view>
@@ -50,7 +53,7 @@
       <view class='title'>微信授权</view>
       <view class='middle_box'>
         <view class='midd_top'>
-          <view>
+          <view style="width:80rpx;height:80rpx;margin:0rpx auto;">
             <image src='https://yig-game.oss-cn-hangzhou.aliyuncs.com/uploads/image/29/29c1e657f770d69ed94e64e790d721ab.png' />
           </view>
           <view style='padding-top:20rpx;'>

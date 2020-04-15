@@ -12,6 +12,18 @@ Page({
     wx.hideShareMenu();
     // t.pageOnLoad(this);
     // this.agreement();
+    let user_info = wx.getStorageSync("user_info");
+    if (user_info){
+      if (user_info.mobile.length==0){
+        this.setData({
+          show_madel: true
+        })
+      }
+    }
+    this.setData({
+      user_info: user_info
+    })
+  
   },
   onReady: function() {
     // t.pageOnReady(this);
@@ -168,13 +180,14 @@ Page({
       url: '/pages/index/index'
     });
   },
-  //文章详情接口
+  // //文章详情接口
   // agreement() {
   //   t.request({
-  //     url: e.user.agreement + "?type=user_agreement",
+  //     url: e.system.getSysSetting,
   //     // data: { article_id: id },
   //     success: res => {
-  //       var str = res.data.content.replace(/\<img/gi, '<img style="display: block; width: 100%;height: auto;margin:20px 0px;"');
+  //       console.log(res.data);
+  //       var str = res.data.replace(/\<img/gi, '<img style="display: block; width: 100%;height: auto;margin:20px 0px;"');
   //       this.setData({
   //         mes_content: str,
   //       })

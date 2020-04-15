@@ -17,10 +17,10 @@ Page({
     auction_type: ["人民币", "金币"],
     auction_typeIndex: 0,
     add_equip_popup: false,
-    floor_time_wap: ['1','5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
-    floor_time_pay: ['1','5', '6', '7', '8', '9', '10','60'],
-    floor_time_wap_index: 5,
-    floor_time_pay_index: 0,
+    floor_time_wap: ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60'],
+    floor_time_pay: ['1', '5', '6', '7', '8', '9', '10', '60'],
+    floor_time_wap_index: 0,
+    floor_time_pay_index: 1,
     pat_popup: false,
     team_list: "", //团员信息  
     identity: "", //当前用户信息
@@ -32,11 +32,15 @@ Page({
     trading_list: "", //我的交易列表
     pay_setInterval: "", //点击拍卖列表的拍卖按钮
     info_setInterval: "", //点击拍卖列表的拍卖按钮
-    teamInfo:''
+    teamInfo: '',
+    select_boss_index: 0,
+    equipment_popup:false,
+    img_fuben:'',
+    now_equip_info:'' 
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 生命周期函数--监听页面加载f
    */
   onLoad: function(options) {},
   /**
@@ -49,33 +53,51 @@ Page({
 
     this.setData({
       user_id: user_info.id,
-      team_id: this.options.team_id,
+      team_id: this.options.team_id
     })
     let that = this;
-    
+
     that.userTeamIdentity(that.options.team_id, user_info.id);
-    that.equipment_list(this.data.top_bar_index);
     that.teamStatus();
     this.set_timer();
 
   },
+  //boss列表切换
+  getboss_list(e) {
+    let index = e.currentTarget.dataset.index;
+    let id=0;
+    if (index != -1) {
+      id = e.currentTarget.dataset.id;
+    }
+   
+    this.setData({
+      select_boss_index: index,
+      boss_id: id,
+      get_is_floor: false,
+    })
+
+    if (index!=-1){
+      this.equipment_list();
+    }
+    
+  },
+
   //定时任务
-  set_timer(){
+  set_timer() {
     let that = this;
     let info_setInterval = setInterval(e => {
       that.userTeamIdentity(that.data.team_id, that.data.user_id);
-      that.equipment_list(that.data.top_bar_index);
       that.teamStatus();
-      that.transaction();
       that.team_list(that.data.team_id, that.data.user_id);
-      that.team_info(that.data.team_id);
+      that.equipment_list();
+      that.set_equipment();
     }, 5000)
     this.setData({
       info_setInterval: info_setInterval
     })
   },
   //清除任务
-  set_clear(){
+  set_clear() {
     clearInterval(this.data.info_setInterval);
     this.setData({
       info_setInterval: null
@@ -86,13 +108,15 @@ Page({
 
 
   //地板金币 审核
-  setReview(e){
+  setReview(e) {
     let index = e.currentTarget.dataset.index;
     let order_id = "";
-    if (index=="-1"){
+    if (index == "-1") {
       order_id = this.data.floor.order_id;
-    }else{
-      order_id = this.data.trading_list.data[index].order_id;
+    } else {
+      console.log(this.data.equip_list[index]);
+
+      order_id = this.data.equip_list[index].order_id;
     }
     app.request({
       url: api.equipment.review + "?order_id=" + order_id,
@@ -102,18 +126,19 @@ Page({
           title: '提示',
           content: res.msg,
         })
-        this.set_clear();
+        // this.set_clear();
         this.teamStatus();
-        this.team_info(this.data.team_id,this.data.user_id);
-        this.transaction();
-        this.set_timer();
+        this.set_equipment();
+        // this.team_info(this.data.team_id, this.data.user_id);
+        // this.transaction();
+        // this.set_timer();
       }
-    }) 
+    })
   },
 
   //立即付钱、支付
   auction_pay(e) {
-
+    var that = this;
     if (this.data.identity == 3) {
       wx.showModal({
         title: '提示',
@@ -121,13 +146,14 @@ Page({
       })
       return;
     }
-
     let index = e.currentTarget.dataset.index;
     let room_info = this.data.room_info;
-    let trading_list = "", trading_dan="";
+    let trading_list = "",
+      trading_dan = "";
     let str = "";
-    let dan = room_info.floorInfo.currency_type == 2 ? '元' : '金币';
+    
     if (index == "-1") {
+      let dan = room_info.floorInfo.currency_type == 2 ? '元' : '金币';
       str = {
         team_id: this.data.team_id,
         equipment_id: 0,
@@ -139,30 +165,29 @@ Page({
         auction_log_id: 0,
       }
     } else {
-      trading_list = this.data.trading_list.data[index];
+      console.log(this.data.equip_list, 1111);
+      trading_list = this.data.equip_list[index];
+      
       trading_dan = trading_list.currency_type == 2 ? '元' : '金币';
       str = {
         team_id: trading_list.team_id,
         equipment_id: trading_list.equipment_id,
-        confirm_payment_id: trading_list.confirm_payment_id,
+        confirm_payment_id: trading_list.id,
         equipment_name: trading_list.equipment_name,
-        user_id: trading_list.user_id,
-        price: parseFloat(trading_list.price),
+        user_id: this.data.user_id,
+        price: parseFloat(trading_list.role.price),
         currency_type: trading_list.currency_type,
-        auction_log_id: trading_list.auction_log_id,
+        auction_log_id: trading_list.role.id,
+        auction_equipment_id: trading_list.id
       }
     }
-
-
     if (index == "-1") {
       let text = '';
       if (room_info.floorInfo.currency_type == 2) {
-        text = '你确定要支付' + parseFloat(room_info.floorInfo.price)  + "元成为了地板";
+        text = '你确定要支付' + parseFloat(room_info.floorInfo.price) + "元成为了地板";
       } else {
-        text = '你已经在游戏中向团长转' + parseFloat(room_info.floorInfo.price)  + "金币了吗";
+        text = '你已经在游戏中向团长转' + parseFloat(room_info.floorInfo.price) + "金币了吗";
       }
-
-
       wx.showModal({
         title: '地板售卖',
         content: text,
@@ -173,49 +198,47 @@ Page({
               method: "POST",
               data: str,
               success: res => {
-                if(res.code==0){
+                if (res.code == 0) {
                   let txt = '';
                   if (room_info.floorInfo.currency_type == 2) {
                     txt = '你已经成功成为地板';
                   } else {
                     txt = '请等待团长审核，你提交的金币';
                   }
-
-                  wx.showModal({
-                    title: '提示',
-                    content: txt
+                  wx.showToast({
+                    title: txt,
+                    icon: 'none'
                   })
-                }else{
+                } else {
                   wx.showModal({
                     title: '提示',
                     content: res.msg
                   })
                 }
-
-               
+                that.teamStatus();
               }
             })
           } else if (res.cancel) {
-            // console.log('用户点击取消')
           }
         }
       })
-
     } else {
       app.request({
         url: api.payment.auction_pay,
         method: "POST",
         data: str,
         success: res => {
-          // console.log(res);
           let text = "";
-          if(res.code==0){
-            text = '你成功支付' + parseFloat(trading_list.price) + trading_dan;
+          if (res.code == 0) {
+            text = '你成功支付' + parseFloat(trading_list.role.price) + trading_dan;
             wx.showModal({
               title: '提示',
               content: text
             })
-          }else{
+            that.teamStatus();
+            that.equipment_list();
+            that.set_equipment();
+          } else {
             text = res.msg;
             wx.showModal({
               title: '提示',
@@ -226,13 +249,10 @@ Page({
                     url: "/pages/account/account"
                   })
                 } else if (res.cancel) {
-                  console.log('用户点击取消')
                 }
               }
             })
           }
-         
-
         }
       })
     }
@@ -246,20 +266,44 @@ Page({
       method: "get",
       success: res => {
         if (res.code == 0) {
-          // let id = res.data.transcript_id;
-          // var transcript_value = wx.getStorageSync("transcript" + id);
-          // console.log(transcript_value);
-          // if (transcript_value == "") {
-          //   this.transcriptAndBoos(id);
-          // } else {
-          //   this.setData({
-          //     boss_list: transcript_value,
-          //     transcript_id: res.data.transcript_id
-          //   })
-          // }
+          //获取boss 和 装备
+          let id = res.data.transcript_id;
+          var transcript_value = wx.getStorageSync("transcript" + id);
+          let img_fuben = "https://wowgame.yigworld.com/static/img/b" + id+'.png';
+          this.setData({
+            img_fuben: img_fuben
+          })
+          if (transcript_value == "") {
+            this.transcriptAndBoos(id);
+          } else {
+            let select_boss_index = 0;
+            if (this.data.select_boss_index==-1){
+              select_boss_index = 0
+            }else{
+              select_boss_index = this.data.select_boss_index
+            }
+            this.setData({
+              boss_list: transcript_value,
+              boss_id: transcript_value[select_boss_index].id,
+              transcript_id: res.data.transcript_id
+            })
+            this.equipment_list();
+          }
+
+          //地板是否开启
+          let is_floor = false;
+          if (res.data.floor_status == 1){
+            is_floor=true,
+            this.setData({
+            select_boss_index:-1
+            })
+          }else{
+            is_floor=false
+          }
           this.setData({
             room_info: res.data,
-            transcript_id: res.data.transcript_id
+            is_floor: is_floor,
+            transcript_id: res.data.transcript_id,
           })
         }
       }
@@ -276,7 +320,7 @@ Page({
           that.set_room_info(res.data.room_id, team_id);
           this.setData({
             team_info: res.data,
-            room_id:res.data.room_id
+            room_id: res.data.room_id
           })
 
         }
@@ -289,8 +333,13 @@ Page({
       url: api.team.team_list + "?team_id=" + team_id + "&user_id=" + user_id,
       method: "get",
       success: res => {
+        let role_info = res.list.filter(e=>{
+          return user_id == e.user_id;
+        })
+
         this.setData({
           team_list: res.data,
+          role_info: role_info[0],
           team_list_li: res.list
         })
       }
@@ -330,7 +379,6 @@ Page({
               user_id: that.data.user_id
             },
             success: res => {
-              // console.log(res);
               if (res.code == 0) {
                 wx.showToast({
                   title: '解散团队成功',
@@ -348,7 +396,6 @@ Page({
             }
           })
         } else if (res.cancel) {
-          // console.log('用户点击取消')
         }
       }
     })
@@ -365,7 +412,7 @@ Page({
       success(res) {
         if (res.confirm) {
           app.request({
-            url: api.team.userQuitTeam,
+            url: api.team.removeTeamMember,
             method: "POST",
             data: {
               team_id: that.data.team_id,
@@ -373,7 +420,6 @@ Page({
               user_id: team_list[index_t].list[index].user_id,
             },
             success: res => {
-              // console.log(res);
               if (res.code == 0) {
                 wx.showToast({
                   title: '踢出成功',
@@ -387,7 +433,6 @@ Page({
             }
           })
         } else if (res.cancel) {
-          // console.log('用户点击取消')
         }
       }
     })
@@ -472,9 +517,12 @@ Page({
           key: "transcript" + id,
           data: res
         })
+        let aid = this.data.select_boss_index;
         this.setData({
-          boss_list: res
+          boss_list: res,
+          boss_id: res[0].id
         })
+        this.equipment_list();
       }
 
     })
@@ -571,7 +619,7 @@ Page({
     this.equipment_list(this.data.top_bar_index);
     this.setData({
       pat_popup: false,
-      pay_setInterval:''
+      pay_setInterval: ''
     })
   },
   //我的交易
@@ -584,7 +632,6 @@ Page({
         user_id: this.data.user_id
       },
       success: res => {
-        // console.log(res);
         if (res.code == 0) {
           this.setData({
             trading_list: res.data
@@ -596,24 +643,50 @@ Page({
 
 
   //点击立即参加拍卖
-  add_auction() {
+  add_auction(e) {
+    if (this.data.identity == 3) {
+      wx.showModal({
+        title: '提示',
+        content: '还不是正式团员，不能参加拍卖',
+      })
+      return;
+    } else if (this.data.now_pat_price){
+      if (this.data.now_pat_price.pat_price == 0) {
+        wx.showModal({
+          title: '提示',
+          content: '你的出价必须大于0',
+        })
+        return;
+      }
+    } else if (!this.data.now_pat_price) {
+      wx.showModal({
+        title: '提示',
+        content: '你的出价必须大于0',
+      })
+      return;
+    }
+
+    let index = e.currentTarget.dataset.index;
+    let equip = this.data.equip_list;
+
     let str = {
       team_id: this.data.team_id,
       user_id: this.data.user_id,
-      auction_equipment_id: this.data.auction_equipment.id,
-      equipment_id: this.data.auction_equipment.equipment_id,
-      equipment_name: this.data.auction_equipment.equipment_name,
-      currency_type: this.data.auction_equipment.currency_type,
-      price: this.data.now_pat_price,
+      auction_equipment_id: equip[index].id,
+      equipment_id: equip[index].equipment_id,
+      equipment_name: equip[index].equipment_name,
+      currency_type: equip[index].currency_type,
+      price: this.data.now_pat_price.pat_price,
+      role_id: this.data.role_info.role_id,
+      role_name: this.data.role_info.role_name,
     }
     app.request({
       url: api.equipment.add_auction,
       method: "POST",
       data: str,
       success: res => {
-        // console.log(res, "点击立即参加拍卖");
         if (res.code == 0) {
-          this.auction_equip();
+          // this.auction_equip();
           wx.showToast({
             title: '成功',
             icon: 'none',
@@ -624,60 +697,61 @@ Page({
             content: res.msg
           })
         }
-
+        equip[index].now_pat_price = '';
+        this.data.now_pat_price.pat_price = '';
         this.setData({
-          now_pat_price: ""
+          equip_list: equip,
+          now_pat_price: this.data.now_pat_price
         })
-
+        this.equipment_list();
       }
     })
   },
 
   //点击列表拍卖
   set_pat_popup(e) {
-    if (this.data.identity == 3) {
-      wx.showModal({
-        title: '提示',
-        content: '还不是正式团员，不能参加拍卖',
-      })
-      return;
-    }
-    let that = this;
-
-    this.data.pay_setInterval = setInterval(e=>{
-      that.auction_equip();
-    },5000)
-
-
     let index = e.currentTarget.dataset.index;
-    let auction_equip = this.data.equip_list[index];
+    let popup_pat = e.currentTarget.dataset.id;
+    let equip_list = "";
+    if (popup_pat =="popup_pat"){
+      equip_list = this.data.equipment_popup_list;
+    }else{
+      equip_list = this.data.equip_list;
+    }
     this.setData({
-      pat_popup: true,
-      auction_equipment: auction_equip,
-      pay_setInterval: this.data.pay_setInterval
+      pat_popup: true
     })
-    this.auction_equip();
+    this.auction_equip(equip_list[index].id);
   },
   //参加拍卖填写金额
   pat_price(e) {
+    let index = e.currentTarget.dataset.index;
+    
+   
+    let now_pat_price = {
+      index: index,
+      pat_price: e.detail.value
+    }
+    // let equip_list = this.data.equip_list;
+    // equip_list[index].now_pat_price = e.detail.value
     this.setData({
-      now_pat_price: e.detail.value
+      now_pat_price: now_pat_price
     })
   },
   //拍卖装备详情倒数时间结束
   set_equip_finish(e) {
-    let index = e.currentTarget.dataset.index; 
-    let id = e.currentTarget.dataset.id; 
-    
-    
+    let index = e.currentTarget.dataset.index;
+    let id = e.currentTarget.dataset.id;
+
+
     clearInterval(this.data.pay_setInterval);
     if (this.data.pat_popup) {
       wx.showToast({
         title: '拍卖结束',
         icon: 'none',
       })
-    }else{
-      if(id=="0"){
+    } else {
+      if (id == "0") {
         let auction_equip = this.data.equip_list[index];
         wx.showToast({
           title: "当前" + auction_equip.equipment_name + "装备拍卖已结束",
@@ -686,31 +760,23 @@ Page({
         })
         this.equipment_list(this.data.top_bar_index);
 
-      }else if(id=="1"){
-        // console.log(this.data.trading_list);
-
-        // let trading_list = this.data.trading_list.data[index];
-        // wx.showToast({
-        //   title: "当前" + trading_list.equipment_name + "装备付款已结束，你没有付款！",
-        //   icon: 'none',
-        //   duration: 5000
-        // })
+      } else if (id == "1") {
         this.transaction();
       }
     }
 
     this.setData({
-      pay_setInterval:""
+      pay_setInterval: ""
     })
   },
   //参加拍卖详情接口
-  auction_equip() {
+  auction_equip(id) {
     app.request({
       url: api.equipment.auction_equip,
       method: "POST",
       data: {
         team_id: this.data.team_id,
-        auction_equipment_id: this.data.auction_equipment.id
+        auction_equipment_id: id
       },
       success: res => {
         // console.log(res, "参加拍卖详情接口");
@@ -731,13 +797,13 @@ Page({
   },
   //确定拍卖时间和拍卖时间、支付时间
   set_eqiop_btn() {
-    if (!this.data.equip_val || this.data.equip_val.length == 0) {
-      wx.showToast({
-        title: '请添加每次加价不少于多少钱',
-        icon: 'none',
-      })
-      return;
-    }
+    // if (!this.data.equip_val || this.data.equip_val.length == 0) {
+    //   wx.showToast({
+    //     title: '请添加每次加价不少于多少钱',
+    //     icon: 'none',
+    //   })
+    //   return;
+    // }
     let b_list = this.data.boss_list;
     let b_index = this.data.boss_index;
     let now_arr = this.data.now_arr_equip;
@@ -758,7 +824,8 @@ Page({
         equipment_id: e.id,
         equipment_name: e.equipmentChineseName,
         price: e.clap_price,
-        add_price: this.data.equip_val,
+        // add_price: this.data.equip_val, 目前加价_价格定死
+        add_price: 1,
         currency_type: currency_type
       });
     })
@@ -795,34 +862,61 @@ Page({
   },
 
   //正在拍卖列表/交易/流拍
-  equipment_list(type) {
+  equipment_list(e) {
     app.request({
       url: api.equipment.getlist,
       method: "POST",
       data: {
         team_id: this.data.team_id,
-        type: type
+        user_id: this.data.user_id,
+        boss_id: this.data.boss_id,
+        is_type: 0,
       },
       success: res => {
-
         this.setData({
           equip_list: res.data.data
         })
+        
         // console.log(this.data.equip_list);
       }
     })
   },
+  set_popup_trading(){
+    this.setData({
+      equipment_popup:true
+    })
+    this.set_equipment();
+  },
+  onClose_popup_trading(){
+    this.setData({
+      equipment_popup: false
+    })
+  },
+  //交易审核
+  set_equipment(e) {
+    app.request({
+      url: api.equipment.getlist,
+      method: "POST",
+      data: {
+        team_id: this.data.team_id,
+        user_id: this.data.user_id,
+        is_type: 1,
+      },
+      success: res => {
+        // console.log(res);
 
+
+        this.setData({
+          equipment_popup_list: res.data.data,
+          team_num: res.data.team_num,
+          team_member_num: res.data.team_member_num,
+        })
+
+        // console.log(this.data.equip_list);
+      }
+    })
+  },
   add_equip_btn() {
-    var transcript_value = wx.getStorageSync("transcript" + this.data.transcript_id);
-    if (transcript_value == "") {
-      this.transcriptAndBoos(this.data.transcript_id);
-    } else {
-      this.setData({
-        boss_list: transcript_value
-      })
-    }
-
     this.setData({
       equip_popup: true,
     })
@@ -857,11 +951,16 @@ Page({
       }
     })
     if (isPrice) {
+
       this.setData({
-        add_equip_popup: true,
+        add_equip_popup: false,
         boss_list: b_list,
         now_arr_equip: now_arr
       })
+
+      this.set_eqiop_btn();
+
+      
     } else {
       wx.showModal({
         title: '提示',
@@ -890,8 +989,11 @@ Page({
   //选择boss
   set_select_boss(e) {
     let index = e.currentTarget.dataset.index;
+    let id = e.currentTarget.dataset.id;
     this.setData({
       boss_index: index,
+      boss_id: id,
+      select_boss_index: index,
       select_boss: true
     })
   },
@@ -926,7 +1028,7 @@ Page({
       },
       success: res => {
         if (res.code == 0) {
-          if (res.data.teamMemberInfo.is_del==2){
+          if (res.data.teamMemberInfo.is_del == 2) {
             this.set_clear();
             wx.showModal({
               title: '提示',
@@ -952,14 +1054,14 @@ Page({
                 })
               }
             })
-          } 
+          }
 
-          if (res.data.distributionInfo==1){
+          if (res.data.distributionInfo == 1) {
             this.set_clear();
             wx.showModal({
               title: '提示',
               content: '团长已分账，请前往分账页面查看。',
-              showCancel:false,
+              showCancel: false,
               success(res) {
                 wx.redirectTo({
                   url: "/pages/account-team/account-team"
@@ -967,11 +1069,13 @@ Page({
               }
             })
           }
-          
+
 
           this.setData({
             teamInfo: res.data.teamInfo,
             floor: res.data.floor,
+            amount: res.data.amount,
+            gold_coin: res.data.gold_coin
           })
         }
       }
@@ -985,9 +1089,9 @@ Page({
       trading_list: '',
       top_bar_index: index
     })
-    if(index==3){
+    if (index == 3) {
       this.transaction();
-    }else{
+    } else {
       this.equipment_list(index);
     }
   },
@@ -999,7 +1103,7 @@ Page({
   },
   //关闭成员信息
   close_team_popup() {
-    this.team_list(this.data.team_id,this.data.user_id);
+    this.team_list(this.data.team_id, this.data.user_id);
     this.setData({
       team_info_popup: false
     })
@@ -1028,7 +1132,7 @@ Page({
     wx.setClipboardData({
       //去找上面的数据
       data: room_num,
-      success:function(res) {
+      success: function(res) {
         wx.showToast({
           title: '复制成功',
         });
@@ -1070,21 +1174,19 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-  
-    wx.showNavigationBarLoading()
 
-    let setTimeout= setTimeout(() => {
-      wx.hideNavigationBarLoading()
-      this.userTeamIdentity(this.data.team_id, this.data.user_id);
-      this.set_room_info(this.data.team_id, this.data.user_id);
-      this.equipment_list(this.data.top_bar_index);
-      this.teamStatus();
-      this.transaction();
+    // // wx.showNavigationBarLoading()
 
-      wx.stopPullDownRefresh()
+    //  setTimeout(() => {
+    //   // wx.hideNavigationBarLoading()
+    //   this.userTeamIdentity(this.data.team_id, this.data.user_id);
+    //   this.set_room_info(this.data.team_id, this.data.user_id);
+    //   this.equipment_list(this.data.top_bar_index);
+    //   this.teamStatus();
+    //   this.transaction();
 
-      clearTimeOut(setTimeout)
-    }, 2000);
+    //   wx.stopPullDownRefresh()
+    // }, 2000);
   },
 
   /**

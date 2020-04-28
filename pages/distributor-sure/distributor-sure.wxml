@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='扣罚确认' background='#FFF0CD'  back="{{true}}"  bindback="handlerGobackClick"></navBar>
+  <navBar title='扣罚确认' background='#FFF0CD' back="{{true}}" bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="allot_list">
@@ -23,14 +23,14 @@
               </view>
             </view>
           </view>
-          <view class="" bindtap="show_modal" data-index="{{index}}">
+          <view wx:if="{{allocation_list.length > 1}}" bindtap="show_modal" data-index="{{index}}">
             扣罚
           </view>
         </view>
       </view>
     </view>
   </view>
-  <view class="grant" bindtap="suer_distribution">确定分配</view>
+  <view class="grant" bindtap="hint">确定分配</view>
 </view>
 <van-popup show="{{ show }}" bind:close="showPopup" round>
   <view class="popup_content">

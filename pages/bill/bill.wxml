@@ -1,6 +1,6 @@
 <view class='main-wraper'>
   <view class='nav'>
-    <navBar title='已购买的装备' background='rgba(0, 0, 0, 0)'  back="{{true}}" bindback="handlerGobackClick"></navBar>
+    <navBar title='已购买的装备' background='#fff0cd'  back="{{true}}" bindback="handlerGobackClick"></navBar>
   </view>
 
   <view class="bill-wraper">

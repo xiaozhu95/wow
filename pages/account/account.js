@@ -34,7 +34,6 @@ Page({
       }
     })
     this.setData({
-      user_info: wx.getStorageSync("user_info"),
       mobile: str2,
       isiphone: isiphone
     })
@@ -51,7 +50,25 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.recod_money();
+    // this.recod_money();
+    this.get_userinfo();
+  },
+  get_userinfo() {
+    http.request({
+      url: api.user.getuserinfo,
+      data: {
+        user_id: wx.getStorageSync("user_info").id
+      },
+      success: res => {
+        if (res.code == 0) {
+          wx.setStorageSync("user_info", res.data);
+          this.setData({
+            user_info: res.data
+          });
+
+        }
+      }
+    })
   },
   money(e) {
     var n = e.detail.value;
@@ -145,6 +162,12 @@ Page({
       if (this.data.deposit_money < 1) {
         return wx.showToast({
           title: '最少提现一元',
+          icon: "none"
+        })
+      }
+      if (Number(this.data.deposit_money) > Number(this.data.user_info.balance)) {
+        return wx.showToast({
+          title: '您余额不足',
           icon: "none"
         })
       }
@@ -320,6 +343,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    this.get_userinfo();
+    setTimeout(e => {
+      wx.stopPullDownRefresh();
+    }, 2000)
 
   },
 
@@ -358,6 +385,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl:'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
   }
 })

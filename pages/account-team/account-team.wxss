@@ -1,6 +1,6 @@
 page {
   background-image: none;
-  background: #eee;
+  background: #fff0cd;
 }
 
 .list {
@@ -10,7 +10,8 @@ page {
 .item {
   margin-top: 20rpx;
   padding: 0 20rpx;
-  background: #fff;
+  color: #30393c;
+  background: #fef9e6;
 }
 
 .item image {
@@ -28,8 +29,9 @@ page {
 
 .room {
   padding: 20rpx 0;
+  font-size: 26rpx;
   font-weight: bold;
-  border-bottom: 1rpx solid #a5a5a5;
+  border-bottom: 1rpx solid #ece7d6;
 }
 
 .unity {

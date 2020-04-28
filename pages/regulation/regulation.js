@@ -8,27 +8,27 @@ Page({
   data: {
     legal_show: false,
     certigier: true,
-    img_fuben: '' 
+    img_fuben: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.message(this.options.room_id);
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
-    
+  onReady: function () {
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
   message(e) {
@@ -38,8 +38,7 @@ Page({
         number: e
       },
       success: res => {
-        // console.log(res, "37");
-        if(res.code == 0){
+        if (res.code == 0) {
           let id = res.data.transcript_id;
           let img_fuben = "https://wowgame.yigworld.com/static/img/b" + id + '.png';
           this.setData({
@@ -48,12 +47,11 @@ Page({
         }
 
         if (res.code == 1) {
-          
           wx.showModal({
             title: '提示',
             content: res.msg,
             showCancel: false,
-            success: function(res) {
+            success: function (res) {
               wx.navigateBack({
                 delta: 1
               })
@@ -86,7 +84,6 @@ Page({
         user_info: user
       },
       success: res => {
-        console.log(res);
         if (res.code == 1) {
           return wx.showToast({
             title: res.msg,
@@ -131,7 +128,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
   legalClose() {
@@ -147,28 +144,34 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
+
 
   }
 })

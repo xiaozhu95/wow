@@ -18,6 +18,7 @@
       <view wx:else class="bt1" bindtap="showPopup">充值</view>
     </view>
     <view class="bt2" bindtap="getmoney" style="margin-top:40rpx;">提现</view>
+    <text class="flex_vert" style="font-size:22rpx; margin-top:20rpx;">提示：提现金额大于1元</text>
   </view>
 </view>
 <!-- <view class="main">
@@ -39,7 +40,7 @@
     <view class="hint">充值金额</view>
     <view class="flex_y" style="padding-bottom: 20rpx;">
       <view style="padding-right:20rpx;font-size:37rpx;font-weight: bold;">￥</view>
-      <input placeholder="请输入金额" bindinput="money" value="{{money}}" type="number" style="font-size:37rpx;" />
+      <input placeholder="请输入金额" bindinput="money" value="{{money}}" type="digit" style="font-size:37rpx;" />
     </view>
     <view class="wire"></view>
     <view class="pay" bindtap="money_pay">充值</view>
@@ -50,7 +51,7 @@
     <view class="hint">提现金额</view>
     <view class="flex_y" style="padding-bottom: 20rpx;">
       <view style="padding-right:20rpx;font-size:37rpx;font-weight: bold;">￥</view>
-      <input placeholder="请输入金额" bindinput="deposit_money" value="{{deposit_money}}" type="number" style="font-size:37rpx;" />
+      <input placeholder="请输入金额" bindinput="deposit_money" value="{{deposit_money}}" type="digit" style="font-size:37rpx;" />
     </view>
     <view class="wire"></view>
     <view class="pay" bindtap="application">提现</view>

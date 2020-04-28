@@ -13,6 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(JSON.parse(this.options.allocation))
     var allocation = JSON.parse(this.options.allocation);
     this.setData({
       allocation_list: allocation
@@ -29,9 +30,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
-  },
+  onShow: function() {},
   show_modal(e) {
     var index = e.currentTarget.dataset.index;
     this.setData({
@@ -86,6 +85,33 @@ Page({
       show: !this.data.show
     })
 
+  },
+  hint() {
+    var that = this;
+    http.request({
+      url: api.room.promise,
+      method: "POST",
+      data: {
+        team_id: this.options.team_id,
+        user_id: wx.getStorageSync("user_info").id,
+        currency_type: this.options.currency_type
+      },
+      success: res => {
+        console.log(res.data == 0, "95");
+        if (res.data == 3) {
+          wx.showModal({
+            title: '提示',
+            content: '您的分配因连续三次同意人数不足3/4，将被系统强制平分',
+            showCancel: false,
+            success(res) {
+              that.suer_distribution()
+            }
+          })
+        } else {
+          that.suer_distribution();
+        }
+      }
+    })
   },
   suer_distribution() {
     http.request({
@@ -156,6 +182,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
+
 
   }
 })

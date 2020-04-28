@@ -8,6 +8,28 @@ page {
   box-sizing: border-box;
 }
 
+.header {
+  height: 80rpx;
+  line-height: 80rpx;
+  background: #fff0cf;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.header_item {
+  text-align: center;
+}
+
+.header_hint {
+  height: 5rpx;
+  width: 60%;
+  margin: 0 auto;
+  background: #30393c;
+  border-radius: 20rpx;
+}
+
 .score_title {
   padding-top: 20rpx;
   text-align: center;
@@ -60,4 +82,9 @@ page {
   color: #30393c;
   margin-top: 10rpx;
   background: #fef9e6;
+}
+
+.hint {
+  text-align: center;
+  padding: 50rpx 0;
 }

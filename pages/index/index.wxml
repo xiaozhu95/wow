@@ -5,6 +5,18 @@
     </view>
   </view>
   <view class="content">
+    <!-- <van-notice-bar
+      left-icon="../../images/tongzhi.png"
+      scrollable="{{false}}"
+      wrapable
+      text="魔兽团吧小程序是一款服务于魔兽怀旧服玩家，帮助团长和团员实现开团入团，道具竞价，金额支付，团队分配的小程序。操作简单，管理方便，过程公正透明不毛利。"
+    /> -->
+
+
+    <view class="notice">
+      魔兽团吧小程序是一款服务于魔兽怀旧服玩家，帮助团长和团员实现开团入团，道具竞价，金额支付，团队分配的小程序。操作简单，管理方便，过程公正透明不毛利。
+    </view>
+
     <view class="creative flex_vert" bindtap="create">
       <image src="../../images/icon1.png" class="icon"></image>
       <text>创建活动</text>

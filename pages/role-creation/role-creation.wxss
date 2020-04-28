@@ -1,5 +1,10 @@
-.lxy-nav-bar {
-  background-color: transparent !important;
+page {
+  background-color: #30393c;
+}
+
+.jiase {
+  width: 750rpx;
+  height: 140rpx;
 }
 
 input {
@@ -8,13 +13,13 @@ input {
 }
 
 .content {
-  padding: 0 20rpx;
+  padding: 20rpx;
   font-size: 28rpx;
 }
 
 .msg_list {
   padding: 0 20rpx;
-  background: #fff;
+  background: #fff0cd;
   border-radius: 15rpx;
 }
 
@@ -25,7 +30,7 @@ input {
 }
 
 .name {
-  padding: 50rpx 0;
+  padding: 30rpx 0;
   font-size: 32rpx;
 }
 
@@ -65,11 +70,13 @@ input {
 }
 
 .save {
-  margin: 100rpx 20rpx 0 20rpx;
-  border-radius: 15rpx;
+  margin: 100rpx auto;
+  width: 490rpx;
+  border-radius: 50rpx;
   padding: 30rpx 0;
-  background: #fff;
+  background-color: #fff0cd;
   text-align: center;
+  font-weight: 600;
 }
 
 .sever_title {
@@ -80,9 +87,17 @@ input {
 
 .ser_close {
   position: absolute;
-  top: 30rpx;
-  right: 20rpx;
+  font-size: 32rpx;
+  padding: 30rpx;
+  top: 0rpx;
+  right: 0rpx;
   /* transform: translateX(-50%); */
+}
+
+.ser_close image {
+  width: 40rpx;
+  height: 40rpx;
+  display: block;
 }
 
 .server_message {
@@ -95,12 +110,29 @@ input {
   border-bottom: 1rpx solid #e7e7e7;
 }
 
+.server_region_list {
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+.server_hint {
+  height: 5rpx;
+  width: 60%;
+  margin: 0 auto;
+  background: #30393c;
+  border-radius: 20rpx;
+}
+
+.server_region {
+  text-align: center;
+}
+
 .server-item:first-child {
   border: none;
 }
 
 .server-item {
-  padding: 20rpx 0;
+  padding: 30rpx 0;
   border-top: 1rpx solid #a5a5a5;
 }
 
@@ -111,7 +143,7 @@ input {
   border-top: 1rpx solid #e7e7e7;
   background: #fff;
   text-align: center;
-  padding: 20rpx 0;
+  padding: 30rpx 0;
 }
 
 .coupon_checked {

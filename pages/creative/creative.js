@@ -10,27 +10,42 @@ Page({
     transcript_popup: false,
     subsidies_type: [{
         type: 2,
-        value: '人民币',
-        checked: 'true'
+        value: '现金',
+        checked: true
       },
       {
         type: 1,
-        value: '金币'
+        value: '金币',
+        checked: false
       }
     ],
     subsidies_index: 2,
     allot_type: [{
         type: 1,
         value: '百分比',
+        checked: false
       },
       {
         type: 2,
         value: '固定',
-        checked: 'true'
+        checked: true
       }
     ],
     allot_index: 2,
     popupshow: false,
+    subsidyPopup: false,
+    subsidyData: [{
+        type: 2,
+        value: '不开启',
+        checked: true
+      },
+      {
+        type: 1,
+        value: '开启',
+        checked: false
+      }
+    ],
+    subsidyNum:2,
     subsidy_data: [{
         "name": "指挥",
         "list": [{
@@ -99,6 +114,9 @@ Page({
         }, {
           "name": "灭火",
           "value": ""
+        }, {
+          "name": "召唤",
+          "value": ""
         }]
       }
     ],
@@ -117,27 +135,30 @@ Page({
     floor_time_pay_index: 0,
     floor: [{
         type: 2,
-        value: '否',
+        value: '不开启',
         checked: true
       },
       {
         type: 1,
-        value: '是',
+        value: '开启',
         checked: false
       }
     ],
     floorNum: 1,
     floorEquip: [{
         name: 1,
-        value: '紫'
+        value: '紫',
+        checked: false
       },
       {
         name: 2,
-        value: '蓝'
+        value: '蓝',
+        checked: false
       },
       {
         name: 3,
-        value: '绿'
+        value: '绿',
+        checked: false
       }
     ],
     floorEquipNum: "",
@@ -146,12 +167,12 @@ Page({
     boss_index: "", //选择当前第几个boss
     select_boss: false,
     check_all: false, //全选
-    auction_type: ["人民币", "金币"],
+    auction_type: ["现金", "金币"],
     auction_typeIndex: 0,
     floor_popup: false,
     floor_way: [{
         type: 2,
-        value: '人民币',
+        value: '现金',
         checked: 'true'
       },
       {
@@ -160,7 +181,7 @@ Page({
       }
     ],
     floor_info: { //起拍地板信息
-      currency_type: 2, //币种，2-人民币，1-金币
+      currency_type: 2, //币种，2-现金，1-金币
       price: "", //价格
       add_price: "", //每次加价
       purple: 2, //紫 1-开启，2-不开启
@@ -178,6 +199,10 @@ Page({
     floor_status: 2,
   },
   onLoad: function(options) {
+
+
+
+
     if (this.options.template_id && this.options.template_id != -1) {
       this.template(this.options.template_id);
     }
@@ -209,15 +234,26 @@ Page({
       danwei: danwei
     })
   },
-
   //确定房间创建
   confirm_Start() {
     var that = this;
     let current_data = this.data;
+    let subsidy_data = this.data.subsidy_data;
+    let expenditure = this.data.expenditure;
+    if (this.data.subsidyNum==2){
+      expenditure = '';
+      subsidy_data.forEach(e => {
+        e.list.forEach(elist => {
+          elist.value = '';
+        })
+      })
+    }
+
+
     let subsidy = {
       currency_type: this.data.subsidies_index,
       status: this.data.allot_index,
-      subsidy: this.data.subsidy_data
+      subsidy: subsidy_data
     }
 
     let id = this.data.transcriptText.id;
@@ -241,7 +277,7 @@ Page({
       equipment_score: 0, //装备评分
       subsidy: subsidy, //补贴方式
       yy_room_number: current_data.yy_room_number, //YY房间号
-      expenditure: current_data.expenditure, //支出
+      expenditure: expenditure, //支出
       high_dps: current_data.high_dps, //DPS需高于第一名的百分比
       high_hps: current_data.high_hps, //HPS需高于第一名的百分比
       floor_status: current_data.floor_status, //是否开启底板，1-开启，2-不开启
@@ -254,11 +290,11 @@ Page({
         avatar: this.data.user_info.avatar,
       }, //用户信息 
     }
-    var subsidy_template = {}
-    subsidy_template.subsidy = createRoomStr.subsidy.subsidy;
-    subsidy_template.high_dps = createRoomStr.high_dps;
-    subsidy_template.high_hps = createRoomStr.high_hps;
-    console.log(subsidy_template, "261");
+    var subsidy_template = createRoomStr;
+    // subsidy_template.subsidy = createRoomStr.subsidy.subsidy;
+    // subsidy_template.high_dps = createRoomStr.high_dps;
+    // subsidy_template.high_hps = createRoomStr.high_hps;
+
     // this.savetemplate(subsidy_template);
     // return;
     app.request({
@@ -266,7 +302,6 @@ Page({
       method: "POST",
       data: createRoomStr,
       success: res => {
-        console.log(res);
         if (res.code == 0) {
           if (this.options.template_id && this.options.template_id != -1) {
             wx.showModal({
@@ -313,6 +348,8 @@ Page({
 
   },
   savetemplate(e, d) {
+    e.room_num = '';
+
     app.request({
       url: api.room.template,
       method: "POST",
@@ -330,6 +367,7 @@ Page({
     })
   },
   updatatemplate(e) {
+    e.room_num = '';
     app.request({
       url: api.room.template_updata,
       method: "POST",
@@ -395,8 +433,8 @@ Page({
       })
     })
     if (this.data.allot_index == 1) {
-      
-      
+
+
       if (isval >= 100) {
         wx.showToast({
           title: '你的补贴百分比已超过百分之百',
@@ -504,7 +542,6 @@ Page({
 
   //副本选择
   transcriptConfirm(e) {
-    console.log(e.detail.value);
     this.setData({
       transcriptText: e.detail.value,
       transcript_popup: false
@@ -532,7 +569,6 @@ Page({
         parent_id: id
       },
       success: res => {
-        // console.log(res);
         if (id == 0) {
           let str = res.map(e => {
             if (e.type == "0") {
@@ -580,7 +616,6 @@ Page({
       success: res => {
 
         if (res.code == 0) {
-          console.log(res);
           this.setData({
             roomNumber: res.data.roomNumber
           })
@@ -614,23 +649,24 @@ Page({
 
   },
   close_floor_btn() {
-    let arr = this.data.floor.map(e => {
-      if (e.type == this.data.floorNum) {
-        e.checked = false;
-      } else {
-        e.checked = true;
-      }
-      return e;
-    })
-    console.log(arr);
+    // let arr = this.data.floor.map(e => {
+    //   if (e.type == this.data.floorNum) {
+    //     e.checked = false;
+    //   } else {
+    //     e.checked = true;
+    //   }
+    //   return e;
+    // })
+    this.data.floor[0].checked = true;
+    this.data.floor[1].checked = false;
+
     this.setData({
       floor_popup: false,
-      floor: arr
+      floor: this.data.floor
     })
   },
   //选择boss
   set_select_boss(e) {
-    // console.log(e.currentTarget.dataset.index);
     let index = e.currentTarget.dataset.index;
     this.setData({
       boss_index: index,
@@ -639,12 +675,21 @@ Page({
   },
   //确定装备起拍价格和选择的币种
   set_boss_equip_btn() {
+    this.data.boss_list.forEach(e => {
+      e.equipment.forEach(ee => {
+        ee.is_select = false
+      })
+    })
+
+
     wx.setStorage({
       key: "transcript" + this.data.transcriptText.id,
       data: this.data.boss_list
     })
     this.setData({
-      select_boss: false
+      select_boss: false,
+      check_all: false,
+      boss_list: this.data.boss_list
     })
   },
   //选择boss装备起拍价
@@ -674,7 +719,14 @@ Page({
 
   //关闭boss装备起拍价
   close_boss_popup() {
+    this.data.boss_list.forEach(e => {
+      e.equipment.forEach(ee => {
+        ee.is_select = false
+      })
+    })
     this.setData({
+      boss_list: this.data.boss_list,
+      check_all:false,
       equip_popup: false,
       select_boss: false
     })
@@ -724,21 +776,75 @@ Page({
       this.setData({
         floor_popup: true,
         floor_status: 1,
-        note: e.detail.value,
         floorNum: e.detail.value,
       })
     } else {
       this.setData({
         floorNum: e.detail.value,
-        floor_status: 2,
-        note: e.detail.value
+        floor_status: 2
       })
     }
 
   },
+  floorTap() {
+    if (this.data.floor_status == 1) {
+      this.setData({
+        floor_popup: true
+      })
+    }
+  },
+  //补贴关闭
+  subsidyPopup_close() {
+    let subsidyData = this.data.subsidyData;
+    subsidyData[0].checked = true
+    subsidyData[1].checked = false
+
+    this.setData({
+      subsidyPopup: false,
+      subsidyData: subsidyData
+    })
+  },
+  //确定补贴方式
+  set_subsidy() {
+
+
+    if (this.data.expenditure.length == 0) {
+      wx.showToast({
+        title: '你的补贴方式不能为空！',
+        icon: 'none',
+        duration: 3000
+      })
+      return;
+    }
+
+    this.setData({
+      subsidyPopup: false,
+    })
+
+  },
+  //补贴设置
+  subsidyChange(e) {
+    if (e.detail.value == 1) {
+      this.setData({
+        subsidyPopup: true,
+        subsidyNum: e.detail.value,
+      })
+    } else {
+      this.setData({
+        subsidyPopup: false,
+        subsidyNum: e.detail.value,
+      })
+    }
+  },
+  subsidyTap() {
+    if (this.data.subsidyNum == 1) {
+      this.setData({
+        subsidyPopup: true
+      })
+    }
+  },
   //选择地板起拍币种
   floor_way_Change: function(e) {
-    // console.log('radio发生change事件，携带value值为：', e.detail.value);
     let val = e.detail.value;
     let floor_way = this.data.floor_way;
     floor_way.forEach(s => {
@@ -847,15 +953,137 @@ Page({
         id: e
       },
       success: res => {
+        let subsidy_data = '',
+          yy_room_number = '';
+        if (res.data.subsidy_template.subsidy.subsidy) {
+          subsidy_data = res.data.subsidy_template.subsidy.subsidy;
+          yy_room_number = res.data.subsidy_template.yy_room_number;
+          let subsidies_type = this.data.subsidies_type;
+          let allot_type = this.data.allot_type;
+          let floor = this.data.floor;
+          let floorEquip = this.data.floorEquip;
+          let floor_way = this.data.floor_way;
+          let currency_type = res.data.subsidy_template.subsidy.currency_type;
+          let status = res.data.subsidy_template.subsidy.status;
+          let floor_status = res.data.subsidy_template.floor_status;
+          let floor_info = res.data.subsidy_template.floor_info;
+          let expenditure = res.data.subsidy_template.expenditure;
+          subsidies_type = subsidies_type.map(e => {
+            e.checked = false;
+            if (currency_type == e.type) {
+              e.checked = true
+            }
+            return e;
+          })
+          allot_type = allot_type.map(e => {
+            e.checked = false;
+            if (status == e.type) {
+              e.checked = true
+            }
+            return e;
+          })
+
+          floor_way = floor_way.map(e => {
+            e.checked = false;
+            if (floor_info.currency_type == e.type) {
+              e.checked = true
+            }
+            return e;
+          })
+          floor = floor.map(e => {
+            e.checked = false;
+            if (floor_status == e.type) {
+              e.checked = true
+            }
+            return e;
+          })
+
+          floorEquip = floorEquip.map(e => {
+            if (e.name == 1) {
+              if (floor_info.purple == 1) {
+                e.checked = true
+              } else {
+                e.checked = false
+              }
+            } else if (e.name == 2) {
+              if (floor_info.blue == 1) {
+                e.checked = true
+              } else {
+                e.checked = false
+              }
+            } else if (e.name == 3) {
+              if (floor_info.green == 1) {
+                e.checked = true
+              } else {
+                e.checked = false
+              }
+            }
+            return e;
+          })
+
+          let subsidyData = this.data.subsidyData;
+          let subsidyNum = this.data.subsidyNum;
+
+          if (expenditure.length>0){
+            subsidyData[0].checked = false
+            subsidyData[1].checked = true
+            subsidyNum = 1
+          }
+
+          
+
+
+
+          this.setData({
+            subsidies_index: currency_type,
+            allot_index: status,
+            subsidies_type: subsidies_type,
+            allot_type: allot_type,
+            floor: floor,
+            floor_way: floor_way,
+            floor_status: floor_status,
+            floorEquip: floorEquip,
+            floor_info: floor_info,
+            note: res.data.subsidy_template.note,
+            subsidyData: subsidyData,
+            subsidyNum: subsidyNum
+          })
+        } else {
+          subsidy_data = res.data.subsidy_template.subsidy;
+        }
+
+
+        let isval = 0;
+        subsidy_data.forEach(e => {
+          e.list.forEach(elist => {
+            if (elist.value) {
+              isval = isval + parseFloat(elist.value);
+            }
+          })
+        })
         this.setData({
-          subsidy_data: res.data.subsidy_template.subsidy,
+          subsidy_data: subsidy_data,
+          yy_room_number: yy_room_number,
           high_dps: res.data.subsidy_template.high_dps,
           high_hps: res.data.subsidy_template.high_hps,
           old_subsidy_data: res.data.subsidy_template.subsidy,
           old_high_dps: res.data.subsidy_template.high_dps,
-          old_high_hps: res.data.subsidy_template.high_hps
+          old_high_hps: res.data.subsidy_template.high_hps,
+          expenditure: isval
         })
       }
     })
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
+
+
   }
 });

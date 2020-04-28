@@ -1,4 +1,3 @@
-
 .new_moreny {
   text-align: center;
   background: #fff;
@@ -14,17 +13,20 @@
   background: #fff;
   /* border-radius: 15rpx; */
 }
+
 .vertical {
   width: 2rpx;
   background: #a5a5a5;
   height: 60rpx;
 }
 
-.amount{
+.amount {
   flex: 1;
 }
+
 .content {
   padding: 0 20rpx;
+  padding-bottom: 20rpx;
 }
 
 .subsidy_list {

@@ -1,6 +1,4 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "团账单",
-  "navigationStyle": "default",
-  "navigationBarTextStyle": "black"
+  "navigationBarTitleText": "团账单"
 }

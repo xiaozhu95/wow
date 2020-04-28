@@ -39,7 +39,7 @@ page{
   width: 180rpx;
 }
 .service_info .input_title{
-  width: 80rpx;
+  width: 130rpx;
 }
 .service_info .inputSty{
   background-color: #ffffff;
@@ -70,7 +70,7 @@ page{
   margin-top: 20rpx;
 }
 .main .info .list .inputSty {
-  width: 520rpx;
+  width: 500rpx;
   border-bottom: 1px solid #bcbcbc;
   color: #000;
   height: 42rpx;
@@ -245,7 +245,6 @@ radio .wx-radio-input {
 }
 
 .boss_box {
-  height: 1180rpx;
   background-color: #2d2d2d !important;
 }
 
@@ -255,7 +254,7 @@ radio .wx-radio-input {
 }
 
 .boss_equip_h {
-  height: 809rpx;
+  height: 780rpx;
 }
 
 .boss_equip {
@@ -270,7 +269,7 @@ radio .wx-radio-input {
   border-bottom: 1px solid #2d2d2d;
 }
 .select_class{
-  width: 324rpx;
+  width: 350rpx;
 }
 .eqiop_name {
   width: 190rpx;
@@ -293,7 +292,7 @@ radio .wx-radio-input {
 }
 
 .select_icon {
-  width: 54rpx;
+  width: 80rpx;
 }
 .li_eqiop_type{
   width: 106rpx;
@@ -304,7 +303,6 @@ radio .wx-radio-input {
   border: 1px solid #fff;
   position: relative;
   border-radius: 5rpx;
-  margin-left: 20rpx;
 }
 
 .icon_sty image {
@@ -328,20 +326,20 @@ radio .wx-radio-input {
   width: 100%;
 }
 .set_boss_equip .set_hook {
-  height: 80rpx;
+  height: 100rpx;
   color: #fff;
-  width: 70rpx;
-  padding-top: 8rpx;
+  width: 80rpx;
+  padding-top: 20rpx;
   box-sizing: border-box;
 }
 .set_hook text {
-  font-size: 22rpx;
+  font-size: 24rpx;
   text-align: center;
   padding-top: 8rpx;
   padding-left: 10rpx;
 }
 .li_qu {
-  width: 440rpx;
+  width: 340rpx;
 }
 .set_boss_equip .set_boss_equip_btn {
   text-align: center;
@@ -352,7 +350,6 @@ radio .wx-radio-input {
 .auction_type_picker {
   color: #ffd100;
   font-size: 24rpx;
-  text-align: left;
 }
 .drop {
   width: 16rpx;
@@ -398,7 +395,7 @@ radio .wx-radio-input {
   font-size: 24rpx;
 }
 .subsidies .sub_li{
-  margin-top: 20rpx;
+  margin-top: 10rpx;
 }
 .subsidies_li {
   width: 315rpx;
@@ -424,7 +421,7 @@ radio .wx-radio-input {
 }
 
 .sub_name{
-  width: 80rpx;
+  width: 130rpx;
   line-height: 60rpx;
   text-align: center;
 }
@@ -432,7 +429,7 @@ radio .wx-radio-input {
   flex: 1;
 }
 .sub_input{
-  margin-bottom: 20rpx;
+  margin-bottom: 15rpx;
 }
 .sub_input text{
  font-size: 22rpx;

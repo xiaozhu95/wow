@@ -20,13 +20,23 @@ page {
 
 .content {
   padding: 0 14rpx;
+  position: relative;
+}
+
+.content image {
+  width: 724rpx;
+  height: 728rpx;
+  margin: 0 auto;
+  display: block;
 }
 
 .subject {
-  /* border: 1rpx solid red; */
+  position: absolute;
+  top: 0;
   color: #30393c;
   font-size: 24rpx;
-  background: #e8cfa5;
+  box-sizing: border-box;
+  left: 0;
   padding: 50rpx 60rpx;
   height: 728rpx;
   line-height: 40rpx;
@@ -37,7 +47,7 @@ page {
 }
 
 .item {
-  width: 101rpx;
+  padding: 2rpx 8rpx;
   height: 33rpx;
   text-align: center;
   line-height: 33rpx;

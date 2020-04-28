@@ -13,21 +13,21 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.get_message();
     this.member();
     this.getPayList();
@@ -50,8 +50,6 @@ Page({
         team_id: this.options.team_id
       },
       success: res => {
-  
-
         var troops = res.data;
         for (let i in troops) {
           troops[i].checked = false;
@@ -218,7 +216,7 @@ Page({
       show_punishment: false
     })
   },
-  checkboxChange: function(e) {
+  checkboxChange: function (e) {
     var checked = e.detail.value
     var changed = {}
     for (var i = 0; i < this.data.team_list.length; i++) {
@@ -230,7 +228,7 @@ Page({
     }
     this.setData(changed)
   },
-  check_punishment: function(e) {
+  check_punishment: function (e) {
     var checked = e.detail.value
     var changed = {}
     for (var i = 0; i < this.data.team_list.length; i++) {
@@ -275,7 +273,7 @@ Page({
       success: res => {
         if (res.code == 0) {
           wx.navigateTo({
-            url: '/pages/distributor-sure/distributor-sure?allocation=' + JSON.stringify(res.data)
+            url: '/pages/distributor-sure/distributor-sure?allocation=' + JSON.stringify(res.data) + "&team_id=" + this.options.team_id + "&currency_type=" + this.data.subsidy.currency_type
           })
         }
       }
@@ -307,35 +305,39 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
     wx.removeStorageSync('subsidy');
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
+  onShareAppMessage: function () {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
   }
 })

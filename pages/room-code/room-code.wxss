@@ -284,7 +284,7 @@
 /* 房间详细信息 */
 
 .group_box {
-  padding: 20rpx;
+  padding: 40rpx;
   max-height: 1082rpx;
   min-height: 800rpx;
 }
@@ -394,7 +394,6 @@
 /* 添加装备 */
 
 .boss_box {
-  height: 1180rpx;
   background-color: #2d2d2d !important;
 }
 
@@ -404,7 +403,7 @@
 }
 
 .boss_equip_h {
-  height: 809rpx;
+  height: 800rpx;
 }
 
 .boss_equip {
@@ -442,9 +441,10 @@
   position: relative;
 }
 
-.select_class{
+.select_class {
   width: 324rpx;
 }
+
 .select_icon {
   width: 80rpx;
 }
@@ -481,10 +481,10 @@
 }
 
 .set_boss_equip .set_hook {
-  height: 80rpx;
+  height: 100rpx;
   color: #fff;
-  width: 70rpx;
-  padding-top: 8rpx;
+  width: 80rpx;
+  padding-top: 20rpx;
   box-sizing: border-box;
 }
 
@@ -496,12 +496,12 @@
 }
 
 .li_qu {
-  width: 440rpx;
+  width: 340rpx;
 }
 
 .set_boss_equip .set_boss_equip_btn {
   text-align: center;
-  line-height: 120rpx;
+  line-height: 130rpx;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
 }
@@ -509,7 +509,6 @@
 .auction_type_picker {
   color: #ffd100;
   font-size: 24rpx;
-  text-align: left;
 }
 
 .drop {
@@ -541,11 +540,11 @@
 
 .set_floor_btn {
   width: 100%;
-  line-height: 80rpx;
+  line-height: 100rpx;
   text-align: center;
   color: #ffd100;
   background-color: rgba(0, 0, 0, 0.6);
-  margin-top: 80rpx;
+  margin-top: 100rpx;
 }
 
 .floor_time {
@@ -811,6 +810,23 @@
   height: 30rpx;
 }
 
+.nav_title .nav_type{
+  flex: 1;
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #fef9e6;
+  border-right: 1px solid #fff0cd;
+  color:#bbb;
+}
+
+.select_nav_type{
+  color:#000 !important;
+  font-weight: 600;
+  border-bottom: 2px solid #999;
+}
+
+
 /* 我的交易 */
 
 /* 立即拍 */
@@ -860,7 +876,7 @@
 }
 
 .group_list .list_1 {
-  width: 430rpx;
+  width: 355rpx;
 }
 
 .group_list .list_1 .img {
@@ -872,7 +888,7 @@
   border-radius: 50%;
 }
 
-.group_list .list_1 .img  .title {
+.group_list .list_1 .img .title {
   background-color: #30393c;
   font-size: 20rpx;
   text-align: center;
@@ -902,18 +918,15 @@
   height: 28rpx;
 }
 
-.group_list .over {
-  width: 280rpx;
-}
 
 .group_list .over .btn {
   background-color: #c92036;
   height: 64rpx;
   text-align: center;
   color: #fff;
-  border-radius: 64rpx;
-  width: 200rpx;
-  font-size: 22rpx;
+  border-radius: 32rpx;
+  width: 340rpx;
+  font-size: 24rpx;
 }
 
 .rules_list {
@@ -945,7 +958,7 @@
   border-radius: 50%;
 }
 
-.boss_list  .select_name {
+.boss_list .select_name {
   height: 8rpx;
   width: 140rpx;
   border-radius: 8rpx;
@@ -953,7 +966,7 @@
   margin-top: 14rpx;
 }
 
-/* 装备拍卖 重新 */
+/* 装备竞价 重新 */
 
 .table_ul {
   padding: 0rpx 20rpx 20rpx 20rpx;
@@ -987,7 +1000,7 @@
 
 .table_li {
   background-color: #fef9e6;
-  height: 140rpx;
+  height: 150rpx;
   border-radius: 20rpx;
   margin-bottom: 20rpx;
 }
@@ -1049,9 +1062,10 @@
 }
 
 .table_li .hint {
-  color: #838383;
+  color: #0000ee;
   font-size: 22rpx;
   padding-top: 10rpx;
+  text-decoration:underline;
 }
 
 .table_li .now_hint {
@@ -1074,6 +1088,7 @@
   border: 1px solid#30393c;
   border-radius: 10rpx;
   color: #30393c;
+  text-align: center;
 }
 
 .color_type text {
@@ -1087,10 +1102,33 @@
 }
 
 .scroll_equip {
-  height: 100%;
-  padding: 100rpx 20rpx 0rpx 20rpx;
+  height: 1002rpx;
+  padding: 50rpx 20rpx 0rpx 20rpx;
   background-color: #fff0cd;
   font-size: 24rpx;
 }
 
-/* 装备拍卖 重新 */
+/* 装备竞价 重新 */
+
+.isdelfuben {
+  margin-top: 100rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+
+.team_list_sty{
+  background-color: #30393C;
+  color: #FFF0CD;
+  height: 64rpx;
+  width: 260rpx;
+  font-size: 24rpx;
+  border-radius: 30rpx;
+}
+.team_list_sty image{
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 10rpx;
+}

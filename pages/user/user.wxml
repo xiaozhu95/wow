@@ -1,7 +1,7 @@
 <view class="main">
   <view class="header">
     <view class="user-info">
-      <view wx:if="{{log_state}}" class="flex">
+      <view wx:if="{{log_state}}" class="flex flex_y">
         <view bindtap="skip" data-url="/pages/user-info/user-info" class="avatar">
           <image class="portrait" src="{{user_info.avatar}}"></image>
         </view>
@@ -16,8 +16,6 @@
       <view class="log_out">未登录</view>
     </view>
   </view>
-
-
   <view class="personal">
     <view class="message">
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/role/role?id=0">
@@ -39,7 +37,7 @@
         </view>
       </view> -->
       <view class="message-item flex_sb flex_y" bindtap="skip" data-url="/pages/bill/bill">
-        <view>已拍得</view>
+        <view>已购得</view>
         <view>
           <image class="r_icon" src="../../images/right1.png"></image>
         </view>

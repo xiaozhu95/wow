@@ -26,3 +26,7 @@
   height: 26rpx;
   margin-right: 15rpx;
 }
+
+.subsidy_template text{
+  margin-right: 20rpx;
+}

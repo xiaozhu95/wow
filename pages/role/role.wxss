@@ -1,14 +1,13 @@
-
 page {
   background: #fff1cd;
 }
 
 .content {
-  padding:40rpx 20rpx;
+  padding: 20rpx;
 }
 
 .creation {
-  margin-bottom: 50rpx;
+  margin: 30rpx 20rpx 50rpx 20rpx;
   background: #30393c;
   height: 90rpx;
   line-height: 90rpx;
@@ -100,4 +99,9 @@ page {
 .close image {
   width: 100%;
   height: 100%;
+}
+
+.chose_title {
+  padding-left: 20rpx;
+  font-weight: 600;
 }

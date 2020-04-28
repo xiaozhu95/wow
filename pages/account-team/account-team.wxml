@@ -1,3 +1,6 @@
+<view class='nav'>
+  <navBar title='团账单' background='#FFF0CD' back="{{true}}" bindback="handlerGobackClick"></navBar>
+</view>
 <view class="content">
   <view class="list" wx:if="{{account_list.length > 0}}">
     <view class="item" wx:for="{{account_list}}" wx:key="index" bindtap="skip" data-url="/pages/account-team-detail/account-team-detail?team_id={{item.team_id}}" data-index="{{index}}">
@@ -11,8 +14,9 @@
         </view>
         <view class="unity flex-grow-1">
           <view class="flex_sb">
-            <view>{{item.user_role_name}}的团</view>
-            <view>阵营-服务器：{{item.camp_name}}-{{item.service_name}}</view>
+            <view style="font-size: 30rpx;">{{item.user_role_name}}</view>
+            <view>阵营-服务器：
+              <text style="color:{{item.camp_id == 1 ? '#4269E2' : '#DD021E'}};">{{item.camp_name}}</text>-{{item.service_name}}</view>
           </view>
           <view style="padding-top:20rpx;" class="flex_sb">
             <view>副本：{{item.transcript_name}}</view>

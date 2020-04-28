@@ -7,6 +7,7 @@
   </view>
   <view class="room_code">房间号：{{room_message.room_num}}</view>
   <view class="content">
+    <image src="https://wowgame.yigworld.com/static/img/bg2.png"></image>
     <view class="subject">
       <scroll-view scroll-y="{{true}}" style="height:100%;">
         <view class="transcript">副本：{{room_message.transcript_name}}</view>
@@ -37,6 +38,18 @@
         </view>
         <view wx:if="{{note.length>0}}">团长备注：{{note}}
         </view>
+        <view class="flex">
+          <view style="width:260rpx;">违规提醒：</view>
+          <view>
+            <view>
+              1.竞拍成功但未支付，即视为恶意竞拍做失信处理。超过两次将在后续竞拍时直接扣款支付
+            </view>
+            <view>
+              2.团员自动退出和被团长踢出该竟拍到的装备信息记录会被删除
+            </view>
+          </view>
+
+        </view>
       </scroll-view>
     </view>
   </view>
@@ -48,7 +61,7 @@
       </view>
       <view style="padding-left:10rpx;color:#fff;" bindtap="go_legal_show">已阅读并同意</view>
     </view>
-    <!-- <view bindtap="go_legal_show">《拍卖协议》</view> -->
+    <!-- <view bindtap="go_legal_show">《竞价协议》</view> -->
   </view>
   <view class="btn_list flex_vert">
     <view class="btn1" style="margin-right:30rpx;" bindtap="reject">拒绝</view>

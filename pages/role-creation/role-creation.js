@@ -23,7 +23,9 @@ Page({
     tribetemArr: ["请选择", "", ""],
     selectItemArr: [],
     show_madel: false,
-    show_tribe: false
+    show_tribe: false,
+    server_index: 0,
+    scrollTop: -1
   },
 
   /**
@@ -53,6 +55,19 @@ Page({
     this.server_list();
     this.tribe();
   },
+  hint() {
+    wx.showToast({
+      title: "请选择职业后选择",
+      icon: "none"
+    })
+  },
+  server_cut(e) {
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      server_index: index,
+      scrollTop: 0
+    })
+  },
   search(e) {
     var word = "";
     // if (search_list.length > 0) {
@@ -64,7 +79,7 @@ Page({
     } else {
       var word = e.detail.value;
       var search_list = []
-      var server_list = this.data.server_list;
+      var server_list = this.data.server_list[this.data.server_index].list;
       // for (let i in server_list) {
       //   var code = server_list[i].name.search(word);
       //   if (code != -1) {
@@ -78,8 +93,9 @@ Page({
         }
       })
       if (search_list.length > 0) {
+        this.data.server_list[this.data.server_index].list = search_list
         this.setData({
-          server_list: search_list
+          server_list: this.data.server_list
         })
       } else {
         wx.showToast({
@@ -135,13 +151,14 @@ Page({
   },
   select_server(e) {
     var index = e.currentTarget.dataset.index;
-    var list = this.data.server_list;
-
+    var new_index = this.data.server_index
+    var list = this.data.server_list[new_index].list;
     for (let i in list) {
       list[i].checked = i == index ? true : false;
     }
+    this.data.server_list[new_index].list = list
     this.setData({
-      server_list: list
+      server_list: this.data.server_list
     })
   },
   select_talent() {
@@ -151,7 +168,6 @@ Page({
         occupation: this.data.selectItemArr[2].name
       },
       success: res => {
-        console.log(res, "118");
         this.setData({
           talent_list: res.data
         })
@@ -159,7 +175,7 @@ Page({
     })
   },
   server_save() {
-    var select = this.data.server_list.filter(item => {
+    var select = this.data.server_list[this.data.server_index].list.filter(item => {
       return item.checked == true
     });
     this.setData({
@@ -211,7 +227,6 @@ Page({
         })
       )
     }
-    console.log(this.data.selectItemArr, "152");
     if (this.data.selectItemArr.length != 3) {
       return (
         wx.showToast({
@@ -224,6 +239,14 @@ Page({
       return (
         wx.showToast({
           title: '请输入名字',
+          icon: 'none'
+        })
+      )
+    }
+    if (!this.data.new_rank) {
+      return (
+        wx.showToast({
+          title: '请输入装备评分',
           icon: 'none'
         })
       )
@@ -274,9 +297,10 @@ Page({
     })
   },
   show_sel() {
-    this.setData({
-      show_madel: !this.data.show_madel
-    })
+    this.server_list(),
+      this.setData({
+        show_madel: !this.data.show_madel
+      })
   },
   show_tribe() {
     this.setData({
@@ -379,6 +403,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
   }
 })

@@ -1,5 +1,5 @@
 <view class='nav'>
-  <navBar title='补贴确认' background='#FFF0CD'  back="{{true}}"  bindback="handlerGobackClick"></navBar>
+  <navBar title='补贴确认' background='#FFF0CD' back="{{true}}" bindback="handlerGobackClick"></navBar>
 </view>
 <view class="content">
   <view class="new_moreny flex_sa flex_y">
@@ -23,7 +23,7 @@
       <view class="flex_y">
         <view class="position">{{item.name}}</view>
         <view>{{item.value}}
-        <text>{{danwei}}</text>
+          <text>{{danwei}}</text>
           <!-- <text wx:if="{{subsidy.status == 1}}">%</text>
           <text wx:eles>
             <text wx:if="{{subsidy.currency_type == 1}}">金币</text>

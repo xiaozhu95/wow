@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    lodingtiem: ''
+    lodingtiem: '',
+    end_Time: ""
   },
 
   /**
@@ -16,9 +17,53 @@ Page({
     this.setData({
       room_message: JSON.parse(this.options.room_message)
     })
-    console.log(JSON.parse(this.options.room_message), "19");
   },
-
+  // 倒计时
+  countDown: function() {
+    var that = this;
+    var nowTime = new Date().getTime(); //现在时间（时间戳）
+    var endTime = new Date(that.data.endTime).getTime() + 10 * 60 * 1000; //结束时间（时间戳）
+    var time = (endTime - nowTime) / 1000;
+    // 获取天、时、分、秒
+    let day = parseInt(time / (60 * 60 * 24));
+    let hou = parseInt(time % (60 * 60 * 24) / 3600);
+    let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+    let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+    // console.log(day + "," + hou + "," + min + "," + sec)
+    day = that.timeFormin(day),
+      hou = that.timeFormin(hou),
+      min = that.timeFormin(min),
+      sec = that.timeFormin(sec)
+    that.setData({
+      day: that.timeFormat(day),
+      hou: that.timeFormat(hou),
+      min: that.timeFormat(min),
+      sec: that.timeFormat(sec)
+    })
+    // 每1000ms刷新一次
+    if (time > 0) {
+      that.setData({
+        countDown: true
+      })
+      that.setData({
+        end_Time: setTimeout(that.countDown, 1000)
+      })
+    } else {
+      clearTimeout(that.data.end_Time);
+      that.setData({
+        countDown: false,
+        end_Time: ""
+      })
+    }
+  },
+  //小于10的格式化函数（2变成02）
+  timeFormat(param) {
+    return param < 10 ? '0' + param : param;
+  },
+  //小于0的格式化函数（不会出现负数）
+  timeFormin(param) {
+    return param < 0 ? 0 : param;
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -70,13 +115,21 @@ Page({
           });
         }
         if (res.data.status == 3 || res.data.status == 2) {
+          clearTimeout(this.data.lodingtiem);
+          clearTimeout(this.data.end_Time);
           this.setData({
-            new_status: res.data.status
+            new_status: res.data.status,
+            countDown: false
           })
           this.team_message(res.data.id);
         } else {
+          this.setData({
+            endTime: res.data.create_time
+          })
           this.get_team();
+          this.countDown();
         }
+        console.log(this.data.countDown, "123");
       }
     })
   },
@@ -87,20 +140,30 @@ Page({
         id: e
       },
       success: res => {
-        console.log(res, "79");
         var team_list = res.data.content;
         var new_list = team_list.filter(item => {
-          return item.userId == wx.getStorageSync("info").id
+          return item.userId == wx.getStorageSync("user_info").id
         })
-        console.log(new_list, "95");
+        var show_vote;
+        if (new_list.length > 0) {
+          show_vote = true
+        } else {
+          show_vote = false
+        }
         this.setData({
           allot: res.data.content,
-          voteDate: res.voteDate
-        })
+          voteDate: res.voteDate,
+          show_vote: show_vote,
+          endTime: res.data.create_time
+        });
+        if (res.data.status != 2 && res.data.status != 3) {
+          this.countDown();
+        }
       }
     })
   },
   get_team() {
+    var new_message = this.data.room_message;
     http.request({
       url: api.account.account_detail,
       method: "POST",
@@ -109,15 +172,40 @@ Page({
         user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
-        console.log(res, "39");
+        var new_list = res.data.filter(item => {
+          return item.userId == wx.getStorageSync("user_info").id;
+        });
+        var show_vote;
+        if (new_list.length > 0) {
+          show_vote = true
+        } else {
+          show_vote = false
+        }
         this.setData({
           allot: res.data,
           allot_info: res,
           voteDate: res.voteDate,
-          new_userid: wx.getStorageSync("user_info").id
+          new_userid: wx.getStorageSync("user_info").id,
+          show_vote: show_vote
         });
         if (res.status == 2 || res.status == 3) {
           clearTimeout(this.data.lodingtiem);
+          clearTimeout(this.data.end_Time);
+          this.setData({
+            countDown: false
+          })
+          if (res.status == 3) {
+            wx.showModal({
+              title: '提示',
+              content: '若您的分配因连续三次同意人数不足3/4，将被系统强制平分',
+              showCancel: false,
+              success: arr => {
+                wx.redirectTo({
+                  url: '/pages/room-code/room-code?team_id=' + new_message.team_id
+                })
+              }
+            })
+          }
         } else {
           this.setData({
             lodingtiem: setTimeout(this.get_team, 1000)
@@ -157,6 +245,7 @@ Page({
    */
   onHide: function() {
     clearTimeout(this.data.lodingtiem);
+    clearTimeout(this.data.end_Time);
   },
   anew() {
     let new_message = this.data.room_message;
@@ -164,11 +253,21 @@ Page({
       url: '/pages/distributor/distributor?team_id=' + new_message.team_id + "&room_id=" + new_message.room_id,
     })
   },
+  skip(e) {
+    var url = e.currentTarget.dataset.url;
+
+    wx.navigateTo({
+      url: url
+    })
+
+
+  },
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
     clearTimeout(this.data.lodingtiem);
+    clearTimeout(this.data.end_Time);
   },
 
   /**
@@ -189,6 +288,12 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
+
 
   }
 })

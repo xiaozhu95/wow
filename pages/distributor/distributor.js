@@ -1,4 +1,3 @@
-// pages/distributor/distributor.js
 var api = require("../../api.js");
 var app = getApp();
 Page({
@@ -15,10 +14,10 @@ Page({
    */
   onLoad: function(options) {
     wx.hideShareMenu();
-
     let user_info = wx.getStorageSync("user_info");
     this.userTeamIdentity(this.options.team_id, user_info.id);
     this.getPayList();
+    this.get_message();
   },
   //当前用户的身份
   userTeamIdentity(team_id, user_id) {
@@ -38,21 +37,20 @@ Page({
       }
     })
   },
-  getPayList(){
+  getPayList() {
     app.request({
       url: api.team.getPayList + "?team_id=" + this.options.team_id,
       method: "get",
       success: res => {
-        console.log(res);
         this.setData({
           currencyMoney: res.data.currencyMoney,
           currencyCoin: res.data.currencyCoin,
           teaminfo: res.data.teaminfo
         })
       }
-    }) 
+    })
   },
- 
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -66,38 +64,131 @@ Page({
   onShow: function() {
 
   },
-  skip(e) {
+  /**
+   * 没有补贴的跳转 
+   */
+  // get_message() {
+  //   app.request({
+  //     url: api.room.room_detail,
+  //     data: {
+  //       room_id: this.options.room_id,
+  //       team_id: this.options.team_id
+  //     },
+  //     success: res => {
+  //       var subsidy_list = res.data.subsidy.subsidy;
+  //       var select_list = subsidy_list.filter(item => {
+  //         return item.value
+  //       });
+  //       var skip = select_list.length > 0 ? true : false;
+  //       console.log(skip, "78");
+  //       this.setData({
+  //         expenditure: res.data.expenditure,
+  //         subsidy: res.data.subsidy,
+  //         subsidy_list: res.data.subsidy.subsidy,
+  //         select_skip: skip
+  //       })
+  //     }
+  //   })
+  // },
+  // allowance() {
+  //   var new_subsidy = this.data.subsidy_list.filter(item => {
+  //     return item.user_id && item.user_id.length > 0
+  //   });
+  //   if (this.data.punishment_list) {
+  //     var punitive = [];
+  //     for (let i in this.data.punishment_list) {
+  //       punitive.push(this.data.punishment_list[i].user_id);
+  //     }
+  //     new_subsidy.push({
+  //       name: "不分钱",
+  //       user_id: punitive,
+  //       value: 0
+  //     })
+  //   }
+  //   var new_message = {};
+  //   new_message.subsidy = this.data.subsidy;
+  //   new_message.subsidy_list = this.data.subsidy_list;
+  //   wx.setStorageSync("subsidy", new_message);
+  //   http.request({
+  //     url: api.room.allowance,
+  //     method: "POST",
+  //     data: {
+  //       room_id: this.options.room_id,
+  //       team_id: this.options.team_id,
+  //       currency_type: this.data.subsidy.currency_type,
+  //       status: this.data.subsidy.status,
+  //       user_id: this.data.team_k[0].user_id,
+  //       subsidy: new_subsidy
+  //     },
+  //     success: res => {
+  //       if (res.code == 0) {
+  //         wx.navigateTo({
+  //           url: '/pages/distributor-sure/distributor-sure?allocation=' + JSON.stringify(res.data) + "&team_id=" + this.options.team_id + "&currency_type=" + this.data.subsidy.currency_type
+  //         })
+  //       }
+  //     }
+  //   })
+  // },
+  hint() {
+    var that = this;
+    app.request({
+      url: api.room.promise,
+      method: "POST",
+      data: {
+        team_id: this.options.team_id,
+        user_id: wx.getStorageSync("user_info").id,
+        currency_type: this.options.currency_type
+      },
+      success: res => {
+        if (res.data == 3) {
+          wx.showModal({
+            title: '提示',
+            content: '您的分配因连续三次同意人数不足3/4，将被系统强制平分',
+            showCancel: false,
+            success(res) {
+              wx.reLaunch({
+                url: '/pages/account-team/account-team',
+              })
+            }
+          })
+        } else {
+          that.skip();
+        }
+      }
+    })
+  },
+  skip() {
     app.request({
       url: api.account.distribution + "?team_id=" + this.options.team_id,
       method: "get",
       success: res => {
-        console.log(res);
-        if(res.code==0){
-          var url = e.currentTarget.dataset.url;
+        if (res.code == 0) {
+          var url = "/pages/distributor-detail/distributor-detail";
           if (parseFloat(this.data.teaminfo.amount) > 0 || parseFloat(this.data.teaminfo.gold_coin) > 0) {
             wx.navigateTo({
               url: url + "?team_id=" + this.options.team_id + "&room_id=" + this.options.room_id,
             })
           } else {
             wx.showToast({
-              title: '分配总金额和金币不能都等于0',
-              icon: "none"
+              title: '分配总金额和金币不能都等于0,如需解散请到团员列表',
+              icon: "none",
+              duration: 3000
             })
             return;
           }
-        }else{
+        } else {
           wx.showToast({
             title: res.msg,
             icon: "none"
           })
         }
       }
-    }) 
+    })
 
 
-    
 
-  
+
+
   },
   handlerGobackClick(delta) {
     const pages = getCurrentPages();
@@ -148,6 +239,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
   }
 })

@@ -46,5 +46,5 @@
       </view>
     </view>
   </view>
-  <view class="start" bindtap="skip" data-url="/pages/distributor-detail/distributor-detail" wx:if="{{identity==1}}">开始分配</view>
+  <view class="start" bindtap="hint" data-url="/pages/distributor-detail/distributor-detail" wx:if="{{identity==1}}">开始分配</view>
 </view>

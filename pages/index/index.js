@@ -39,7 +39,7 @@ Page({
   create() {
     if (this.data.log_state) {
 
-      if (this.data.info.mobile.length == 0) {
+      if (this.data.info.mobile == null || this.data.info.mobile.length == 0) {
         wx.navigateTo({
           url: '/pages/login/login'
         })
@@ -54,11 +54,11 @@ Page({
         app.request({
           url: api.room.getFaithCount + "?user_id=" + wx.getStorageSync("user_info").id,
           success: res => {
-            if(res.code==0){
+            if (res.code == 0) {
               wx.navigateTo({
                 url: '/pages/role/role?id=2'
               })
-            }else{
+            } else {
               wx.showToast({
                 title: res.msg,
                 icon: 'none',
@@ -66,8 +66,6 @@ Page({
             }
           }
         })
-
-        
       }
     } else {
       wx.navigateTo({
@@ -128,5 +126,15 @@ Page({
     }
 
 
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
   }
 })

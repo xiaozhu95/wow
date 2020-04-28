@@ -12,19 +12,21 @@
 
   <view class="flex_sb group_list">
     <view class="list_1 flex_y">
-      <view wx:for="{{team_list_li}}" wx:if="{{index<7}}" class="img" wx:key="index">
-        <image src="{{item.avatar}}"></image>
-        <text class="title">{{item.identityName}}</text>
+      <view class="img">
+        <image src="{{team_list_li[0].avatar}}"></image>
+        <text class="title">{{team_list_li[0].identityName}}</text>
       </view>
-
+      <view class="flex_vert team_list_sty" bindtap="team_popup">
+        <image src="../../images/icon_shezhi.png"></image>
+        <text>团员列表</text>
+        <text style="margin-left:10rpx; font-size:24rpx;">/{{team_list_li.length}}人</text>
+      </view>
     </view>
     <view class="over flex_sb">
-      <view class="set_group flex_vert" bindtap="team_popup">
-        <image src="../../images/icon_shezhi.png"></image>
-      </view>
-      <view class="btn" wx:if="{{identity==1}}" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
-        <view>结束活动</view>
-        <view>分配金额</view>
+      <view class="btn flex_vert" wx:if="{{identity==1}}" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
+        结束活动分配金额
+        <!-- <view>结束活动分配金额</view>
+        <view>分配金额</view> -->
       </view>
       <view class="btn flex_vert" wx:if="{{identity==2}}" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
         <view>金额记录</view>
@@ -34,10 +36,10 @@
 
   <view class="flex_sa">
     <view class="rules_list" bindtap="skip" data-url="/pages/distributor/distributor?team_id={{team_id}}">
-      <view class="text">
+      <view class="text" style="height: 40rpx">
         <text>已获金额：</text>{{amount}}
       </view>
-      <view class="text">
+      <view class="text" style="height: 40rpx">
         <text>已获金币：</text>{{gold_coin}}
       </view>
     </view>
@@ -80,7 +82,7 @@
         </view>
         <view class="li flex" wx:if="{{room_info.expenditure>0}}">
           <view class="title flex-grow-0">支出：</view>
-          <view>{{room_info.expenditure}}{{room_info.subsidy.currency_type==2?'元':room_info.subsidy.currency_type==1?'币':''}}</view>
+          <view>{{room_info.expenditure}}{{room_info.subsidy.status==1?'%-':''}}{{room_info.subsidy.currency_type==2&&room_info.subsidy.status==2?'元':room_info.subsidy.currency_type==1&&room_info.subsidy.status==2?'币':''}}</view>
         </view>
         <view class="li flex">
           <view class="title flex-grow-0">补贴方式：</view>
@@ -114,7 +116,17 @@
             {{room_info.note}}
           </view>
         </view>
-
+        <view class="li flex">
+          <view class="title flex-grow-0">违规提醒：</view>
+          <view>
+            <view>
+              1.竞拍成功但未支付，即视为恶意竞拍做失信处理。超过两次将在后续竞拍时直接扣款支付
+            </view>
+            <view>
+              2.团员自动退出和被团长踢出该竞拍到的装备信息记录会被删除
+            </view>
+          </view>
+        </view>
       </scroll-view>
     </view>
   </view>
@@ -148,9 +160,9 @@
                 </view>
               </view>
               <view class="fun" wx:if="{{identity==1}}">
-               <view class="btn_sty" wx:if="{{item.identity==3}}" bindtap="checkTeamMember" data-id="2" data-index_t="{{index_t}}" data-index="{{index}}">不通过</view>
+                <view class="btn_sty" wx:if="{{item.identity==3}}" bindtap="checkTeamMember" data-id="2" data-index_t="{{index_t}}" data-index="{{index}}">不通过</view>
                 <view class="btn_sty" wx:if="{{item.identity==3}}" bindtap="checkTeamMember" data-id="1" data-index_t="{{index_t}}" data-index="{{index}}">通过</view>
-               
+
                 <view class="btn_sty" wx:if="{{item.identity==2}}" bindtap="removeTeamMember" data-index_t="{{index_t}}" data-index="{{index}}">踢出</view>
               </view>
             </view>
@@ -177,7 +189,6 @@
           <view class="name text-more">地板</view>
           <view class="select_name" wx:if="{{select_boss_index=='-1'}}"></view>
         </view>
-
 
         <view class="boss_list flex-grow-0" wx:for="{{boss_list}}" wx:key="index" data-index="{{index}}" bindtap="getboss_list" data-id="{{item.id}}">
           <image src="{{item.icon}}"></image>
@@ -250,19 +261,22 @@
             </view>
             <view class="timer">
               <van-count-down time="{{ item.countdown_time * 1000 }}" format="mm:ss" wx:if="{{item.countdown_time>0}}" />
-              <view style="color:#C92036" wx:else>拍卖结束</view>
+              <view style="color:#C92036" wx:else>竞价结束</view>
             </view>
           </view>
         </view>
-        <view class="t2">
+        <view class="t2" bindtap="set_pat_popup" data-index="{{index}}">
+          <view class="text-more">{{item.role.role_name}}</view>
           <view class="now_price flex_vert">
             <!-- <text wx:if="{{item.type==0||item.type==3}}">{{item.role.length==0?item.price:item.role.price}}</text> -->
-
             <view wx:if="{{item.type==0 || item.type==3}}">
-              <text wx:if="{{item.role.price}}">
-              {{item.role.price}}{{item.currency_type==2?'元':'币'}}
-            </text>
-              <text wx:else>{{item.price}}{{item.currency_type==2?'元':'币'}}</text>
+              <view wx:if="{{item.role.price}}">
+                {{item.role.price}}
+                <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
+              </view>
+              <view wx:else>{{item.price}}
+                <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
+              </view>
             </view>
             <view wx:if="{{item.type==1||item.type==4}}">{{item.pay_money}}
               <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
@@ -270,14 +284,14 @@
 
 
           </view>
-          <view class="hint flex_vert" bindtap="set_pat_popup" data-index="{{index}}">出价记录</view>
+          <view class="hint flex_vert">出价记录</view>
           <!-- <view class="now_hint">{{item.price_range}}</view> -->
         </view>
         <view class="t3 flex_sa">
           <view>
             <input type="digit" value="{{index==now_pat_price.index?now_pat_price.pat_price:''}}" class="number" placeholder="竞拍价格" placeholder-style="color:#30393c" wx:if="{{item.type==0}}" bindinput="pat_price" data-index="{{index}}"></input>
           </view>
-          <view class="btn" style="background-color:#03C160" wx:if="{{item.type==0}}" bindtap="add_auction" data-index="{{index}}">出价</view>
+          <view class="btn" style="background-color:#03C160" wx:if="{{item.type==0}}" bindtap="add_auction" data-index="{{index}}">竞</view>
           <view class="btn" style="background-color:#777777;width:160rpx;" wx:if="{{item.type==2}}">流拍</view>
 
           <view wx:if="{{item.type==1}}">
@@ -294,7 +308,7 @@
             审核
           </view>
           <view wx:if="{{item.type==5}}">
-            因拍人员没有付款，转二次拍卖
+            竞拍成功未付款，转二次竞价
           </view>
         </view>
 
@@ -307,8 +321,13 @@
 
     </view>
   </view>
-  <view wx:if="{{teamInfo.isdel==0}}" class="flex_vert" style="height:300rpx;">
-    副本还未开启请等待
+  <view wx:if="{{teamInfo.isdel==0}}" class="isdelfuben">
+    <view class="room_num">
+      房间号：{{room_info.room_num}}
+    </view>
+    <view>
+      副本还未开启请等待
+    </view>
   </view>
 
 
@@ -343,75 +362,100 @@
 
 
   <!-- 交易审核 -->
-  <van-popup show="{{equipment_popup}}" position="bottom" bind:close="onClose_popup_trading" closeable custom-style="height: 1182rpx;">
-    <scroll-view scroll-y="{{true}}" class="scroll_equip">
-      <view class="flex_y table_li {{item.type==2?'auction1':''}}" wx:for="{{equipment_popup_list}}" wx:key="index">
-        <view class="t1 flex_y">
-          <view class="img flex_vert">
-            <image src="{{item.equipment_icon}}"></image>
-          </view>
-          <view style="width:150rpx;">
-            <view class="name text-more">{{item.equipment_name}}</view>
-            <view class="type">
-              <text style="margin-right:10rpx;">lv{{item.equipment_grade}}</text>
-              <text>{{item.equipment_type}}</text>
-            </view>
-            <view class="timer">
-              <van-count-down time="{{ item.countdown_time * 1000 }}" format="mm:ss" wx:if="{{item.countdown_time>0}}" />
-              <view style="color:#C92036" wx:else>拍卖结束</view>
-            </view>
-          </view>
-        </view>
-        <view class="t2">
-          <view class="now_price flex_vert">
-            <!-- <text wx:if="{{item.type==0||item.type==3}}">{{item.role.length==0?item.price:item.role.price}}</text> -->
+  <van-popup show="{{equipment_popup}}" position="bottom" z-index="99999" bind:close="onClose_popup_trading" closeable custom-style="height: 1182rpx;">
 
-            <view wx:if="{{item.type==0 || item.type==3}}">
-              <text wx:if="{{item.role.price}}">
-              {{item.role.price}}{{item.currency_type==2?'元':'币'}}
-            </text>
-              <text wx:else>{{item.price}}{{item.currency_type==2?'元':'币'}}</text>
-            </view>
-            <view wx:if="{{item.type==1||item.type==4}}">{{item.pay_money}}
-              <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
-            </view>
-          </view>
-          <view class="hint flex_vert" bindtap="set_pat_popup" data-index="{{index}}" data-id="popup_pat">出价记录</view>
-          <!-- <view class="now_hint">{{item.price_range}}</view> -->
-        </view>
-        <view class="t3 flex_sa">
-          <view>
-            <input type="number" value="{{equip_list[index].now_pat_price}}" class="number" placeholder="填写价格" placeholder-style="color:#30393c" wx:if="{{item.type==0}}" bindblur="pat_price" data-index="{{index}}"></input>
-          </view>
-          <view class="btn" style="background-color:#03C160" wx:if="{{item.type==0}}" bindtap="add_auction" data-index="{{index}}">出价</view>
-          <view class="btn" style="background-color:#777777;width:160rpx;" wx:if="{{item.type==2}}">流拍</view>
-
-          <view wx:if="{{item.type==1}}">
-            {{item.pay_role_name}} 支付成功
-          </view>
-
-          <view wx:if="{{item.type==3}}" class="btn" style="background-color:#03C160;width:160rpx;" bindtap="auction_pay" data-index="{{index}}">
-            去支付
-          </view>
-          <view wx:if="{{item.type==4&&identity!=1}}">
-            待审核
-          </view>
-          <view wx:if="{{item.type==4&&identity==1}}" bindtap="setReview" data-index="{{index}}" class="btn" style="background-color:#03C160;width:160rpx;">
-            审核
-          </view>
-          <view wx:if="{{item.type==5}}">
-            因拍人员没有付款，转二次拍卖
-          </view>
-        </view>
+    <view style="background-color: #fff0cd;widht:100%;height:100%;padding-top:100rpx;">
+      <view class="nav_title flex_vert">
+        <view class="nav_type {{select_nav_index==0?'select_nav_type':''}}" data-id="0" bindtap="select_nav">竞价中</view>
+        <view class="nav_type {{select_nav_index==3?'select_nav_type':''}}" data-id="3" bindtap="select_nav">待支付</view>
+        <view class="nav_type {{select_nav_index==4?'select_nav_type':''}}" data-id="4" bindtap="select_nav">待交易</view>
+        <view class="nav_type {{select_nav_index==2?'select_nav_type':''}}" data-id="2" bindtap="select_nav" wx:if="{{identity==1}}">流拍</view>
+        <view class="nav_type {{select_nav_index==1?'select_nav_type':''}}" data-id="1" bindtap="select_nav">已完成</view>
       </view>
-      <view wx:if="{{equipment_popup_list.length==0}}" class="flex_vert" style="height:300rpx;">
-        暂时还没有订单
-      </view>
-    </scroll-view>
+      <scroll-view scroll-y="{{true}}" class="scroll_equip">
+
+        <view class="flex_y table_li {{item.type==2?'auction1':''}}" wx:for="{{equipment_popup_list}}" wx:key="index">
+          <view class="t1 flex_y">
+            <view class="img flex_vert">
+              <image src="{{item.equipment_icon}}"></image>
+            </view>
+            <view style="width:150rpx;">
+              <view class="name text-more">{{item.equipment_name}}</view>
+              <view class="type">
+                <text style="margin-right:10rpx;">lv{{item.equipment_grade}}</text>
+                <text>{{item.equipment_type}}</text>
+              </view>
+              <view class="timer">
+                <van-count-down time="{{ item.countdown_time * 1000 }}" format="mm:ss" wx:if="{{item.countdown_time>0}}" />
+                <view style="color:#C92036" wx:else>竞价结束</view>
+              </view>
+            </view>
+          </view>
+          <view class="t2" bindtap="set_pat_popup" data-index="{{index}}" data-id="popup_pat">
+            <view class="text-more" style="text-align: center;">{{item.role.role_name}}</view>
+            <view class="now_price flex_vert">
+              <!-- <text wx:if="{{item.type==0||item.type==3}}">{{item.role.length==0?item.price:item.role.price}}</text> -->
+
+              <view wx:if="{{item.type==0 || item.type==3}}">
+                <view wx:if="{{item.role.price}}">
+                  {{item.role.price}}
+                  <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
+                </view>
+                <view wx:else>{{item.price}}
+                  <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
+                </view>
+              </view>
+              <view wx:if="{{item.type==1||item.type==4}}">{{item.pay_money}}
+                <text style="font-size:23rpx;">{{item.currency_type==2?'元':'币'}}</text>
+              </view>
+            </view>
+            <view class="hint flex_vert">出价记录</view>
+            <!-- <view class="now_hint">{{item.price_range}}</view> -->
+          </view>
+          <view class="t3 flex_sa">
+            <view>
+              <input type="digit" value="{{index==pat_price_list.index?pat_price_list.pat_price:''}}" class="number" placeholder="竞拍价格" placeholder-style="color:#30393c" wx:if="{{item.type==0}}" bindinput="pat_price_list" data-index="{{index}}"></input>
+            </view>
+            <view class="btn" style="background-color:#03C160" wx:if="{{item.type==0}}" bindtap="add_auction" data-index="{{index}}">出价</view>
+            <view class="btn" style="background-color:#777777;width:160rpx;" wx:if="{{item.type==2}}">流拍</view>
+
+            <view wx:if="{{identity==1&&item.type==1}}">
+              {{item.pay_role_name}} 支付成功
+            </view>
+            <view wx:if="{{identity!=1&&item.type==1&&item.user_id==user_id}}">
+              {{item.pay_role_name}} 支付成功
+            </view>
+            <view wx:if="{{identity!=1&&item.type==1&&item.user_id!=user_id}}">
+              {{item.pay_role_name}} 获得
+            </view>
+            <view wx:if="{{item.type==3&&item.role.user_id==user_id}}" class="btn" style="background-color:#03C160;width:160rpx;" bindtap="auction_pay" data-index="{{index}}">
+              去支付
+            </view>
+            <view wx:if="{{identity==1&&item.type==3&&item.role.user_id!=user_id}}">请在游戏中提醒该用户支付</view>
+
+
+            <view wx:if="{{item.type==4&&identity!=1}}">
+              待交易
+            </view>
+            <view wx:if="{{item.type==4&&identity==1}}" bindtap="setReview" data-index="{{index}}" class="btn" style="background-color:#03C160;width:160rpx;">
+              审核
+            </view>
+            <view wx:if="{{item.type==5}}">
+              竞拍成功未付款，转二次竞价
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{equipment_popup_list.length==0}}" class="flex_vert" style="height:300rpx;">
+          暂时还没有数据
+        </view>
+      </scroll-view>
+    </view>
+
+
   </van-popup>
 
   <!-- 添加装备 -->
-  <van-popup show="{{equip_popup}}" position="bottom" custom-style="height: 1182rpx;">
+  <van-popup show="{{equip_popup}}" position="bottom" z-index="99999">
     <view class="popup_box boss_box">
 
       <view class="close" bindtap="close_boss_popup">
@@ -430,18 +474,21 @@
       </view>
 
 
-      <view wx:if="{{select_boss}}">
+      <view wx:if="{{select_boss}}" style="overflow: hidden;">
         <view class="subsidy_title flex_x boss_title text-more">{{boss_list[boss_index].bossChineseName}}</view>
 
         <view class="ul_box">
           <view class="ul_li flex_sa">
-            <view class="select_icon">
-            </view>
-            <view class="eqiop_icon">
-              <view>图标</view>
-            </view>
-            <view class="eqiop_name">
-              <view>名称</view>
+            <view class="select_class flex_sa flex_y">
+              <view class="select_icon" bindtap="set_select_equip" data-index="-1">
+                <view>全选</view>
+              </view>
+              <view class="eqiop_icon">
+                <view>图标</view>
+              </view>
+              <view class="eqiop_name">
+                <view>名称</view>
+              </view>
             </view>
             <view class="l1_eqiop">
               <view>等级</view>
@@ -449,7 +496,7 @@
             <view class="l1_eqiop">
               <view>类型</view>
             </view>
-            <view class="eqiop_type">
+            <view class="eqiop_type" style="color: #07c160;">
               <view>币种</view>
             </view>
             <view class="set_up_input">
@@ -472,7 +519,7 @@
                 <view class="eqiop_icon">
                   <image src="{{item.icon}}"></image>
                 </view>
-                <view class="eqiop_name">
+                <view class="eqiop_name" style="color:{{item.color==1?'#a335ee':item.color==2?'#0070dd':item.color==3?'#ff8000':''}}">
                   <view>{{item.equipmentChineseName}}</view>
                   <view class="english_name">{{item.equipmentEnglishName}}</view>
                 </view>
@@ -482,13 +529,13 @@
               <view class="l1_eqiop">
                 <view>{{item.grade}}</view>
               </view>
-              <view class="l1_eqiop li_eqiop_type">
+              <view class="l1_eqiop">
                 <view>{{item.type}}</view>
               </view>
               <view class="eqiop_type">
                 <image src="../../images/drop.png" class="drop"></image>
                 <picker bindchange="auction_typeChange" data-index="{{index}}" value="{{item.currency_type}}" range="{{auction_type}}">
-                  <view class="auction_type_picker">
+                  <view class="auction_type_picker" style="color: #07c160;">
                     {{auction_type[item.currency_type]}}
                   </view>
                 </picker>
@@ -505,18 +552,21 @@
 
         <view class="set_boss_equip">
           <view class="set_equip_up flex_sa flex_y">
-            <view class="set_hook" bindtap="set_select_equip" data-index="-1">
-              <view class="icon_sty">
-                <image src="../../images/hook.png" wx:if="{{check_all}}"></image>
+            <view class="set_hook flex_vert" bindtap="set_select_equip" data-index="-1">
+              <view class="" style="width:80rpx;">
+                <view class="icon_sty " style="margin:0px auto;">
+                  <image src="../../images/hook.png" wx:if="{{check_all}}"></image>
+                </view>
+                <view class="flex_vert">全选</view>
               </view>
-              <text>全选</text>
             </view>
             <view class="li_qu"></view>
-            <view class="l1_eqiop eqiop_type">
+            <view class="l1_eqiop eqiop_type" style="width: 190rpx;">
               <image src="../../images/drop.png" class="drop"></image>
+
               <picker bindchange="auction_typeChange" data-index="-1" value="{{item.currency_type}}" range="{{auction_type}}">
-                <view class="auction_type_picker">
-                  {{auction_type[auction_typeIndex]}}
+                <view class="auction_type_picker" style="color: #07c160;">
+                  <text>选择币种：</text>{{auction_type[auction_typeIndex]}}
                 </view>
               </picker>
 
@@ -526,8 +576,8 @@
               <input type="number" class="set_up" bindinput="set_check_price"></input>
             </view>
           </view>
-          <view class="set_boss_equip_btn" bindtap="add_equip">
-            添加
+          <view class="set_boss_equip_btn" bindtap="set_boss_equip_btn">
+            确定
           </view>
         </view>
       </view>
@@ -536,31 +586,32 @@
 
   </van-popup>
 
-  <!-- 设置拍卖时间 -->
+  <!-- 设置竞价时间 -->
   <view class="popup" wx:if="{{add_equip_popup}}">
     <view class="popup_bj"></view>
     <view class="popup_box">
       <view class="close" bindtap="close_add_popup">
         <image src="../../images/close.png"></image>
       </view>
-      <view class="flex_x popup_title">设置拍卖时间</view>
+      <view class="flex_x popup_title">设置竞价时间</view>
 
       <view class="group_box">
-        <view class="flex_y floor_li">
+        <!-- <view class="flex_y floor_li">
           <view>每次加价</view>
           <view>
             <input type="number" placeholder="每次加价" placeholder-style="color:#190f00" class="floorEquipIpunt" bindinput="equipIpunt"></input>
           </view>
-        </view>
+        </view> -->
         <view class="flex_y floor_li">
-          <view>拍卖时间</view>
+          <view>竞价时间</view>
           <view class="time_wap">
             <picker bindchange="floor_time_Change" data-id="wap" value="{{floor_time_wap_index}}" range="{{floor_time_wap}}">
               <view class="floor_time">
                 {{floor_time_wap[floor_time_wap_index]}} 分钟
               </view>
+              <image src="../../images/drop1.png" class="drop"></image>
             </picker>
-            <image src="../../images/drop1.png" class="drop"></image>
+
           </view>
         </view>
         <view class="flex_y floor_li">
@@ -570,8 +621,8 @@
               <view class="floor_time">
                 {{floor_time_pay[floor_time_pay_index]}} 分钟
               </view>
+              <image src="../../images/drop1.png" class="drop"></image>
             </picker>
-            <image src="../../images/drop1.png" class="drop"></image>
           </view>
         </view>
         <view class="set_floor_btn" bindtap="set_eqiop_btn">
@@ -583,7 +634,7 @@
   </view>
 
 
-  <!-- 拍卖纪录 详情-->
+  <!-- 竞价纪录 详情-->
   <view class="popup" wx:if="{{pat_popup}}">
     <view class="popup_bj"></view>
     <view class="popup_box">
@@ -591,7 +642,7 @@
         <image src="../../images/close.png"></image>
       </view>
 
-      <view class="flex_x popup_title pat_title">拍卖纪录</view>
+      <view class="flex_x popup_title pat_title">竞价纪录</view>
       <view class="pat_box">
         <view class="flex">
           <view class="cover">
@@ -612,7 +663,7 @@
           </view>
         </view>
         <view class="record_box">
-          <view class="title">拍卖纪录</view>
+          <view class="title">竞价纪录</view>
           <scroll-view class="scroll_record" scroll-y="{{true}}">
             <view class="flex_y record_li" wx:for="{{now_equip_info.record_log}}" wx:key="index" wx:if="{{now_equip_info.record_log.length>0}}">
               <view class="cover_box">

@@ -34,6 +34,7 @@ var _api_root = "{$_api_root}",
       template_updata: _api_root + "user_subsidy_template/update",
       room_number: _api_root + "room/getInfoByNumber",
       getFaithCount: _api_root + "team_leader_credit/getFaithCount",
+      promise: _api_root + "Distribution/getFaithInfo"
     },
     team: {
       startTeam: _api_root + "team/startTeam",
@@ -60,7 +61,7 @@ var _api_root = "{$_api_root}",
       pay: _api_root + "pay_log/add",
       auction_pay: _api_root + "auction_pay/pay",
       recode_mony: _api_root + "user_money_log/getlist",
-      auctionList: _api_root + "auction_pay/auctionList",
+      auctionList: _api_root + "auction_pay/auctionList"
     },
     equipment: {
       addequipment: _api_root + "auction_equipment/addequipment",
@@ -68,7 +69,7 @@ var _api_root = "{$_api_root}",
       auction_equip: _api_root + "auction_log/getlist",
       add_auction: _api_root + "auction_log/addauction",
       transaction: _api_root + "auction_equipment/transaction",
-      review: _api_root + "user_money_log/review",
+      review: _api_root + "user_money_log/review"
     },
     account: {
       team_account: _api_root + "team_member/userTeamInfo",

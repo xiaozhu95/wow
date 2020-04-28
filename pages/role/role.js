@@ -12,7 +12,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     if (this.options.id) {
       this.setData({
         id: this.options.id
@@ -34,14 +34,14 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.gain_role();
     this.template_list();
     let data = wx.getStorageSync('role-info-index');
@@ -63,7 +63,6 @@ Page({
         user_id: wx.getStorageSync("user_info").id
       },
       success: res => {
-        console.log(res, "36");
         this.setData({
           list: res.data
         })
@@ -94,41 +93,51 @@ Page({
     })
   },
   role_delete(e) {
-
-    if (this.data.code_id == 0) {
-      var index = e.currentTarget.dataset.index;
-      var wx_index = e.currentTarget.dataset.wx_index;
-      var role_message = this.data.role_lsit[wx_index].list[index];
-      http.request({
-        url: api.role.role_delete,
-        data: {
-          id: role_message.id,
-          user_id: wx.getStorageSync("user_info").id,
-        },
-        success: res => {
-          console.log(res);
-          if (res.code == 0) {
-            wx.showToast({
-              title: res.data,
-              icon: 'none'
-            })
-            this.data.role_lsit[wx_index].list.splice(index, 1);
-            this.setData({
-              role_lsit: this.data.role_lsit
+    let that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这个角色吗？',
+      success(res) {
+        if (res.confirm) {
+          if (that.data.code_id == 0) {
+            var index = e.currentTarget.dataset.index;
+            var wx_index = e.currentTarget.dataset.wx_index;
+            var role_message = that.data.role_lsit[wx_index].list[index];
+            http.request({
+              url: api.role.role_delete,
+              data: {
+                id: role_message.id,
+                user_id: wx.getStorageSync("user_info").id,
+              },
+              success: res => {
+                if (res.code == 0) {
+                  wx.showToast({
+                    title: res.data,
+                    icon: 'none'
+                  })
+                  that.data.role_lsit[wx_index].list.splice(index, 1);
+                  that.setData({
+                    role_lsit: that.data.role_lsit
+                  })
+                } else {
+                  wx.showToast({
+                    title: res.msg,
+                  })
+                }
+              }
             })
           } else {
             wx.showToast({
-              title: res.msg,
+              title: '你当前正在房间中，请结束之后再来删除',
+              icon: 'none'
             })
           }
+        } else if (res.cancel) {
         }
-      })
-    } else {
-      wx.showToast({
-        title: '你当前正在房间中，请结束之后再来删除',
-        icon: 'none'
-      })
-    }
+      }
+    })
+
+
   },
   gain_role() {
     http.request({
@@ -204,35 +213,41 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
+    return {
+      path: "/pages/index/index",
+      title: "玩了这么多年的魔兽，居然不知道，团本打工还能用这个~",
+      imageUrl: 'https://wowgame.yigworld.com/static/img/share.jpg'
+    };
+
 
   }
 })
